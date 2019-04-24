@@ -1,0 +1,7 @@
+#security.login:
+#  path: /login
+#  controller: App\Application\Controller\SecuriryController
+#
+#dashboard.index:
+#    path: /
+#    controller: App\Application\Controller\DashboardController::index
