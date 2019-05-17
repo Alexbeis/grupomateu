@@ -3,6 +3,7 @@
 namespace App\Application\Repository;
 
 use App\Domain\Entity\Explotation;
+use App\Domain\ExplotationRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,12 +13,27 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Explotation[]    findAll()
  * @method Explotation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ExplotationRepository extends ServiceEntityRepository
+class ExplotationRepository extends ServiceEntityRepository implements ExplotationRepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Explotation::class);
     }
+
+    public function save()
+    {
+        // TODO: Implement save() method.
+    }
+
+    public function getTotal()
+    {
+        $qb = $this->createQueryBuilder('explotation');
+        $qb->select('count(explotation.id)');
+        $total = $qb->getQuery()->getSingleScalarResult();
+
+        return $total;
+    }
+
 
     // /**
     //  * @return Explotation[] Returns an array of Explotation objects

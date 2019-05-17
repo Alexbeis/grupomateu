@@ -2,7 +2,9 @@
 
 namespace App\Application\Repository;
 
-use App\Entity\Purchaser;
+use App\Domain\Entity\Purchaser;
+use App\Domain\PurchaserRepositoryInterface;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,11 +14,25 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Purchaser[]    findAll()
  * @method Purchaser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PurchaserRepository extends ServiceEntityRepository
+class PurchaserRepository extends ServiceEntityRepository implements PurchaserRepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Purchaser::class);
+    }
+
+    public function save()
+    {
+        // TODO: Implement save() method.
+    }
+
+    public function getTotal()
+    {
+        $qb = $this->createQueryBuilder('purchaser');
+        $qb->select('count(purchaser.id)');
+        $total = $qb->getQuery()->getSingleScalarResult();
+
+        return $total;
     }
 
     // /**
@@ -47,4 +63,5 @@ class PurchaserRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
