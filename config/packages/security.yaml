@@ -4,38 +4,46 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         database_users:
-            entity: { class: App\Domain\Entity\User, property: username }
+            entity: { class: App\Domain\Entity\User, property: email }
+
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+
             pattern: ^/
+
+            guard:
+              authenticators:
+                - App\Application\Security\LoginFormAuthenticator
+
+            logout:
+              path: security_logout
+              target: /login
+
+            remember_me:
+              secret: '%kernel.secret%'
+              lifetime: 2592000
+
+            switch_user: true
 
             # activate different ways to authenticate
 
             #            http_basic: ~
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            form_login:
-                check_path: security_login
-                login_path: security_login
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path: index_dashboard
-            #                always_use_default_target_path: false
-            #                use_referer: true
-            #                failure_path:
-                username_parameter: _username
-                password_parameter: _password
 
-            logout:
-                path: security_logout
-                target: security_login
+
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-           - { path: ^/admin, roles: [ROLE_USER, ROLE_ADMIN] }
+      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     # - { path: ^/profile, roles: ROLE_USER }

@@ -13,17 +13,18 @@ use App\Domain\Entity\Animal;
 use App\Domain\Entity\Explotation;
 
 
+
 class AnimalTest extends \PHPUnit_Framework_TestCase
 {
     public function testSameAnimalClass()
     {
         $animal = new Animal();
-        $num = (string)rand(1000000000, 9999999999);
-        $numMother = (string)rand(1000000000, 9999999999);
-        $crot = (int)substr($num, -4);
+        $crot = (string)rand(1000000000, 9999999999);
+        $crotMother = (string)rand(1000000000, 9999999999);
+        $num = substr($crot, -4);
         $animal->setInternalNum($num);
         $animal->setCrotal($crot);
-        $animal->setCrotalMother($numMother);
+        $animal->setCrotalMother($crotMother);
         $animal->setProcedence('Morroco');
         $animal->setWeightIn(rand(10, 20));
         $date = new \DateTime();
@@ -38,10 +39,12 @@ class AnimalTest extends \PHPUnit_Framework_TestCase
     public function testSameCrotalNum()
     {
         $animal = new Animal();
-        $num = (string) 9999999999;
-        $crot = (int)substr($num, -4);
+        $crot = (string) 9999999999;
+        $crotMother = (string)rand(1000000000, 9999999999);
+        $num = substr($crot, -4);
         $animal->setInternalNum($num);
         $animal->setCrotal($crot);
+        $animal->setCrotalMother($crotMother);
         $animal->setProcedence('Morroco');
         $animal->setWeightIn(rand(10, 20));
         $date = new \DateTime();
@@ -49,8 +52,7 @@ class AnimalTest extends \PHPUnit_Framework_TestCase
         $animal->setBirthDate($date);
         $animal->setExplotation(new Explotation());
 
-        $this->assertSame(9999, $animal->getCrotal());
-
+        $this->assertSame('9999999999', $animal->getCrotal());
 
     }
 
