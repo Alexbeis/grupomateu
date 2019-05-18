@@ -38,6 +38,9 @@ class SummaryDashboard
         $this->purchaserRepository = $purchaserRepository;
     }
 
+    /**
+     * @retun array of entity Summaries
+     */
     public function execute()
     {
         $result = [

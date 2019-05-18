@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -27,6 +26,7 @@ class DashboardController extends AbstractController
     {
         $this->router = $router;
     }
+
     /**
      * @Route("/", name="index")
      */
@@ -36,6 +36,7 @@ class DashboardController extends AbstractController
             return new RedirectResponse($this->router->generate('index_dashboard'));
         }
     }
+
     /**
      * @Route("/admin", name="index_dashboard")
      */

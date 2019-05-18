@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entity;
 
+use App\Domain\UseCases\Animal\Birthday\BirthdayMonthCalculator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -227,4 +228,15 @@ class Animal
     {
         $this->crotal_mother = $crotal_mother;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMonthsOld()
+    {
+        $calculator = new BirthdayMonthCalculator($this->birth_date->format('Y-m-d'));
+
+        return $calculator->getMonthAge('NOW');
+    }
+
 }
