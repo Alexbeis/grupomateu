@@ -1,18 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: AlexYAloha
- * Date: 23/04/2019
- * Time: 20:23
- */
 
 namespace App\Tests\Animal;
 
-
 use App\Domain\Entity\Animal;
 use App\Domain\Entity\Explotation;
-
-
 
 class AnimalTest extends \PHPUnit_Framework_TestCase
 {
