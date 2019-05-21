@@ -4,6 +4,7 @@ namespace App\Domain\Entity;
 
 use App\Domain\UseCases\Animal\Birthday\BirthdayMonthCalculator;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -53,6 +54,11 @@ class Animal
     private $birth_date;
 
     /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $genre;
+
+    /**
      * @ORM\Column(type="text", length=50)
      */
     private $procedence;
@@ -68,6 +74,14 @@ class Animal
      * @ORM\OneToMany(targetEntity="App\Domain\Entity\History", mappedBy="animal")
      */
     private $history;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Domain\Entity\Race", inversedBy="animal")
+     * @JoinColumn(name="race_id", referencedColumnName="id")
+     */
+    private $race;
+
+
 
     public function __construct()
     {
@@ -232,11 +246,44 @@ class Animal
     /**
      * @return mixed
      */
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    /**
+     * @param mixed $genre
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getMonthsOld()
     {
         $calculator = new BirthdayMonthCalculator($this->birth_date->format('Y-m-d'));
 
         return $calculator->getMonthAge('NOW');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRace()
+    {
+        return $this->race;
+    }
+
+    /**
+     * @param mixed $race
+     */
+    public function setRace($race)
+    {
+        $this->race = $race;
+    }
+
 
 }

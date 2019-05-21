@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 use App\Domain\Entity\Animal;
 use App\Domain\Entity\Explotation;
 use App\Domain\Entity\Purchaser;
+use App\Domain\Entity\Race;
 use App\Domain\Entity\Supplier;
 use App\Domain\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -148,6 +149,12 @@ class BaseFixtures extends Fixture
 
     ];
 
+    private const RACES = [
+        ['code' => '0001', 'name' => 'raza1'],
+        ['code' => '0002', 'name' => 'raza2'],
+        ['code' => '0003', 'name' => 'raza3']
+    ];
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -161,10 +168,12 @@ class BaseFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->loadUsers($manager);
+        $this->loadRaces($manager);
         $this->loadExplotations($manager);
         $this->loadAnimals($manager);
         $this->loadSuppliers($manager);
         $this->loadPurchasers($manager);
+
     }
 
     private function loadUsers(ObjectManager $manager)
@@ -232,6 +241,9 @@ class BaseFixtures extends Fixture
             $date->modify('-' . rand(0, 10) . 'day');
             $animal->setBirthDate($date);
             $animal->setExplotation($this->getReference(self::NAMES_TEXT[rand(0, count(self::NAMES_TEXT) - 1)]));
+            $genere = ($i%2 == 0)? 'Male':'Female';
+            $animal->setGenre($genere);
+            $animal->setRace($this->getReference(self::RACES[rand(0, count(self::RACES) - 1)]['code']));
 
             $manager->persist($animal);
             if ($i % 100 == 0) {
@@ -240,6 +252,19 @@ class BaseFixtures extends Fixture
 
         }
         $manager->flush();
+
+    }
+
+    public function loadRaces(ObjectManager $manager)
+    {
+        foreach (self::RACES as $key => $race) {
+            $r = new Race($race['code'], $race['name']);
+            $this->addReference($race['code'], $r);
+            $manager->persist($r);
+        }
+
+        $manager->flush();
+
 
     }
 
