@@ -2,7 +2,7 @@
 
 (function(window, $) {
 
-    window.GrupoMateuDashboard = function($wrapper) {
+    window.GMDashboard = function($wrapper) {
         console.log('Hello from constructor');
         this.$wrapper = $wrapper;
 
@@ -12,7 +12,7 @@
         this.init();
     };
 
-    $.extend(window.GrupoMateuDashboard.prototype, {
+    $.extend(window.GMDashboard.prototype, {
 
         _selectors: {
             pluggins:{
@@ -60,7 +60,7 @@
     let BoxesWrapper = $('.js-boxes');
 
     if (BoxesWrapper.length > 0) {
-        let GM = new GrupoMateuDashboard(BoxesWrapper);
+        let GM = new GMDashboard(BoxesWrapper);
     }
 
 

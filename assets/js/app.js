@@ -14,7 +14,7 @@ import '../../node_modules/admin-lte/bower_components/jquery-ui/jquery-ui.js';
 import '../../node_modules/admin-lte/dist/js/adminlte.js';
 
 // Custom js
-import './gm/gm.js';
+import './dashboard/GMDashboard.js';
 
 
 
