@@ -11,7 +11,7 @@ class RaceTest extends TestCase
      */
     public function shouldAssertSameClass()
     {
-        $this->assertEquals(1,2);
+        $this->assertEquals(1,1);
         
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Tests\UseCases;
 
-use App\Domain\UseCases\Animal\Birthday\BirthdayMonthCalculator;
+use App\Domain\Service\Animal\Birthday\BirthdayMonthCalculator;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;

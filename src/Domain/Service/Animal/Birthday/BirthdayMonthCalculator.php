@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\UseCases\Animal\Birthday;
+namespace App\Domain\Service\Animal\Birthday;
 
 use DateInterval;
 use DateTime;

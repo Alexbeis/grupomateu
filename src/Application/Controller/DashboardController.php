@@ -2,7 +2,7 @@
 
 namespace App\Application\Controller;
 
-use App\Domain\UseCases\Dashboard\SummaryDashboard;
+use App\Domain\UseCases\Dashboard\SummaryDashboardUseCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +40,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/admin", name="index_dashboard")
      */
-    public function dashboard(SummaryDashboard $summaryDashboard)
+    public function dashboard(SummaryDashboardUseCase $summaryDashboard)
     {
         $totals = $summaryDashboard->execute();
 

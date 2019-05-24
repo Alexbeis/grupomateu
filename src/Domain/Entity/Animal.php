@@ -2,7 +2,7 @@
 
 namespace App\Domain\Entity;
 
-use App\Domain\UseCases\Animal\Birthday\BirthdayMonthCalculator;
+use App\Domain\Service\Animal\Birthday\BirthdayMonthCalculator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;

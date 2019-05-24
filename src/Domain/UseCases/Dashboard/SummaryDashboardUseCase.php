@@ -7,7 +7,7 @@ use App\Domain\ExplotationRepositoryInterface;
 use App\Domain\PurchaserRepositoryInterface;
 use App\Domain\SupplierRepositoryInterface;
 
-class SummaryDashboard
+class SummaryDashboardUseCase
 {
     /**
      * @var AnimalRepositoryInterface
