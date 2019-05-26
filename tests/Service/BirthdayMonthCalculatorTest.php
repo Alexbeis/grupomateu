@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\UseCases;
+namespace App\Tests\Service;
 
 use App\Domain\Service\Animal\Birthday\BirthdayMonthCalculator;
 

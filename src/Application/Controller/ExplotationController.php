@@ -3,9 +3,11 @@
 namespace App\Application\Controller;
 
 
+use App\Domain\Entity\Explotation;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,7 +31,16 @@ class ExplotationController extends AbstractController
                 'explotations' => $allExplotationsUseCase->execute()
             ]
         );
+    }
 
+    /**
+     * @Route("/explotation/edit/{id}", name="edit_explotation")
+     */
+    public function edit(Explotation $explotation)
+    {
+        dd($explotation);
+
+        return new Response('ok');
     }
 
 }
