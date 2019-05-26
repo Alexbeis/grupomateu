@@ -136,21 +136,6 @@ class Explotation
         $this->createdBy = $createdBy;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    /**
-     * @param mixed $created_at
-     */
-    public function setCreatedAt($created_at): void
-    {
-        $this->created_at = $created_at;
-    }
 
     public function __toString()
     {

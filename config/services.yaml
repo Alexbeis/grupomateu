@@ -26,5 +26,13 @@ services:
         resource: '../src/Application/Controller'
         tags: ['controller.service_arguments']
 
+    App\Application\Repository\:
+        resource: '../src/Application/Repository'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    #USE CASES:
+    application.usecases.get.all.explotations:
+        class: App\Domain\UseCases\Explotations\GetAllExplotationsUseCase
+        public: true

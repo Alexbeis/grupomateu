@@ -3,6 +3,7 @@
 namespace App\Application\Controller;
 
 
+use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,12 +15,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExplotationController extends AbstractController
 {
+
     /**
      * @Route("/explotations" ,name="index_explotations")
      */
-    public function index()
+    public function index(ContainerInterface $container)
     {
-        return $this->render('explotations/index.html.twig');
+        $allExplotationsUseCase = $container->get('application.usecases.get.all.explotations');
+
+        return $this->render(
+            'explotations/index.html.twig',
+            [
+                'explotations' => $allExplotationsUseCase->execute()
+            ]
+        );
 
     }
 
