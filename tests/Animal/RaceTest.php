@@ -2,6 +2,7 @@
 
 namespace App\Tests\Animal;
 
+use App\Domain\Entity\Race;
 use PHPUnit\Framework\TestCase;
 
 class RaceTest extends TestCase
@@ -11,8 +12,8 @@ class RaceTest extends TestCase
      */
     public function shouldAssertSameClass()
     {
-        $this->assertEquals(1,1);
-        
+        $r = new Race('001', 'race1');
+        $this->assertInstanceOf(Race::class, $r);
     }
 
 }

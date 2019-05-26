@@ -1,3 +1,11 @@
 controllers:
     resource: ../../src/Application/Controller/
     type: annotation
+    prefix: /admin
+
+root:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /admin
+        permanent: true

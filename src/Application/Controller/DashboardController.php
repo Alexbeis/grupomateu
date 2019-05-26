@@ -28,17 +28,7 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index")
-     */
-    public function index()
-    {
-        if ($this->getUser()) {
-            return new RedirectResponse($this->router->generate('index_dashboard'));
-        }
-    }
-
-    /**
-     * @Route("/admin", name="index_dashboard")
+     * @Route("/", name="index_dashboard")
      */
     public function dashboard(SummaryDashboardUseCase $summaryDashboard)
     {
