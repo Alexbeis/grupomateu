@@ -14,6 +14,8 @@ const swal = require('sweetalert2');
             this.handleExplotationDelete.bind(this)
         );
 
+        this.loadDatatable();
+
     };
 
     $.extend(window.GMExplotations.prototype, {
@@ -28,6 +30,12 @@ const swal = require('sweetalert2');
                 deleted: "Deleted!",
                 error: "Error!"
             }
+        },
+
+        loadDatatable: function() {
+            this.$wrapper.DataTable({
+                "pageLength": 10
+            });
         },
 
         /**
