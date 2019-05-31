@@ -16,6 +16,7 @@
         "admin-lte": "^2.4.10",
         "bootstrap": "^3.3.7",
         "jquery": "^3.4.1",
-        "popper.js": "^1.15.0"
+        "popper.js": "^1.15.0",
+        "sweetalert2": "^8.11.6"
     }
 }

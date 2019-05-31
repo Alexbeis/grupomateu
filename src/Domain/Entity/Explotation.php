@@ -66,10 +66,13 @@ class Explotation
 
     /**
      * @param mixed $code
+     * @return Explotation
      */
-    public function setCode($code): void
+    public function setCode($code): self
     {
         $this->code = $code;
+
+        return $this;
     }
 
     /**
@@ -82,10 +85,13 @@ class Explotation
 
     /**
      * @param mixed $localization
+     * @return Explotation
      */
-    public function setLocalization($localization): void
+    public function setLocalization($localization): self
     {
         $this->localization = $localization;
+
+        return $this;
     }
 
     /**
@@ -98,10 +104,12 @@ class Explotation
 
     /**
      * @param mixed $name
+     * @return Explotation
      */
-    public function setName($name): void
+    public function setName($name): self
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -114,10 +122,12 @@ class Explotation
 
     /**
      * @param mixed $animal
+     * @return Explotation
      */
-    public function setAnimal($animal): void
+    public function setAnimal($animal): self
     {
         $this->animal = $animal;
+        return $this;
     }
 
     /**
@@ -130,10 +140,13 @@ class Explotation
 
     /**
      * @param mixed $createdBy
+     * @return Explotation
      */
-    public function setCreatedBy($createdBy): void
+    public function setCreatedBy($createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
     }
 
 

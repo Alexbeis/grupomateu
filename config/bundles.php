@@ -15,4 +15,6 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+    SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle::class => ['all' => true],
+    SimpleBus\SymfonyBridge\SimpleBusEventBusBundle::class => ['all' => true]
 ];

@@ -32,7 +32,22 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    #USE CASES:
-    application.usecases.get.all.explotations:
+    #
+    # USE CASES:
+    #
+
+    usecases.get.all.explotations:
         class: App\Domain\UseCases\Explotations\GetAllExplotationsUseCase
         public: true
+
+    usecases.delete.explotation:
+        class:  App\Domain\UseCases\Explotations\DeleteExplotationUseCase
+        public: true
+
+
+    # CommandBus Handlers
+
+    add.explotation.command.handler:
+        class: App\Domain\Handler\Explotation\AddExplotationCommandHandler
+        tags:
+            - { name: command_handler, handles: App\Domain\Command\Explotation\AddExplotationCommand }

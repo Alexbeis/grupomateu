@@ -20,9 +20,10 @@ class ExplotationRepository extends ServiceEntityRepository implements Explotati
         parent::__construct($registry, Explotation::class);
     }
 
-    public function save()
+    public function save($explotation)
     {
-        // TODO: Implement save() method.
+        $this->_em->persist($explotation);
+
     }
 
     public function getTotal()
@@ -32,6 +33,12 @@ class ExplotationRepository extends ServiceEntityRepository implements Explotati
         $total = $qb->getQuery()->getSingleScalarResult();
 
         return $total;
+    }
+
+    public function remove($explotation)
+    {
+        $this->_em->remove($explotation);
+
     }
 
 
