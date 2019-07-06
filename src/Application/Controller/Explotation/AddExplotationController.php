@@ -3,11 +3,17 @@
 namespace App\Application\Controller\Explotation;
 
 use App\Domain\Command\Explotation\AddExplotationCommand;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DashboardController
+ * @package App\Application\Controller
+ * @IsGranted("ROLE_ADMIN")
+ */
 class AddExplotationController extends AbstractController
 {
     /**
@@ -34,11 +40,6 @@ class AddExplotationController extends AbstractController
         $this->get('session')->getFlashBag()->set('success', 'Explotación creada correctamente');
 
         return $this->redirectToRoute("index_explotations");
-    }
-
-    public function new()
-    {
-
     }
 
 }

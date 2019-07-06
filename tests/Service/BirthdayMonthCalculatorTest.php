@@ -21,7 +21,7 @@ class BirthdayMonthCalculatorTest extends TestCase
             [2018, 1, 1, 16],
             [2019, 4, 1, 1],
             [2017, 1, 1, 28],
-            [2018, 12, 1, 5]
+            [2018, 12, 1, 6]
         ];
     }
 

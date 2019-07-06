@@ -29,7 +29,6 @@ class DeleteExplotationUseCase
      */
     public function execute($explotation)
     {
-
         if (($explotation instanceof Explotation) && $explotation->getAnimal()->count() !== 0) {
             throw new NotEmptyExplotationException('Explotation must be empty of Animals');
         }
@@ -37,11 +36,5 @@ class DeleteExplotationUseCase
         $this->explotationRepository->remove($explotation);
 
         $this->entityManager->flush();
-
-
-
-
-
     }
-
 }

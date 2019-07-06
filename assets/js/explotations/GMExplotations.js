@@ -80,14 +80,10 @@ const swal = require('sweetalert2');
                 confirmButtonText: 'Bórrala'
             }).then((result) => {
                 if (result.value) {
-                    return $.ajax(
-                        {
-                            url: url,
-                            method:'DELETE',
-                        }
-                    ).then(function (data) {
+                    self._ajaxDelete(url)
+                    .then(function (data) {
                         if (data.success) {
-                            swal.fire({
+                            self._fireAlert({
                                 title: self.options.text.deleted,
                                 text: data.message,
                                 type:'success',
@@ -95,13 +91,16 @@ const swal = require('sweetalert2');
                                 onClose:() => {
                                     self._deleteRow($target);
                                 }
-                            });
+                            })
                         } else {
-                            swal.fire(
-                                self.options.text.error,
-                                data.message,
-                                'error'
-                            );
+                            self._fireAlert({
+                                title: self.options.text.error,
+                                text: data.message,
+                                type: 'error',
+                                allowOutsideClick:false,
+                                });
+
+
                         }
                     }).catch(function(err){
                         console.log(err);
@@ -109,6 +108,17 @@ const swal = require('sweetalert2');
 
                 }
             })
+        },
+        _ajaxDelete: function (url) {
+            return $.ajax(
+                {
+                    url: url,
+                    method:'DELETE',
+                }
+            );
+        },
+        _fireAlert:function (options) {
+            swal.fire(options);
         }
 
     });
