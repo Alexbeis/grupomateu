@@ -1,0 +1,3 @@
+services:
+
+  Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface: '@Mateu\Infraestructure\Repository\ExplotationRepository'

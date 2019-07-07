@@ -1,0 +1,6 @@
+services:
+  # CommandBus Handlers
+  add.explotation.command.handler:
+    class: Mateu\Backend\Explotation\Application\Create\AddExplotationCommandHandler
+    tags:
+      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Create\AddExplotationCommand }

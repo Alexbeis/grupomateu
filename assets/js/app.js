@@ -16,6 +16,7 @@ import '../../node_modules/admin-lte/bower_components/datatables.net/js/jquery.d
 import '../../node_modules/admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js';
 import '../../node_modules/admin-lte/bower_components/jquery-ui/jquery-ui.js';
 import '../../node_modules/admin-lte/dist/js/adminlte.js';
+import '../../node_modules/admin-lte/plugins/iCheck/icheck.js';
 
 // Custom js
 import './dashboard/GMDashboard.js';

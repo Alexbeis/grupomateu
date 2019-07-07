@@ -3,6 +3,7 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+
 parameters:
     locale: 'en'
 
@@ -14,20 +15,24 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/**/*'
+    Mateu\:
+        resource: '../src/**/'
         exclude:
           - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
           - '../src/Domain/{DependencyInjection,Entity,Migrations}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Application\Controller\:
-        resource: '../src/Application/Controller'
+    Mateu\Infraestructure\Controller\:
+        resource: '../src/Infraestructure/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Application\Repository\:
-        resource: '../src/Application/Repository'
+    Mateu\Infraestructure\Repository\:
+        resource: '../src/Infraestructure/Repository/'
+
+    Mateu\Application\Security\:
+        resource: '../src/Application/Security'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -37,17 +42,14 @@ services:
     #
 
     usecases.get.all.explotations:
-        class: App\Domain\UseCases\Explotations\GetAllExplotationsUseCase
+        class: Mateu\Backend\Explotation\Application\GetAll\GetAllExplotationsUseCase
         public: true
 
     usecases.delete.explotation:
-        class:  App\Domain\UseCases\Explotations\DeleteExplotationUseCase
+        class:  Mateu\Backend\Explotation\Application\DeleteExplotationUseCase
         public: true
 
+imports:
+    - {resource: services/repositories.yaml}
+    - {resource: services/commands.yaml}
 
-    # CommandBus Handlers
-
-    add.explotation.command.handler:
-        class: App\Domain\Handler\Explotation\AddExplotationCommandHandler
-        tags:
-            - { name: command_handler, handles: App\Domain\Command\Explotation\AddExplotationCommand }

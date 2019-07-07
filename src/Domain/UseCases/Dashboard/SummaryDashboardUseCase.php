@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\UseCases\Dashboard;
+namespace Mateu\Domain\UseCases\Dashboard;
 
-use App\Domain\AnimalRepositoryInterface;
-use App\Domain\ExplotationRepositoryInterface;
-use App\Domain\PurchaserRepositoryInterface;
-use App\Domain\SupplierRepositoryInterface;
+use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
+use Mateu\Backend\Purchaser\Domain\PurchaserRepositoryInterface;
+use Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface;
 
 class SummaryDashboardUseCase
 {

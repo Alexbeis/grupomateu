@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Application\Security;
+namespace Mateu\Application\Security;
 
-
-use App\Application\Repository\UserRepository;
+use Mateu\Infraestructure\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
