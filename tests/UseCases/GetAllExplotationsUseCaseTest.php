@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\UseCases;
+namespace Mateu\Tests\UseCases;
 
-use App\Application\Repository\ExplotationRepository;
-use App\Domain\Entity\Explotation;
-use App\Domain\UseCases\Explotations\GetAllExplotationsUseCase;
+use Mateu\Backend\Explotation\Application\GetAll\GetAllExplotationsUseCase;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Infraestructure\Repository\ExplotationRepository;
 use PHPUnit\Framework\TestCase;
 
 class GetAllExplotationsUseCaseTest extends TestCase

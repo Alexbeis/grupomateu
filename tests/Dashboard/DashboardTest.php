@@ -1,5 +1,5 @@
 <?php
-namespace App\Tests;
+namespace Mateu\Tests\Dashboard;
 
 
 class DashboardTest extends \PHPUnit_Framework_TestCase

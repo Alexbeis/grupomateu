@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Animal;
+namespace Mateu\Tests\Animal;
 
-use App\Domain\Entity\Race;
+use Mateu\Backend\Race\Domain\Entity\Race;
 use PHPUnit\Framework\TestCase;
 
 class RaceTest extends TestCase

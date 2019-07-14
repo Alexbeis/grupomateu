@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Tests\Animal;
+namespace Mateu\Tests\Animal;
 
-use App\Domain\Entity\Animal;
-use App\Domain\Entity\Explotation;
+
+
+use Mateu\Backend\Animal\Domain\Entity\Animal;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 
 class AnimalTest extends \PHPUnit_Framework_TestCase
 {

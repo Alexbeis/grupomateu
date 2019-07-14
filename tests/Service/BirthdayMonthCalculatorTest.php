@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Tests\Service;
-
-use App\Domain\Service\Animal\Birthday\BirthdayMonthCalculator;
+namespace Mateu\Tests\Service;
 
 use DateTime;
+use Mateu\Domain\Service\Animal\Birthday\BirthdayMonthCalculator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,10 +17,10 @@ class BirthdayMonthCalculatorTest extends TestCase
     public function getBirthDates()
     {
         return [
-            [2018, 1, 1, 16],
-            [2019, 4, 1, 1],
-            [2017, 1, 1, 28],
-            [2018, 12, 1, 6]
+            [2018, 1, 1, 18],
+            [2019, 4, 1, 3],
+            [2017, 1, 1, 30],
+            [2018, 12, 1, 7]
         ];
     }
 
