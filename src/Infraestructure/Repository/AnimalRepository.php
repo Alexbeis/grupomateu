@@ -4,8 +4,8 @@ namespace Mateu\Infraestructure\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Serializer\Tests\Animal;
 
 
 /**

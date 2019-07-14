@@ -2,5 +2,12 @@ services:
   # CommandBus Handlers
   add.explotation.command.handler:
     class: Mateu\Backend\Explotation\Application\Create\AddExplotationCommandHandler
+    arguments: ['@explotation.creator']
     tags:
       - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Create\AddExplotationCommand }
+
+  delete.explotation.command.handler:
+    class: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommandHandler
+    arguments: ['@explotation.deletor']
+    tags:
+      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommand }

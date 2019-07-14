@@ -1,13 +1,12 @@
 <?php
 
-namespace Mateu\Domain\UseCases\Explotations;
+namespace Mateu\Backend\Explotation\Application\Create;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 
-class DeleteExplotationUseCase
+class ExplotationCreator
 {
     /**
      * @var ExplotationRepositoryInterface
@@ -24,17 +23,21 @@ class DeleteExplotationUseCase
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * An explotation can be removed if has no animals inside, else will return an Exception
-     */
-    public function execute($explotation)
+    public function create($code, $name, $localisation, $createdby)
     {
-        if (($explotation instanceof Explotation) && $explotation->getAnimal()->count() !== 0) {
-            throw new NotEmptyExplotationException('Explotation must be empty of Animals');
-        }
+        $explotation = new Explotation();
+        $explotation
+            ->setCode($code)
+            ->setName($name)
+            ->setLocalization($localisation)
+            ->setCreatedBy($createdby);
 
-        $this->explotationRepository->remove($explotation);
+        $this->explotationRepository->save($explotation);
 
         $this->entityManager->flush();
+
     }
+
+
+
 }

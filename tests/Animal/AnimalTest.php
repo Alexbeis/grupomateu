@@ -2,8 +2,6 @@
 
 namespace Mateu\Tests\Animal;
 
-
-
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 

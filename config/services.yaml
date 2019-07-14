@@ -19,7 +19,6 @@ services:
         resource: '../src/**/'
         exclude:
           - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-          - '../src/Domain/{DependencyInjection,Entity,Migrations}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -33,6 +32,12 @@ services:
     Mateu\Application\Security\:
         resource: '../src/Application/Security'
 
+    Mateu\Domain\:
+        resource: '../src/Domain/*'
+
+    Mateu\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -45,8 +50,12 @@ services:
         class: Mateu\Backend\Explotation\Application\GetAll\GetAllExplotationsUseCase
         public: true
 
-    usecases.delete.explotation:
-        class:  Mateu\Backend\Explotation\Application\DeleteExplotationUseCase
+    explotation.creator:
+        class: Mateu\Backend\Explotation\Application\Create\ExplotationCreator
+        public: true
+
+    explotation.deletor:
+        class: Mateu\Backend\Explotation\Application\Delete\ExplotationDeletor
         public: true
 
 imports:

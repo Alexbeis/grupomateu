@@ -3,11 +3,11 @@
 namespace Mateu\Infraestructure\Controller\Explotation;
 
 
-use Mateu\Domain\Exception\Explotation\NotEmptyExplotationException;
+use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Infraestructure\Controller\BaseController;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,18 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Application\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class ExplotationController extends AbstractController
+class ExplotationController extends BaseController
 {
-    /**
-     * @var CommandBus
-     */
-    private $commandBus;
-
-    public function __construct(CommandBus $commandBus)
-    {
-        $this->commandBus = $commandBus;
-    }
-
     /**
      * @Route("/explotations" ,name="index_explotations")
      */
@@ -56,18 +46,11 @@ class ExplotationController extends AbstractController
         return new Response('ok');
     }
 
-    /**
-     * @param Explotation $explotation
-     * @param ContainerInterface $container
-     * @Route("/explotation/remove/{id}", name="remove_explotation", requirements={"id"= "\d+"},
-     *                                    methods={"DELETE"})
-     *
-     * @return JsonResponse
-     */
-    public function remove(Explotation $explotation, ContainerInterface $container)
+
+    public function remove(Explotation $explotation)
     {
         try {
-            $removeExplotation = $container->get('usecases.delete.explotation');
+            $removeExplotation = $this->container->get('usecases.delete.explotation');
             $removeExplotation->execute($explotation);
 
             return new JsonResponse(

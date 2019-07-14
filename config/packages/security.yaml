@@ -26,7 +26,7 @@ security:
 
             logout:
               path: security_logout
-              target: /login
+              target: /admin/login
 
             remember_me:
               secret: '%kernel.secret%'

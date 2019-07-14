@@ -2,40 +2,26 @@
 
 namespace Mateu\Backend\Explotation\Application\Create;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Mateu\Backend\Explotation\Domain\Entity\Explotation;
-use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
-
 class AddExplotationCommandHandler
 {
     /**
-     * @var ExplotationRepositoryInterface
+     * @var ExplotationCreator
      */
-    private $explotationRepository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $explotationCreator;
 
-    public function __construct(ExplotationRepositoryInterface $explotationRepository, EntityManagerInterface $entityManager)
+    public function __construct(ExplotationCreator $explotationCreator)
     {
-        $this->explotationRepository = $explotationRepository;
-        $this->entityManager = $entityManager;
+        $this->explotationCreator = $explotationCreator;
     }
 
     public function handle(AddExplotationCommand $command)
     {
-        $explotation = new Explotation();
-        $explotation
-            ->setCode($command->getCode())
-            ->setName($command->getName())
-            ->setLocalization($command->getLocalization())
-            ->setCreatedBy($command->getCreatedBy());
-
-        $this->explotationRepository->save($explotation);
-
-        $this->entityManager->flush();
-
+        $this->explotationCreator->create(
+            $command->getCode(),
+            $command->getName(),
+            $command->getLocalization(),
+            $command->getCreatedBy()
+        );
     }
 
 }
