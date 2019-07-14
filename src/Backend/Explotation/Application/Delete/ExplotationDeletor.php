@@ -5,6 +5,8 @@ namespace Mateu\Backend\Explotation\Application\Delete;
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
+use Psr\Log\LoggerInterface;
+use SimpleBus\SymfonyBridge\Bus\EventBus;
 
 class ExplotationDeletor
 {
@@ -16,11 +18,26 @@ class ExplotationDeletor
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var EventBus
+     */
+    private $eventBus;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(ExplotationRepositoryInterface $explotationRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        ExplotationRepositoryInterface $explotationRepository,
+        EntityManagerInterface $entityManager,
+        EventBus $eventBus,
+        LoggerInterface $logger
+    )
     {
         $this->explotationRepository = $explotationRepository;
         $this->entityManager = $entityManager;
+        $this->eventBus = $eventBus;
+        $this->logger = $logger;
     }
 
     /**
@@ -44,6 +61,9 @@ class ExplotationDeletor
 
         $this->entityManager->flush();
 
+        $this->eventBus->handle(
+            new ExplotationDeleted($explotation->getCode(), $explotation->getCreatedBy())
+        );
     }
 
 }

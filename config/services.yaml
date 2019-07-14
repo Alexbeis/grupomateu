@@ -61,4 +61,5 @@ services:
 imports:
     - {resource: services/repositories.yaml}
     - {resource: services/commands.yaml}
+    - {resource: services/events.yaml}
 

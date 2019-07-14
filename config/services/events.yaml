@@ -1,0 +1,6 @@
+services:
+  explotation.deleted_event_subscriber:
+    class: Mateu\Backend\Explotation\Application\Delete\ExplotationDeletedEventSubscriber
+    arguments: ['@logger']
+    tags:
+      - { name: event_subscriber, subscribes_to: Mateu\Backend\Explotation\Application\Delete\ExplotationDeleted }

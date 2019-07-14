@@ -23,7 +23,7 @@ class AddExplotationController extends BaseController
     public function __invoke(Request $request)
     {
         $this->bus->handle(
-            new AddExplotationCommand('CODE_17', 'Command', 'loc32974269438', $this->getUser())
+            new AddExplotationCommand('CODE_18', 'Command', 'loc32974269438', $this->getUser())
         );
 
         $this->get('session')->getFlashBag()->set('success', 'Explotación creada correctamente');
