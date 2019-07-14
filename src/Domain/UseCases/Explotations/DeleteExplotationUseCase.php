@@ -2,10 +2,10 @@
 
 namespace App\Domain\UseCases\Explotations;
 
-use App\Domain\Entity\Explotation;
-use App\Domain\Exception\Explotation\NotEmptyExplotationException;
-use App\Domain\ExplotationRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 
 class DeleteExplotationUseCase
 {
