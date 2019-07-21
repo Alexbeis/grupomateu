@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity(repositoryClass="Mateu\Infraestructure\Repository\SupplierRepository")
+ * @ORM\Entity(repositoryClass="Mateu\Backend\Supplier\Infraestructure\SupplierRepository")
  */
 class Supplier
 {

@@ -3,6 +3,8 @@
 namespace Mateu\Infraestructure\Controller\Explotation;
 
 use Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommand;
+use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
+use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Infraestructure\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,16 +27,17 @@ class DeleteExplotationController extends BaseController
      */
     public function __invoke($id)
     {
-        //throw new NotEmptyExplotationException('oli oliii');
-        $this->dispatch(
-            new DeleteExplotationCommand($id)
-        );
+        try {
+            $this->dispatch(
+                new DeleteExplotationCommand($id)
+            );
+        } catch (NotEmptyExplotationException $e) {
+            return $this->createFailResponse($e->getMessage());
+        } catch (ExplotationNotFound $e) {
+            return $this->createFailResponse($e->getMessage());
+        }
 
-        return new JsonResponse(
-            [
-                'success' => true,
-                'message' => 'Explotación borrada correctamente'
-            ]
-        );
+        return $this->createSuccessResponse('Explotación borrada correctamente');
+
     }
 }

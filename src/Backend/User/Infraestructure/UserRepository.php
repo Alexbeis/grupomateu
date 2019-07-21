@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Infraestructure\Repository;
+namespace Mateu\Backend\User\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mateu\Backend\User\Domain\Entity\User;

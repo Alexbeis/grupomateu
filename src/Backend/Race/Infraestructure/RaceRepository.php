@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Infraestructure\Repository;
+namespace Mateu\Backend\Race\Infraestructure;
 
 use App\Domain\Entity\Race;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

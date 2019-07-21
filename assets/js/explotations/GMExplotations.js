@@ -4,17 +4,26 @@ const swal = require('sweetalert2');
 
 (function(window, $, swal) {
 
-    window.GMExplotations = function($wrapper) {
+    window.GMExplotations = function($wrapper, $modalWrapper) {
 
         this.$wrapper = $wrapper;
 
+        this.$modalWrapper = $modalWrapper;
+
         this.$wrapper.on(
             'click',
-            '.js-remove-explotation',
+            this.options._selectors.remove,
             this.handleExplotationDelete.bind(this)
         );
 
-        this.loadDatatable();
+        this.$modalWrapper.on(
+            'click',
+            this.options._selectors.add,
+            this.handleExplotationAdd.bind(this)
+        );
+
+        this.loadDatatable()
+        this.loadEvents();
 
     };
 
@@ -22,6 +31,9 @@ const swal = require('sweetalert2');
 
         options: {
             _selectors: {
+                remove: '.js-remove-explotation',
+                add: '.js-add-explotation',
+                inputs:['#exp_name', '#exp_code']
             },
             text:{
                 title: "Estás seguro?",
@@ -31,11 +43,24 @@ const swal = require('sweetalert2');
                 error: "Error!"
             }
         },
+        errors: {},
 
+        /**
+         * Load Datatable data
+         */
         loadDatatable: function() {
             this.$wrapper.DataTable({
                 "pageLength": 10
             });
+        },
+
+        /**
+         * Load modal events
+         */
+        loadEvents: function() {
+            $('#modal-add-explotation').on('hidden.bs.modal',  () => {
+                this._cleanErrors();
+            })
         },
 
         /**
@@ -46,6 +71,59 @@ const swal = require('sweetalert2');
             e.preventDefault();
             let target = e.currentTarget;
             this.showAlert(target);
+        },
+
+        /**
+         * Handle Add Explotation from modal
+         * @param e
+         */
+        handleExplotationAdd: function(e) {
+            e.preventDefault();
+
+            this._cleanErrors();
+            let canSubmit = true;
+            let $form = $(e.currentTarget).closest('#add-exp-form');
+            this.options._selectors.inputs.forEach((id) => {
+                let $id = $(id);
+                let value = $id.val();
+                if (!this._isValid(value)) {
+                    canSubmit = false;
+                    this._addError($id)
+                }
+            });
+
+            if (canSubmit) {
+                $form.submit();
+            }
+        },
+        /**
+         *
+         * @param value
+         * @returns {boolean}
+         * @private
+         */
+        _isValid: function(value) {
+            return value.length > 3;
+        },
+
+        /**
+         *
+         * @param element
+         * @private
+         */
+        _addError:function(element){
+            element.closest('.form-group').addClass('has-error');
+        },
+
+        /**
+         *
+         * @private
+         */
+        _cleanErrors:function(){
+            this.options._selectors.inputs.forEach((id) => {
+                let $id = $(id);
+                $id.closest('.form-group').removeClass('has-error');
+            });
         },
 
         /**
@@ -109,6 +187,12 @@ const swal = require('sweetalert2');
                 }
             })
         },
+
+        /**
+         *
+         * @param url
+         * @returns promise
+         */
         _ajaxDelete: function (url) {
             return $.ajax(
                 {
@@ -117,6 +201,12 @@ const swal = require('sweetalert2');
                 }
             );
         },
+
+        /**
+         *
+         * @param options
+         * @private
+         */
         _fireAlert:function (options) {
             swal.fire(options);
         }
@@ -128,7 +218,8 @@ const swal = require('sweetalert2');
 
 
 let ExplotationsWrapper = $('#explotations-table');
+let ModalWrapper = $('#modal-add-explotation');
 
-if (ExplotationsWrapper.length > 0) {
-    let GM = new GMExplotations(ExplotationsWrapper);
+if (ExplotationsWrapper.length > 0 && ModalWrapper.length > 0) {
+    let GM = new GMExplotations(ExplotationsWrapper, ModalWrapper);
 }

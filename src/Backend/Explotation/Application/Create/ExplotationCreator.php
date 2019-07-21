@@ -4,6 +4,7 @@ namespace Mateu\Backend\Explotation\Application\Create;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\Explotation\Domain\ExplotationCode;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 
 class ExplotationCreator

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Infraestructure\Repository;
+namespace Mateu\Backend\Purchaser\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mateu\Backend\Purchaser\Domain\Entity\Purchaser;

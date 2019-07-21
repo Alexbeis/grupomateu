@@ -2,6 +2,8 @@
 
 namespace Mateu\Backend\Explotation\Application\Create;
 
+use Mateu\Backend\Explotation\Domain\ExplotationCode;
+
 class AddExplotationCommandHandler
 {
     /**
@@ -16,8 +18,10 @@ class AddExplotationCommandHandler
 
     public function handle(AddExplotationCommand $command)
     {
+        $code = new ExplotationCode($command->getCode());
+
         $this->explotationCreator->create(
-            $command->getCode(),
+            $code->getCode(),
             $command->getName(),
             $command->getLocalization(),
             $command->getCreatedBy()

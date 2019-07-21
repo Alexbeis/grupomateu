@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity(repositoryClass="Mateu\Infraestructure\Repository\ExplotationRepository")
+ * @ORM\Entity(repositoryClass="Mateu\Backend\Explotation\Infraestructure\ExplotationRepository")
  */
 class Explotation
 {
@@ -31,7 +31,7 @@ class Explotation
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $localization;
 

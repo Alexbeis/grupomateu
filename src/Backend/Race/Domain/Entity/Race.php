@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
- * @ORM\Entity(repositoryClass="Mateu\Infraestructure\Repository\RaceRepository")
+ * @ORM\Entity(repositoryClass="Mateu\Backend\Race\Infraestructure\RaceRepository")
  */
 class Race
 {

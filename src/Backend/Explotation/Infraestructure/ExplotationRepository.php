@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Infraestructure\Repository;
+namespace Mateu\Backend\Explotation\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;

@@ -2,7 +2,6 @@
 
 namespace Mateu\Infraestructure\Controller\Explotation;
 
-
 use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Infraestructure\Controller\BaseController;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Infraestructure\Repository;
+namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;

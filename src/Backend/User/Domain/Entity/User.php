@@ -7,7 +7,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Mateu\Infraestructure\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Mateu\Backend\User\Infraestructure\UserRepository")
  */
 class User implements UserInterface, \Serializable
 {

@@ -1,6 +1,6 @@
 services:
 
-  Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface: '@Mateu\Infraestructure\Repository\ExplotationRepository'
-  Mateu\Backend\Animal\Domain\AnimalRepositoryInterface: '@Mateu\Infraestructure\Repository\AnimalRepository'
-  Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface: '@Mateu\Infraestructure\Repository\SupplierRepository'
-  Mateu\Backend\Purchaser\Domain\PurchaserRepositoryInterface: '@Mateu\Infraestructure\Repository\PurchaserRepository'
+  Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface: '@Mateu\Backend\Explotation\Infraestructure\ExplotationRepository'
+  Mateu\Backend\Animal\Domain\AnimalRepositoryInterface: '@Mateu\Backend\Animal\Infraestructure\AnimalRepository'
+  Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface: '@Mateu\Backend\Supplier\Infraestructure\SupplierRepository'
+  Mateu\Backend\Purchaser\Domain\PurchaserRepositoryInterface: '@Mateu\Backend\Purchaser\Infraestructure\PurchaserRepository'

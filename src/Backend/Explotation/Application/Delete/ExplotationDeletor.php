@@ -3,7 +3,7 @@
 namespace Mateu\Backend\Explotation\Application\Delete;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\EventBus;
@@ -50,11 +50,11 @@ class ExplotationDeletor
         $explotation = $this->explotationRepository->find($id);
 
         if (!$explotation) {
-            throw new \Exception('Explotation Not Found');
+            throw new ExplotationNotFound('Explotation Not Found', 400);
         }
 
-        if (($explotation instanceof Explotation) && $explotation->getAnimal()->count() > 0) {
-            throw new \Exception('Explotation must be empty of Animals');
+        if ($explotation->getAnimal()->count() > 0) {
+            throw new NotEmptyExplotationException('Explotation must be empty of Animals');
         }
 
         $this->explotationRepository->remove($explotation);

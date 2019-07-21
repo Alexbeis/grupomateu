@@ -25,9 +25,32 @@ class BaseController extends AbstractController
         $this->container = $container;
     }
 
-    public function dispatch($command)
+    protected function dispatch($command)
     {
         $this->bus->handle($command);
     }
+
+    protected function createSuccessResponse($message = null)
+    {
+        return $this->createJsonResponse(true, $message);
+    }
+
+    protected function createFailResponse($message = null)
+    {
+        return $this->createJsonResponse(false, $message);
+    }
+
+    private function createJsonResponse($sucess, $message)
+    {
+        return new JsonResponse(
+            [
+                'success' => $sucess,
+                'message' => $message
+            ]
+        );
+
+    }
+
+
 
 }

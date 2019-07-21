@@ -16,7 +16,7 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     Mateu\:
-        resource: '../src/**/'
+        resource: '../src/**/*/*/*'
         exclude:
           - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
@@ -26,18 +26,15 @@ services:
         resource: '../src/Infraestructure/Controller/'
         tags: ['controller.service_arguments']
 
-    Mateu\Infraestructure\Repository\:
-        resource: '../src/Infraestructure/Repository/'
-
     Mateu\Application\Security\:
         resource: '../src/Application/Security'
 
     Mateu\Domain\:
         resource: '../src/Domain/*'
 
-    Mateu\EventListener\ExceptionListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception }
+    #Mateu\EventListener\ExceptionListener:
+    #    tags:
+    #        - { name: kernel.event_listener, event: kernel.exception }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -57,6 +54,11 @@ services:
     explotation.deletor:
         class: Mateu\Backend\Explotation\Application\Delete\ExplotationDeletor
         public: true
+
+    #explotation.finder:
+    #    class: Mateu\Backend\Explotation\Application\Find\ExplotationFinder
+    #    public: true
+
 
 imports:
     - {resource: services/repositories.yaml}

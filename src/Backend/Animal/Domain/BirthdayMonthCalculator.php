@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Domain\Service\Animal\Birthday;
+namespace Mateu\Backend\Animal\Domain;
 
 use DateInterval;
 use DateTime;

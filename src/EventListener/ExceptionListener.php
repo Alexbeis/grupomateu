@@ -17,6 +17,7 @@ class ExceptionListener
             'success' => false,
             'message' => $exception->getMessage()
         ]);
+        //$message = null;
 
         // Customize your response object to display the exception details
         $response = new Response();
@@ -28,6 +29,7 @@ class ExceptionListener
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
         } else {
+            dd($exception);
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 

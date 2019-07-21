@@ -2,6 +2,8 @@
 
 namespace Mateu\Backend\Explotation\Application\Delete;
 
+use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
+
 class DeleteExplotationCommandHandler
 {
     /**
@@ -16,12 +18,7 @@ class DeleteExplotationCommandHandler
 
     public function handle(DeleteExplotationCommand $command)
     {
-        try {
-            $this->explotationDeletor->delete($command->getId());
-
-        } catch (NotEmptyExplotationException $e) {
-
-        }
+        $this->explotationDeletor->delete($command->getId());
 
     }
 

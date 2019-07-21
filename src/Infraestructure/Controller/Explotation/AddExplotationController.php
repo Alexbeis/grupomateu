@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class DashboardController
+ * Class ExplotationController
  * @package Mateu\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
@@ -23,7 +23,11 @@ class AddExplotationController extends BaseController
     public function __invoke(Request $request)
     {
         $this->bus->handle(
-            new AddExplotationCommand('CODE_18', 'Command', 'loc32974269438', $this->getUser())
+            new AddExplotationCommand(
+                $request->get('exp_code'),
+                $request->get('exp_name'),
+                null,
+                $this->getUser())
         );
 
         $this->get('session')->getFlashBag()->set('success', 'Explotación creada correctamente');

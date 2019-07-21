@@ -3,7 +3,7 @@
 namespace Mateu\Tests\Service;
 
 use DateTime;
-use Mateu\Domain\Service\Animal\Birthday\BirthdayMonthCalculator;
+use Mateu\Backend\Animal\Domain\Birthday\BirthdayMonthCalculator;
 use PHPUnit\Framework\TestCase;
 
 /**

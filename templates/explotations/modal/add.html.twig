@@ -1,20 +1,42 @@
 <div class="modal fade" id="modal-add-explotation" style="display: none;">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Default Modal</h4>
-            </div>
-            <div class="modal-body">
-                <p>One fine body…</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
+        <form role="form" id="add-exp-form" method="post" action="{{ path('add_explotation') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Nueva Explotación</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exp_name">Nombre</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="exp_name"
+                                   placeholder="ex. Trillo"
+                                   name="exp_name">
+                            <span class="help-block hidden"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exp_code">Código</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="exp_code"
+                                   placeholder="ej: EXP_XXXXXX"
+                                   name="exp_code">
+                            <span class="help-block hidden"></span>
+                        </div>
+                    </div>
+                        <!-- /.box-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary js-add-explotation">Guardar</button>
+                </div>
+            </div> <!-- /.modal-content -->
+        </form>
+        <!-- /. form -->
     </div>
     <!-- /.modal-dialog -->
 </div>
