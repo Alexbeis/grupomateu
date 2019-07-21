@@ -21,6 +21,7 @@ import '../../node_modules/admin-lte/plugins/iCheck/icheck.js';
 // Custom js
 import './dashboard/GMDashboard.js';
 import './explotations/GMExplotations.js';
+import './explotations/GMExplotation.js';
 
 
 

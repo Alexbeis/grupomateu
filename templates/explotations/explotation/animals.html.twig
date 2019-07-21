@@ -1,0 +1,25 @@
+<table id="exp-animal-table" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        <th>Crotal</th>
+        <th>Número interno</th>
+        <th>Edad(meses)</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for animal in explotation.animal %}
+        <tr>
+            <td>{{ animal.crotal }}</td>
+            <td>{{ animal.internalnum }}</td>
+            <td>{{ animal.birthdate|date('d-m-y') }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Crotal</th>
+        <th>Número interno</th>
+        <th>Edad(meses)</th>
+    </tr>
+    </tfoot>
+</table>

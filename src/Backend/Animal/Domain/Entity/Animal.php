@@ -2,9 +2,9 @@
 
 namespace Mateu\Backend\Animal\Domain\Entity;
 
-use Mateu\Backend\Animal\Domain\Birthday\BirthdayMonthCalculator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Mateu\Backend\Animal\Domain\BirthdayMonthCalculator;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;

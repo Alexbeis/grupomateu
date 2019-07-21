@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShowEditExplotationController extends BaseController
 {
-
     /**
      * @Route("/explotation/edit/{id}", name="edit_explotation", methods={"GET"}, requirements={"id"= "\d+"})
      * @param $id
@@ -25,6 +24,7 @@ class ShowEditExplotationController extends BaseController
      */
     public function __invoke($id, ExplotationFinder $explotationFinder)
     {
+        // TODO: control exceptions from finder
         $explotation = $explotationFinder->__invoke($id);
 
         return new Response(

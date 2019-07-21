@@ -18,6 +18,6 @@ class ExplotationDeletedEventSubscriber
 
     public function __invoke(ExplotationDeleted $event)
     {
-        $this->logger->info('CODE: ' . $event->getCode());
+        $this->logger->info('from loop -> CODE: ' . $event->getCode());
     }
 }

@@ -11,3 +11,9 @@ services:
     arguments: ['@explotation.deletor']
     tags:
       - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommand }
+
+  save.explotation.command.handler:
+    class: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommandHandler
+    arguments: ['@explotation.saver']
+    tags:
+      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommand }

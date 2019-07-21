@@ -59,6 +59,9 @@ services:
     #    class: Mateu\Backend\Explotation\Application\Find\ExplotationFinder
     #    public: true
 
+    explotation.saver:
+        class: Mateu\Backend\Explotation\Application\Save\ExplotationSaver
+        public: true
 
 imports:
     - {resource: services/repositories.yaml}

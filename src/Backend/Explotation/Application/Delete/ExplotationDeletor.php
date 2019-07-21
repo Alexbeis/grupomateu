@@ -61,9 +61,22 @@ class ExplotationDeletor
 
         $this->entityManager->flush();
 
-        $this->eventBus->handle(
-            new ExplotationDeleted($explotation->getCode(), $explotation->getCreatedBy())
-        );
+        foreach ($this->registeredEvents() as $event => $eventName) {
+
+            $this->eventBus->handle(
+                new $eventName($explotation->getCode(), $explotation->getCreatedBy())
+            );
+        }
     }
 
+    /**
+     * Events related
+     * @return array
+     */
+    private function registeredEvents()
+    {
+        return [
+           'explotation_deleted' => ExplotationDeleted::class
+        ];
+    }
 }
