@@ -21,19 +21,33 @@ class ExceptionListener
 
         // Customize your response object to display the exception details
         $response = new Response();
-        $response->setContent($message);
 
         // HttpExceptionInterface is a special type of exception that
         // holds status code and header details
-        if ($exception instanceof HttpExceptionInterface) {
+        switch (true) {
+            case $exception instanceof HttpExceptionInterface :
+                $response->setStatusCode($exception->getStatusCode());
+                $response->headers->replace($exception->getHeaders());
+                break;
+            case $exception instanceof \PDOException:
+                $message = json_encode([
+                    'success' => false,
+                    'message' => 'Something went wrong :('
+                ]);
+                break;
+            default:
+                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        }
+        /*if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
         } else {
-            dd($exception);
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        }*/
 
         // sends the modified response object to the event
+        $response->setContent($message);
         $event->setResponse($response);
     }
 }

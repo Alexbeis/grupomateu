@@ -22,13 +22,19 @@ class AddExplotationController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        $this->bus->handle(
-            new AddExplotationCommand(
-                $request->get('exp_code'),
-                $request->get('exp_name'),
-                null,
-                $this->getUser())
-        );
+        try {
+            $this->bus->handle(
+                new AddExplotationCommand(
+                    $request->get('exp_code'),
+                    $request->get('exp_name'),
+                    null,
+                    $this->getUser())
+            );
+        } catch (\Exception $e) {
+            $this->get('session')->getFlashBag()->set('error', $e->getMessage() );
+
+            return $this->redirectToRoute("index_explotations");
+        }
 
         $this->get('session')->getFlashBag()->set('success', 'Explotación creada correctamente');
 

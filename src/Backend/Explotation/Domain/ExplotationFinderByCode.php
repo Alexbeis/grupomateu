@@ -4,7 +4,13 @@ namespace Mateu\Backend\Explotation\Domain;
 
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 
-class ExplotationFinder
+/**
+ * Class ExplotationFinderByCode
+ * @package Mateu\Backend\Explotation\Domain
+ *
+ * Used to find Explotation by its code
+ */
+class ExplotationFinderByCode
 {
     /**
      * @var ExplotationRepositoryInterface
@@ -16,15 +22,8 @@ class ExplotationFinder
         $this->explotationRepository = $explotationRepository;
     }
 
-    public function __invoke($id): Explotation
+    public function __invoke($code): ?Explotation
     {
-        $explotation = $this->explotationRepository->find($id);
-
-        if (null == $explotation) {
-            throw new ExplotationNotFound('Explotación no encontrada');
-        }
-
-        return $explotation;
+        return $this->explotationRepository->findOneBy(['code' => $code]);
     }
-
 }
