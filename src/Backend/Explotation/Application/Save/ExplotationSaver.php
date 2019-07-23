@@ -25,7 +25,7 @@ class ExplotationSaver
      * @var ExplotationFinderByCode
      */
     private $explotationFinderByCode;
-    
+
     /**
      * @var ExplotationFinderById
      */

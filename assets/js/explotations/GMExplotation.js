@@ -68,6 +68,7 @@ const swal = require('sweetalert2');
          */
         handleExplotationSave: function(e) {
             e.preventDefault();
+
             var self = this;
 
             this._cleanErrors();
@@ -83,6 +84,7 @@ const swal = require('sweetalert2');
             });
 
             if (canSubmit) {
+                this._showSpinner();
                 var url = this.$wrapperForm.attr('action');
                 var data = this.$wrapperForm.serialize();
                 this._ajaxSave(url, data)
@@ -92,6 +94,7 @@ const swal = require('sweetalert2');
                         } else {
                             self._fireAlert({type:'error', title:data.message});
                         }
+                        self._hideSpinner();
 
                 }).catch(function (err) {
                     console.log(err);
@@ -107,10 +110,8 @@ const swal = require('sweetalert2');
          * @private
          */
         _isValid: function(value, max, min) {
-            let isValid = value.length <= max && value.length >= min;
-            console.log(value, isValid);
 
-            return isValid;
+            return value.length <= max && value.length >= min;
         },
 
         /**
@@ -156,6 +157,18 @@ const swal = require('sweetalert2');
                 timer: 1500
             };
             swal.fire($.extend(defOptions, options));
+        },
+
+        _showSpinner:function () {
+            let $button = this.$wrapperForm.find(this.options._selectors.save);
+            $button.find('.js-spinner > i').removeClass('hidden');
+            $button.attr('disabled', true);
+        },
+
+        _hideSpinner: function () {
+            let $button = this.$wrapperForm.find(this.options._selectors.save);
+            $button.find('.js-spinner > i').addClass('hidden');
+            $button.attr('disabled', false);
         }
 
     });

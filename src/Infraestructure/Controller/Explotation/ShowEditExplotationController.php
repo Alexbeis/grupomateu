@@ -20,7 +20,7 @@ class ShowEditExplotationController extends BaseController
      * @param $id
      * @param ExplotationFinder $explotationFinder
      *
-     * @return void
+     * @return Response
      */
     public function __invoke($id, ExplotationFinder $explotationFinder)
     {
