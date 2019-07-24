@@ -3,6 +3,7 @@
 namespace Mateu\Backend\Explotation\Application\Find;
 
 use Mateu\Backend\Explotation\Domain\ExplotationFinderById as DomainExplotationFinder;
+use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 
 class ExplotationFinder
@@ -19,7 +20,13 @@ class ExplotationFinder
 
     public function __invoke($id)
     {
-        return $this->finder->__invoke($id);
+        $explotation = $this->finder->__invoke($id);
+
+        if (!$explotation) {
+            throw new ExplotationNotFound('404 not found');
+        }
+
+        return $explotation;
     }
 
 }

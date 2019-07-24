@@ -5,6 +5,7 @@ namespace Mateu\Infraestructure\Controller\Explotation;
 use Mateu\Backend\Explotation\Application\Find\ExplotationFinder;
 use Mateu\Infraestructure\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,8 +25,14 @@ class ShowEditExplotationController extends BaseController
      */
     public function __invoke($id, ExplotationFinder $explotationFinder)
     {
-        // TODO: control exceptions from finder
-        $explotation = $explotationFinder->__invoke($id);
+        try {
+            // TODO: control exceptions from finder
+            $explotation = $explotationFinder->__invoke($id);
+        } catch (\Throwable $e) {
+
+            $this->get('session')->getFlashBag()->set('danger', sprintf($e->getMessage()));
+            return new RedirectResponse($this->router->generate('index_explotations'));
+        }
 
         return new Response(
             $this->render('explotations/explotation/index.html.twig',

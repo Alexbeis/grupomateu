@@ -3,6 +3,7 @@
     <tr>
         <th>Crotal</th>
         <th>Número interno</th>
+        <th>Edad</th>
         <th>Edad(meses)</th>
     </tr>
     </thead>
@@ -12,6 +13,7 @@
             <td>{{ animal.crotal }}</td>
             <td>{{ animal.internalnum }}</td>
             <td>{{ animal.birthdate|date('d-m-y') }}</td>
+            <td>{{ animal.birthdate|date('m') }}</td>
         </tr>
     {% endfor %}
     </tbody>
@@ -19,6 +21,7 @@
     <tr>
         <th>Crotal</th>
         <th>Número interno</th>
+        <th>Edad</th>
         <th>Edad(meses)</th>
     </tr>
     </tfoot>
