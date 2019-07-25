@@ -2,8 +2,9 @@
 
 namespace Mateu\Backend\Race\Infraestructure;
 
-use App\Domain\Entity\Race;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Mateu\Backend\Race\Domain\Entity\Race;
+use Mateu\Backend\Race\Domain\RaceRepositoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -12,12 +13,23 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Race[]    findAll()
  * @method Race[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RaceRepository extends ServiceEntityRepository
+class RaceRepository extends ServiceEntityRepository implements RaceRepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Race::class);
     }
+
+    public function save(Race $race)
+    {
+        $this->_em->persist($race);
+    }
+
+    public function getAll()
+    {
+        return $this->findAll();
+    }
+
 
     // /**
     //  * @return Race[] Returns an array of Race objects

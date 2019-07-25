@@ -18,11 +18,9 @@ class IndexConfigurationController extends BaseController
     /**
      * @Route("configuration", name="index_conf", methods={"GET"})
      */
-    public function index(Request $request)
+    public function __invoke()
     {
-
         return new Response($this->render('configuration/index.html.twig'));
-
     }
 
 }

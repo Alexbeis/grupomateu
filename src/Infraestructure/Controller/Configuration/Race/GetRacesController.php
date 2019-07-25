@@ -2,6 +2,7 @@
 
 namespace Mateu\Infraestructure\Controller\Configuration\Race;
 
+use Mateu\Backend\Race\Application\Get\GetAllRaces;
 use Mateu\Infraestructure\Controller\BaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +18,13 @@ class GetRacesController extends BaseController
 {
     /**
      * @return JsonResponse
-     * @Route("configuration/races/get", name="races_get")
+     * @Route("configuration/races/get", name="races_get", methods={"GET"})
      */
-    public function __invoke()
+    public function __invoke(GetAllRaces $allRaces)
     {
-        return new JsonResponse('HELLO');
+        return new JsonResponse(
+            $allRaces->get()
+        );
     }
 
 }
