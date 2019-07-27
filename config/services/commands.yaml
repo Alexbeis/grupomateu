@@ -1,5 +1,7 @@
 services:
-  # CommandBus Handlers
+  ### CommandBus Handlers ###
+
+  ## Explotations ##
   add.explotation.command.handler:
     class: Mateu\Backend\Explotation\Application\Create\AddExplotationCommandHandler
     arguments: ['@explotation.creator']
@@ -17,3 +19,10 @@ services:
     arguments: ['@explotation.saver']
     tags:
       - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommand }
+
+  ## Races ##
+  create.race.command.handler:
+    class: Mateu\Backend\Race\Application\Create\CreateRaceCommandHandler
+    arguments: ['@race.creator']
+    tags:
+      - { name: command_handler, handles: Mateu\Backend\Race\Application\Create\CreateRaceCommand }

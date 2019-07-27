@@ -41,6 +41,11 @@ class Race
         $this->animal = new ArrayCollection();
     }
 
+    public static function create($code, $name)
+    {
+        return new self($code, $name);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

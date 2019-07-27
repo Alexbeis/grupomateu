@@ -1,15 +1,32 @@
 <div class="box box-danger js-box-race">
-    <div class="box-header">
-        <h3>Razas</h3>
+    <div class="box-header with-border">
+        <h3 class="box-title">Razas</h3>
     </div>
 
     <div class="box-body">
-        <form action="" method="POST" id="add_race">
+        <form action="{{ path('add_race') }}" method="POST" id="add_race">
             <div class="form-group">
-                <label for="race_input">Añade Raza:</label>
-                <input type="text" class="form-control" id="race_input" placeholder="Nueva Raza">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="race_code_input">Código:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="race_code_input"
+                               name="race_code"
+                               placeholder="Nueva Raza">
+
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="race_name_input">Nombre:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="race_name_input"
+                               name="race_name"
+                               placeholder="Nueva Raza">
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary js-input-add" type="submit">Guardar</button>
         </form>
 
         <div class="form-group">

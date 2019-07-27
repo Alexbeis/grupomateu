@@ -1,6 +1,8 @@
 'use strict';
 
-(function(window, $) {
+const swal = require('sweetalert2');
+
+(function(window, $, swal) {
 
     /**
      * Main Object for Configuration variables
@@ -24,15 +26,24 @@
 
     $.extend(window.GMConfiguration.prototype, {
 
+        /**
+         * Options needed
+         */
         _options: {
             forms: {
+                add:'.js-input-add',
                 race: {
                     add: '#add_race',
                     delete: '#delete_race',
-                    loadurl: 'configuration/races/get'
+                    loadurl: 'configuration/races/get',
+                    addurl: 'configuration/races/add'
                 },
                 in: {},
-                out:{},
+                out:{
+                    add: '#add_out',
+                    delete: '#delete_out',
+
+                },
                 movement:{}
             }
         },
@@ -64,20 +75,24 @@
          */
         _loadOptions: function() {
             let entries = Object.entries(this._options.forms);
-            const self = this;
+            let self = this;
             entries.forEach(function (object) {
                 let url = object[1].loadurl;
 
                 /*Next iteration if not exists url*/
                 if (!url) return;
 
-                self._ajaxCall(url)
-                    .then(function (data) {
+                let options = {
+                    url: url,
+                    method:'GET'
+                };
+                self._ajaxCall(options)
+                    .then( (data) => {
                         self._addOptionsToSelect(data, $('#' + object[0]+'-select'));
-                    }).catch(function (err) {
-                    console.log(err);
+                    }).catch((err) => {
+                        console.log(err);
                 })
-            })
+            });
         },
 
         /**
@@ -86,24 +101,54 @@
          */
         handleAddConfiguration: function (e) {
             e.preventDefault();
+
+            let $target = $(e.currentTarget);
+            let form = $target.closest('form');
+            let url = form.attr('action');
+            let data = form.serialize();
+            let options = {
+                url:url,
+                method: 'POST',
+                data: data
+            }
+            this._ajaxCall(options)
+                .then((data) => {
+                    if(data.success) {
+                        this._fireAlert({type:'success', title:data.message});
+                    } else {
+                        this._fireAlert({type:'error', title:data.message});
+                    }
+                }).catch( (err) => {
+                    this._fireAlert({type:'error', title:'Error desconocido'});
+            });
+
+
         },
 
         /**
-         *
-         * @param url
          * @returns Promise
          * @private
+         * @param options
          */
-        _ajaxCall: function (url) {
+        _ajaxCall: function (options) {
             
-            return $.ajax({
-                    url: url,
-                    method:'GET'
-                })
+            return $.ajax(options)
         },
 
         /**
-         *
+         * @param options
+         * @private
+         */
+        _fireAlert:function (options) {
+            let defOptions = {
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000
+            };
+            swal.fire($.extend(defOptions, options));
+        },
+
+        /**
          * @param data
          * @param $element
          * @private
@@ -111,12 +156,15 @@
         _addOptionsToSelect: function (data, $element) {
 
             for (let i = 0; i < data.length; i++) {
-                $element.append('<option value="' + data[i].id +'">' + data[i].name + '</option>');
+                this._addoption(data[i], $element);
             }
+        },
+        _addoption: function (data, $element) {
+            $element.append(`<option value="${data.id}">${data.name}</option>`);
         }
     });
 
-})(window, jQuery);
+})(window, jQuery, swal);
 
 let raceWrapper = $('.js-box-race');
 

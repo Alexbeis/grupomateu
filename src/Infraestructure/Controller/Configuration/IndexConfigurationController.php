@@ -4,7 +4,6 @@ namespace Mateu\Infraestructure\Controller\Configuration;
 
 use Mateu\Infraestructure\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
