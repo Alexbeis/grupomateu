@@ -16,10 +16,10 @@ class CreateRaceCommandHandler
 
     public function handle(CreateRaceCommand $command)
     {
+        $uuid = $command->getUuid();
         $code = $command->getCode();
         $name = $command->getName();
 
-        $this->creator->create($code, $name);
+        $this->creator->create($uuid,$code, $name);
     }
-
 }

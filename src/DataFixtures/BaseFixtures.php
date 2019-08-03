@@ -1,19 +1,20 @@
 <?php
 
-namespace App\DataFixtures;
+namespace Mateu\DataFixtures;
 
-
-use App\Domain\Entity\Animal;
-use App\Domain\Entity\Explotation;
-use App\Domain\Entity\Purchaser;
-use App\Domain\Entity\Race;
-use App\Domain\Entity\Supplier;
-use App\Domain\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Mateu\Backend\Animal\Domain\Entity\Animal;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\Purchaser\Domain\Entity\Purchaser;
+use Mateu\Backend\Race\Domain\Entity\Race;
+use Mateu\Backend\Supplier\Domain\Entity\Supplier;
+use Mateu\Backend\User\Domain\Entity\User;
+use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class BaseFixtures extends Fixture
+class BaseFixtures extends Fixture implements FixtureInterface
 {
     public const USER_REFERENCE = 'user';
 
@@ -258,7 +259,7 @@ class BaseFixtures extends Fixture
     public function loadRaces(ObjectManager $manager)
     {
         foreach (self::RACES as $key => $race) {
-            $r = new Race($race['code'], $race['name']);
+            $r = new Race(Uuid::random()->getValue(),$race['code'], $race['name']);
             $this->addReference($race['code'], $r);
             $manager->persist($r);
         }

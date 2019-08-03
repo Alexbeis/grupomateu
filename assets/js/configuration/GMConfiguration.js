@@ -1,6 +1,8 @@
 'use strict';
 
 const swal = require('sweetalert2');
+import Race from './Race';
+import ValidatorFactory from './ValidatorFactory';
 
 (function(window, $, swal) {
 
@@ -19,6 +21,8 @@ const swal = require('sweetalert2');
             this.handleAddConfiguration.bind(this)
         );
 
+        this.selectors = [new Race()];
+        this.validatorFactory = new ValidatorFactory();
 
         // App Init
         this.init();
@@ -74,29 +78,32 @@ const swal = require('sweetalert2');
          * @private
          */
         _loadOptions: function() {
-            let entries = Object.entries(this._options.forms);
+
+            //let entries = Object.entries(this.selectors);
             let self = this;
-            entries.forEach(function (object) {
-                let url = object[1].loadurl;
+            this.selectors.forEach((instance) => {
+                //let url = instance.getLoadUrl();
 
                 /*Next iteration if not exists url*/
-                if (!url) return;
+                if (!instance.getLoadUrl()) return;
 
                 let options = {
-                    url: url,
+                    url: instance.getLoadUrl(),
                     method:'GET'
                 };
+
                 self._ajaxCall(options)
                     .then( (data) => {
-                        self._addOptionsToSelect(data, $('#' + object[0]+'-select'));
+                        self._addOptionsToSelect(data, $('#' + instance.getName() +'-select'));
                     }).catch((err) => {
                         console.log(err);
                 })
             });
+
         },
 
         /**
-         *
+         * Handle form add any configurable parameter.
          * @param e
          */
         handleAddConfiguration: function (e) {
@@ -105,22 +112,38 @@ const swal = require('sweetalert2');
             let $target = $(e.currentTarget);
             let form = $target.closest('form');
             let url = form.attr('action');
+            const type = form.attr('data-validator');
+            const validator = this.validatorFactory.create(type);
+            if (!validator.isValid(form)) {
+                this._markErrors(validator.getErrors());
+
+                return;
+            }
+
+            form.closest('.box').find('.overlay').removeClass('hidden');
+
             let data = form.serialize();
             let options = {
                 url:url,
                 method: 'POST',
                 data: data
-            }
+            };
+
             this._ajaxCall(options)
                 .then((data) => {
                     if(data.success) {
                         this._fireAlert({type:'success', title:data.message});
+                        //this._addoption(data, form.find('select'));
+                        // TODO: Replace by loadOptionsByTheme
+                        this._loadOptions();
                     } else {
                         this._fireAlert({type:'error', title:data.message});
                     }
                 }).catch( (err) => {
                     this._fireAlert({type:'error', title:'Error desconocido'});
             });
+
+            form.closest('.box').find('.overlay').addClass('hidden');
 
 
         },
@@ -155,18 +178,50 @@ const swal = require('sweetalert2');
          */
         _addOptionsToSelect: function (data, $element) {
 
+            $element.children().remove();
+
             for (let i = 0; i < data.length; i++) {
                 this._addoption(data[i], $element);
             }
         },
-        _addoption: function (data, $element) {
+
+        /**
+         * Add Single Option
+         * @param data
+         * @param $element
+         * @private
+         */
+        _addoption: (data, $element) => {
             $element.append(`<option value="${data.id}">${data.name}</option>`);
+        },
+
+        /**
+         * Mark errors on input elements
+         * @param errors
+         * @private
+         */
+        _markErrors: (errors) => {
+            errors.forEach((error) => {
+               $('#' + error.name)
+                   .next()
+                   .html(error.error)
+                   .removeClass('hidden')
+                   .parent('.form-group').addClass('has-error');
+            });
+        },
+
+        /**
+         * Clean marked errors
+         * @private
+         */
+        _cleanMarkedErrors: () => {
+
         }
     });
 
 })(window, jQuery, swal);
 
-let raceWrapper = $('.js-box-race');
+let raceWrapper = $('.js-box');
 
 if (raceWrapper.length > 0) {
     new GMConfiguration(raceWrapper);

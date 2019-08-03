@@ -1,37 +1,10 @@
-<div class="box box-danger js-box-race">
+<div class="box box-danger js-box">
     <div class="box-header with-border">
-        <h3 class="box-title">Razas</h3>
+        <h3 class="box-title">Razas<small>&nbsp;(* obligatorio)</small></h3>
     </div>
-
     <div class="box-body">
-        <form action="{{ path('add_race') }}" method="POST" id="add_race">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <label for="race_code_input">Código:</label>
-                        <input type="text"
-                               class="form-control"
-                               id="race_code_input"
-                               name="race_code"
-                               placeholder="Nueva Raza">
-
-                    </div>
-                    <div class="col-xs-6">
-                        <label for="race_name_input">Nombre:</label>
-                        <input type="text"
-                               class="form-control"
-                               id="race_name_input"
-                               name="race_name"
-                               placeholder="Nueva Raza">
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-primary js-input-add" type="submit">Guardar</button>
-        </form>
-
-        <div class="form-group">
-            <select id="race-select" class="form-control select2 js-select2">
-            </select>
-        </div>
+        {% include 'configuration/partials/forms/add_race_form.html.twig' %}
+        {% include 'configuration/partials/forms/delete_race_form.html.twig' %}
     </div>
+    {% include 'configuration/partials/overlay.html.twig' %}
 </div>

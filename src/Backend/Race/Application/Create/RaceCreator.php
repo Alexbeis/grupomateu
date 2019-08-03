@@ -23,9 +23,9 @@ class RaceCreator
         $this->em = $em;
     }
 
-    public function create($code, $name)
+    public function create($uuid, $code, $name)
     {
-        $race = Race::create($code, $name);
+        $race = Race::create($uuid, $code, $name);
 
         $this->raceRepository->save($race);
         $this->em->flush();

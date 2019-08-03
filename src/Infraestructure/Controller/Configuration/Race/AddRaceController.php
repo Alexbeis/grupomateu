@@ -4,6 +4,7 @@ namespace Mateu\Infraestructure\Controller\Configuration\Race;
 
 use Mateu\Backend\Race\Application\Create\CreateRaceCommand;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +26,11 @@ class AddRaceController extends BaseController
     public function __invoke(Request $request)
     {
         try {
+            $uuid =  Uuid::random()->getValue();
+
             $this->dispatch(
                 new CreateRaceCommand(
+                    $uuid,
                     $request->get('race_code'),
                     $request->get('race_name')
                 )

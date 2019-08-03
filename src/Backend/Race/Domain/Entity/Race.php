@@ -19,7 +19,12 @@ class Race
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=false)
+     * @ORM\Column(type="string", length=40, nullable=false)
+     */
+    private $uuid;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $code;
 
@@ -34,21 +39,30 @@ class Race
      */
     private $animal;
 
-    public function __construct($code, $name)
+    public function __construct($uuid, $code, $name)
     {
+        $this->uuid = $uuid;
         $this->code = $code;
         $this->name = $name;
         $this->animal = new ArrayCollection();
     }
 
-    public static function create($code, $name)
+    public static function create($uuid, $code, $name)
     {
-        return new self($code, $name);
+        return new self($uuid, $code, $name);
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**

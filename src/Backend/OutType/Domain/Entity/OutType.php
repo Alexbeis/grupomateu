@@ -21,7 +21,11 @@ class OutType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10, unique=true)
+     * @ORM\Column(type="string", length=10, unique=true, nullable=false)
+     */
+    private $uuid;
+    /**
+     * @ORM\Column(type="string", length=10, unique=true, nullable=true)
      */
     private $code;
 
@@ -30,15 +34,16 @@ class OutType
      */
     private $name;
 
-    public function __construct($code, $name)
+    public function __construct($uuid, $code, $name)
     {
+        $this->uuid = $uuid;
         $this->code = $code;
         $this->name = $name;
     }
 
-    public static function create($code, $name)
+    public static function create($uuid, $code, $name)
     {
-        return new self($code, $name);
+        return new self($uuid, $code, $name);
     }
 
     /**
@@ -63,6 +68,14 @@ class OutType
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
 

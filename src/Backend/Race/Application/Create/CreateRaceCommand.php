@@ -6,11 +6,13 @@ class CreateRaceCommand
 {
     private $code;
     private $name;
+    private $uuid;
 
-    public function __construct(string $code, string $name)
+    public function __construct(string $uuid, string $code, string $name)
     {
         $this->code = $code;
         $this->name = $name;
+        $this->uuid = $uuid;
     }
 
     /**
@@ -43,5 +45,13 @@ class CreateRaceCommand
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }

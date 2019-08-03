@@ -32,6 +32,11 @@ services:
     Mateu\Domain\:
         resource: '../src/Domain/*'
 
+    Mateu\DataFixtures\:
+        resource: '%kernel.project_dir%/src/DataFixtures/*'
+        exclude:
+            - '%kernel.project_dir%/src/DataFixtures/BaseFixture.php'
+
     #Mateu\EventListener\ExceptionListener:
     #    tags:
     #        - { name: kernel.event_listener, event: kernel.exception }
@@ -42,7 +47,6 @@ services:
     #
     # USE CASES:
     #
-
     usecases.get.all.explotations:
         class: Mateu\Backend\Explotation\Application\GetAll\GetAllExplotationsUseCase
         public: true
