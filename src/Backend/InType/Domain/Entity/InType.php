@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\InType\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -16,9 +17,14 @@ class InType
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned" = true})
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(type="string", length=10, unique=true)
@@ -30,15 +36,22 @@ class InType
      */
     private $name;
 
-    public function __construct($code, $name)
+    /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="inType")
+     */
+    private $animal;
+
+    public function __construct($uuid, $code, $name)
     {
         $this->code = $code;
         $this->name = $name;
+        $this->uuid = $uuid;
+        $this->animal = new ArrayCollection();
     }
 
-    public static function create($code, $name)
+    public static function create($uuid, $code, $name)
     {
-        return new self($code, $name);
+        return new self($uuid, $code, $name);
     }
 
     /**
@@ -65,4 +78,11 @@ class InType
         return $this->id;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getAnimal():?ArrayCollection
+    {
+        return $this->animal;
+    }
 }

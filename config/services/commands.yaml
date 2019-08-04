@@ -26,3 +26,10 @@ services:
     arguments: ['@race.creator']
     tags:
       - { name: command_handler, handles: Mateu\Backend\Race\Application\Create\CreateRaceCommand }
+
+  ## In Types ##
+  create.intype.command.handler:
+    class: Mateu\Backend\InType\Application\Create\CreateInTypeCommandHandler
+    arguments: ['@intype.creator']
+    tags:
+      - { name: command_handler, handles: Mateu\Backend\InType\Application\Create\CreateInTypeCommand }

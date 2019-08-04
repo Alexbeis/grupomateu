@@ -1,0 +1,23 @@
+<form action="{{ path('add_intype') }}" method="POST" id="add_intype" data-validator="intype">
+    <div class="row">
+        <div class="col-xs-6 form-group">
+            <label for="intype_code_input">Código:</label>
+            <input type="text"
+                   class="form-control"
+                   id="intype_code_input"
+                   name="intype_code"
+                   placeholder="ex: 001">
+            <span class="help-block hidden"></span>
+        </div>
+        <div class="col-xs-6 form-group">
+            <label for="race_name_input">Nombre<sup>*</sup>:</label>
+            <input type="text"
+                   class="form-control"
+                   id="intype_name_input"
+                   name="intype_name"
+                   placeholder="Nuevo Tipo de Entrada">
+            <span class="help-block hidden">Error</span>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-block js-input-add" type="submit">Guardar</button>
+</form>

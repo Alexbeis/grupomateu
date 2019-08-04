@@ -70,6 +70,10 @@ services:
     race.creator:
         class: Mateu\Backend\Race\Application\Create\RaceCreator
         public: true
+
+    intype.creator:
+        class: Mateu\Backend\InType\Application\Create\IntypeCreator
+        public: true
 imports:
     - {resource: services/repositories.yaml}
     - {resource: services/commands.yaml}

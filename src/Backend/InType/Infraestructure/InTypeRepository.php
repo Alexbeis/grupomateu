@@ -13,5 +13,10 @@ class InTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, InType::class);
     }
 
+    public function save(InType $inType)
+    {
+        $this->_em->persist($inType);
+    }
+
 
 }

@@ -2,6 +2,7 @@
 
 const swal = require('sweetalert2');
 import Race from './Race';
+import InType from './InType';
 import ValidatorFactory from './ValidatorFactory';
 
 (function(window, $, swal) {
@@ -21,7 +22,7 @@ import ValidatorFactory from './ValidatorFactory';
             this.handleAddConfiguration.bind(this)
         );
 
-        this.selectors = [new Race()];
+        this.selectors = [new Race(), new InType()];
         this.validatorFactory = new ValidatorFactory();
 
         // App Init
@@ -114,6 +115,7 @@ import ValidatorFactory from './ValidatorFactory';
             let url = form.attr('action');
             const type = form.attr('data-validator');
             const validator = this.validatorFactory.create(type);
+            if (!validator) return false;
             if (!validator.isValid(form)) {
                 this._markErrors(validator.getErrors());
 

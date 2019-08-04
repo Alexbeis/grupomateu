@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\InType\Domain\Entity\InType;
 use Mateu\Backend\Purchaser\Domain\Entity\Purchaser;
 use Mateu\Backend\Race\Domain\Entity\Race;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
@@ -156,6 +157,13 @@ class BaseFixtures extends Fixture implements FixtureInterface
         ['code' => '0003', 'name' => 'raza3']
     ];
 
+    private const INTYPES = [
+      ['code' => '001', 'name' => 'Nacimiento'],
+      ['code' => '002', 'name' => 'Compra'],
+      ['code' => '003', 'name' => 'Translado'],
+      ['code' => '004', 'name' => 'Otro']
+    ];
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -169,11 +177,13 @@ class BaseFixtures extends Fixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $this->loadUsers($manager);
+        $this->loadInTypes($manager);
         $this->loadRaces($manager);
         $this->loadExplotations($manager);
         $this->loadAnimals($manager);
         $this->loadSuppliers($manager);
         $this->loadPurchasers($manager);
+        //$this->loadOutTypes($manager);
 
     }
 
@@ -226,6 +236,18 @@ class BaseFixtures extends Fixture implements FixtureInterface
 
     }
 
+    private function loadInTypes(ObjectManager $manager)
+    {
+        foreach (self::INTYPES as $inType) {
+            $t = InType::create(Uuid::random()->getValue(), $inType['code'], $inType['name']);
+            $this->addReference($inType['name'], $t);
+
+            $manager->persist($t);
+        }
+
+        $manager->flush();
+    }
+
     private function loadAnimals(ObjectManager $manager)
     {
         for ($i = 0; $i < 500; $i++) {
@@ -245,6 +267,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $genere = ($i%2 == 0)? 'Male':'Female';
             $animal->setGenre($genere);
             $animal->setRace($this->getReference(self::RACES[rand(0, count(self::RACES) - 1)]['code']));
+            $animal->setInType($this->getReference(self::INTYPES[rand(0, count(self::INTYPES) - 1)]['name']));
 
             $manager->persist($animal);
             if ($i % 100 == 0) {

@@ -1,13 +1,13 @@
 'use strict';
 
-export default class Race {
+export default class InType {
 
     constructor() {
-        this.name = 'race';
-        this.add = '#add_race';
-        this.delete = '#delete_race';
-        this.loadurl =  'configuration/races/get';
-        this.addurl = 'configuration/races/add';
+        this.name = 'intype';
+        this.add = '#add_intype';
+        this.delete = '#delete_intype';
+        this.loadurl =  'configuration/in_types/get';
+        this.addurl = 'configuration/in_types/add';
     }
 
     getName() {

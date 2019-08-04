@@ -5,6 +5,7 @@ namespace Mateu\Backend\Animal\Domain\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Mateu\Backend\Animal\Domain\BirthdayMonthCalculator;
+use Mateu\Backend\History\Domain\Entity\History;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -19,7 +20,7 @@ class Animal
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned" = true})
      */
     private $id;
 
@@ -80,6 +81,12 @@ class Animal
      * @JoinColumn(name="race_id", referencedColumnName="id")
      */
     private $race;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\InType\Domain\Entity\InType", inversedBy="animal")
+     * @JoinColumn(name="in_type_id", referencedColumnName="id")
+     */
+    private $inType;
 
 
 
@@ -284,6 +291,22 @@ class Animal
     public function setRace($race)
     {
         $this->race = $race;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInType()
+    {
+        return $this->inType;
+    }
+
+    /**
+     * @param mixed $inType
+     */
+    public function setInType($inType): void
+    {
+        $this->inType = $inType;
     }
 
 
