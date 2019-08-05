@@ -22,6 +22,12 @@ import ValidatorFactory from './ValidatorFactory';
             this.handleAddConfiguration.bind(this)
         );
 
+        this.$raceWrapper.on(
+            'click',
+            this._options.forms.delete,
+            this.handleDeleteConfiguration.bind(this)
+        );
+
         this.selectors = [new Race(), new InType()];
         this.validatorFactory = new ValidatorFactory();
 
@@ -37,19 +43,7 @@ import ValidatorFactory from './ValidatorFactory';
         _options: {
             forms: {
                 add:'.js-input-add',
-                race: {
-                    add: '#add_race',
-                    delete: '#delete_race',
-                    loadurl: 'configuration/races/get',
-                    addurl: 'configuration/races/add'
-                },
-                in: {},
-                out:{
-                    add: '#add_out',
-                    delete: '#delete_out',
-
-                },
-                movement:{}
+                delete: '.js-input-delete',
             }
         },
 
@@ -147,6 +141,23 @@ import ValidatorFactory from './ValidatorFactory';
 
             form.closest('.box').find('.overlay').addClass('hidden');
 
+
+        },
+
+        /**
+         *
+         */
+        handleDeleteConfiguration: function(e) {
+            e.preventDefault();
+            let $target = $(e.currentTarget);
+            let $form = $target.closest('form');
+            let url = $form.attr('action');
+
+            this._ajaxCall({
+                url : url,
+                method: 'POST',
+                data: $form.serialize()
+            });
 
         },
 

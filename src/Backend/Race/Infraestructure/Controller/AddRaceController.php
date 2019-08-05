@@ -1,9 +1,10 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Configuration\InType;
+namespace Mateu\Backend\Race\Infraestructure\Controller;
 
-use Mateu\Backend\InType\Application\Create\CreateInTypeCommand;
+use Mateu\Backend\Race\Application\Create\CreateRaceCommand;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,15 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AddInTypeController
- * @package Mateu\Infraestructure\Controller\Configuration\InType
+ * Class AddRaceController
+ * @package Mateu\Backend\Race\Infraestructure
  * @IsGranted("ROLE_ADMIN")
  */
-class AddInTypeController extends BaseController
+class AddRaceController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request
-     * @Route("configuration/in_type/add", name="add_intype", methods={"POST"})
+     * @Route("configuration/race/add", name="add_race", methods={"POST"})
      *
      * @return JsonResponse
      */
@@ -29,10 +30,10 @@ class AddInTypeController extends BaseController
             $uuid =  Uuid::random()->getValue();
 
             $this->dispatch(
-                new CreateInTypeCommand(
+                new CreateRaceCommand(
                     $uuid,
-                    $request->get('intype_code'),
-                    $request->get('intype_name')
+                    $request->get('race_code'),
+                    $request->get('race_name')
                 )
             );
 
@@ -40,6 +41,6 @@ class AddInTypeController extends BaseController
             $this->createFailResponse($e->getMessage());
         }
 
-        return $this->createSuccessResponse('Tipo de Entrada creada correctamente');
+        return $this->createSuccessResponse('Raza creada correctamente');
     }
 }

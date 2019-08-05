@@ -30,6 +30,20 @@ class RaceRepository extends ServiceEntityRepository implements RaceRepositoryIn
         return $this->findAll();
     }
 
+    public function delete(Race $race)
+    {
+        $this->_em->remove($race);
+    }
+
+    public function exist($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult() !== null;
+    }
+
 
     // /**
     //  * @return Race[] Returns an array of Race objects

@@ -1,9 +1,10 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Explotation;
+namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
 use Mateu\Backend\Explotation\Application\Create\AddExplotationCommand;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Mateu\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class AddExplotationController extends BaseController
+class AddExplotationController extends BaseController implements ControllerInterface
 {
     /**
      * @Route("/explotation/add/", name="add_explotation", methods={"POST", "GET"})

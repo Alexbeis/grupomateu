@@ -1,9 +1,10 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Configuration\Race;
+namespace Mateu\Backend\InType\Infraestructure\Controller;
 
-use Mateu\Backend\Race\Application\Create\CreateRaceCommand;
+use Mateu\Backend\InType\Application\Create\CreateInTypeCommand;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,15 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AddRaceController
- * @package Mateu\Infraestructure\Controller\Configuration\Race
+ * Class AddInTypeController
+ * @package Mateu\Infraestructure\Controller\Configuration\InType
  * @IsGranted("ROLE_ADMIN")
  */
-class AddRaceController extends BaseController
+class AddInTypeController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request
-     * @Route("configuration/race/add", name="add_race", methods={"POST"})
+     * @Route("configuration/in_type/add", name="add_intype", methods={"POST"})
      *
      * @return JsonResponse
      */
@@ -29,10 +30,10 @@ class AddRaceController extends BaseController
             $uuid =  Uuid::random()->getValue();
 
             $this->dispatch(
-                new CreateRaceCommand(
+                new CreateInTypeCommand(
                     $uuid,
-                    $request->get('race_code'),
-                    $request->get('race_name')
+                    $request->get('intype_code'),
+                    $request->get('intype_name')
                 )
             );
 
@@ -40,9 +41,6 @@ class AddRaceController extends BaseController
             $this->createFailResponse($e->getMessage());
         }
 
-        return $this->createSuccessResponse('Raza creada correctamente');
-
-
+        return $this->createSuccessResponse('Tipo de Entrada creada correctamente');
     }
-
 }

@@ -1,11 +1,12 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Explotation;
+namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
 use Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommand;
 use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
 use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Mateu\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class DeleteExplotationController extends BaseController
+class DeleteExplotationController extends BaseController implements ControllerInterface
 {
     /**
      * @param $id

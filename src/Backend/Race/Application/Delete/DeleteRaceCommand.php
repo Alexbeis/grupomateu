@@ -18,5 +18,4 @@ class DeleteRaceCommand
     {
         return $this->id;
     }
-
 }

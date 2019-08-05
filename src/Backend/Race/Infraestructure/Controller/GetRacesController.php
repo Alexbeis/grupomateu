@@ -1,9 +1,10 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Configuration\Race;
+namespace Mateu\Backend\Race\Infraestructure\Controller;
 
 use Mateu\Backend\Race\Application\Get\GetAllRaces;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -14,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @package Mateu\Infraestructure\Controller\Configuration\Race
  * @IsGranted("ROLE_ADMIN")
  */
-class GetRacesController extends BaseController
+class GetRacesController extends BaseController implements ControllerInterface
 {
     /**
      * @return JsonResponse
@@ -26,5 +27,4 @@ class GetRacesController extends BaseController
             $allRaces->get()
         );
     }
-
 }

@@ -18,17 +18,13 @@ class GetAllRaces
 
     public function get()
     {
-        $all = $this->raceRepository->getAll();
-        $result = [];
+        return array_map(function($race) {
+           return  [
+               'id' => $race->getId(),
+               'name' => $race->getName()
+           ];
+        }, $this->raceRepository->getAll());
 
-        foreach ($all as $race) {
-            $result[] = [
-                'id' => $race->getId(),
-                'name' => $race->getName()
-            ];
-        }
 
-        return $result;
     }
-
 }

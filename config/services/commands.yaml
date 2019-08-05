@@ -2,6 +2,7 @@ services:
   ### CommandBus Handlers ###
 
   ## Explotations ##
+
   add.explotation.command.handler:
     class: Mateu\Backend\Explotation\Application\Create\AddExplotationCommandHandler
     arguments: ['@explotation.creator']
@@ -27,9 +28,16 @@ services:
     tags:
       - { name: command_handler, handles: Mateu\Backend\Race\Application\Create\CreateRaceCommand }
 
+  delete.race.command.handler:
+    class: Mateu\Backend\Race\Application\Delete\DeleteRaceCommandHandler
+    arguments: ['@race.deletor']
+    tags:
+      - { name: command_handler, handles: Mateu\Backend\Race\Application\Delete\DeleteRaceCommand }
+
   ## In Types ##
   create.intype.command.handler:
     class: Mateu\Backend\InType\Application\Create\CreateInTypeCommandHandler
     arguments: ['@intype.creator']
     tags:
       - { name: command_handler, handles: Mateu\Backend\InType\Application\Create\CreateInTypeCommand }
+

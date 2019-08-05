@@ -37,7 +37,7 @@ class InType
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="inType")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="inType", cascade={"remove"}, orphanRemoval=true))
      */
     private $animal;
 
