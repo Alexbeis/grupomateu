@@ -1,0 +1,12 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-default">Acción</button>
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="height: 34px;">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Editar</a></li>
+        <li class="divider"></li>
+        <li><a class="js-input-delete" href="{{ path('delete_race', {'id': race.id})}}"><i class="fa fa-trash"></i>Borrar</a></li>
+    </ul>
+</div>

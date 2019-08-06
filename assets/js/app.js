@@ -6,6 +6,7 @@ import '../../node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.
 import '../../node_modules/admin-lte/dist/css/AdminLTE.min.css';
 import '../../node_modules/admin-lte/dist/css/skins/skin-blue.min.css';
 import '../../node_modules/admin-lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css';
+import '../../node_modules/admin-lte/bower_components/select2/dist/css/select2.min.css';
 
 const $ = require('jquery');
 global.$ = global.jquery = $;
@@ -17,11 +18,14 @@ import '../../node_modules/admin-lte/bower_components/datatables.net-bs/js/dataT
 import '../../node_modules/admin-lte/bower_components/jquery-ui/jquery-ui.js';
 import '../../node_modules/admin-lte/dist/js/adminlte.js';
 import '../../node_modules/admin-lte/plugins/iCheck/icheck.js';
+import '../../node_modules/admin-lte/bower_components/select2/dist/js/select2.min.js';
+
 
 // Custom js
 import './dashboard/GMDashboard.js';
 import './explotations/GMExplotations.js';
 import './explotations/GMExplotation.js';
+import './configuration/GMConfiguration.js';
 
 
 

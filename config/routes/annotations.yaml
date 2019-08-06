@@ -3,6 +3,11 @@ controllers:
     type: annotation
     prefix: /admin
 
+controllers_ha:
+    resource: ../../src/Backend/
+    type: annotation
+    prefix: /admin
+
 root:
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction

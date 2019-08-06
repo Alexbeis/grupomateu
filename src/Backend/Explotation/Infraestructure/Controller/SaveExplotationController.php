@@ -1,10 +1,11 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Explotation;
+namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
 use Exception;
 use Mateu\Backend\Explotation\Application\Save\SaveExplotationCommand;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Mateu\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class SaveExplotationController extends BaseController
+class SaveExplotationController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Configuraciones <small>Configura tus variables</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active">Configuracion</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                {% block box %}
+
+                {% endblock %}
+            </div>
+
+            <div class="col-md-6">
+                {% block box_side %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

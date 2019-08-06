@@ -2,7 +2,9 @@
 
 namespace Mateu\Backend\Explotation\Application\Delete;
 
-class DeleteExplotationCommandHandler
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+
+class DeleteExplotationCommandHandler implements MessageHandlerInterface
 {
     /**
      * @var ExplotationDeletor
@@ -14,7 +16,7 @@ class DeleteExplotationCommandHandler
         $this->explotationDeletor = $explotationDeletor;
     }
 
-    public function handle(DeleteExplotationCommand $command)
+    public function __invoke(DeleteExplotationCommand $command)
     {
         $this->explotationDeletor->delete($command->getId());
 

@@ -4,15 +4,21 @@ const swal = require('sweetalert2');
 
 (function(window, $, swal) {
 
-    window.GMExplotation = function($wrapperForm,$wrapperTable ) {
+    window.GMExplotation = function($wrapperForm, $wrapperTable) {
 
         this.$wrapperForm = $wrapperForm;
         this.$wrapperTable = $wrapperTable;
+        this.$moveAnimalButton = $('.js-move-animal');
 
         this.$wrapperForm.on(
             'click',
             this.options._selectors.save,
             this.handleExplotationSave.bind(this)
+        );
+
+        this.$moveAnimalButton.on(
+            'click',
+            this.handleMoveAnimal.bind(this)
         );
 
         this.loadDatatable()
@@ -58,7 +64,16 @@ const swal = require('sweetalert2');
         loadDatatable: function() {
             this.$wrapperTable.DataTable({
                 "pageLength": 10,
-                "pagingType": "simple"
+                "pagingType": "simple",
+                'columnDefs': [{
+                    'targets': 0,
+                    'searchable':false,
+                    'orderable':false,
+                    'className': 'js-animal-selected',
+                    'render': function (data, type, full, meta){
+                        return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+                    }
+                }],
             });
         },
 
@@ -78,7 +93,6 @@ const swal = require('sweetalert2');
                 let value = $id.val();
                 if (!this._isValid(value, obj.max, obj.min)) {
                     canSubmit = false;
-
                     this._addError($id, obj.error)
                 }
             });
@@ -98,9 +112,16 @@ const swal = require('sweetalert2');
 
                 }).catch(function (err) {
                     console.log(err);
+                    self._hideSpinner();
                 })
             }
         },
+
+        handleMoveAnimal: function(e){
+            e.preventDefault();
+            console.log('Moving animals');
+        },
+
         /**
          *
          * @param value
@@ -117,6 +138,7 @@ const swal = require('sweetalert2');
         /**
          *
          * @param element
+         * @param message
          * @private
          */
         _addError:function(element, message){
@@ -135,9 +157,11 @@ const swal = require('sweetalert2');
                 $id.next('.help-block').html('').addClass('hidden');
             });
         },
+
         /**
          *
          * @param url
+         * @param data
          * @returns promise
          */
         _ajaxSave: function (url, data) {
@@ -150,6 +174,11 @@ const swal = require('sweetalert2');
             );
         },
 
+        /**
+         *
+         * @param options
+         * @private
+         */
         _fireAlert:function (options) {
             let defOptions = {
                 position: 'top-end',
@@ -159,12 +188,20 @@ const swal = require('sweetalert2');
             swal.fire($.extend(defOptions, options));
         },
 
+        /**
+         *
+         * @private
+         */
         _showSpinner:function () {
             let $button = this.$wrapperForm.find(this.options._selectors.save);
             $button.find('.js-spinner > i').removeClass('hidden');
             $button.attr('disabled', true);
         },
 
+        /**
+         *
+         * @private
+         */
         _hideSpinner: function () {
             let $button = this.$wrapperForm.find(this.options._selectors.save);
             $button.find('.js-spinner > i').addClass('hidden');

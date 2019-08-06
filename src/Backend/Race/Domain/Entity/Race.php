@@ -14,12 +14,17 @@ class Race
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned" = true})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=false)
+     * @ORM\Column(type="string", length=40, nullable=false)
+     */
+    private $uuid;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $code;
 
@@ -34,11 +39,17 @@ class Race
      */
     private $animal;
 
-    public function __construct($code, $name)
+    public function __construct($uuid, $code, $name)
     {
+        $this->uuid = $uuid;
         $this->code = $code;
         $this->name = $name;
         $this->animal = new ArrayCollection();
+    }
+
+    public static function create($uuid, $code, $name)
+    {
+        return new self($uuid, $code, $name);
     }
 
     public function getId(): ?int
@@ -49,7 +60,15 @@ class Race
     /**
      * @return mixed
      */
-    public function getCode():string
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode():?string
     {
         return $this->code;
     }
@@ -65,7 +84,7 @@ class Race
     /**
      * @return mixed
      */
-    public function getName():string
+    public function getName():?string
     {
         return $this->name;
     }

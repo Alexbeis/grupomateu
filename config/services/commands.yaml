@@ -1,19 +1,9 @@
 services:
-  # CommandBus Handlers
-  add.explotation.command.handler:
-    class: Mateu\Backend\Explotation\Application\Create\AddExplotationCommandHandler
-    arguments: ['@explotation.creator']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Create\AddExplotationCommand }
 
-  delete.explotation.command.handler:
-    class: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommandHandler
-    arguments: ['@explotation.deletor']
+  ## In Types ##
+  create.intype.command.handler:
+    class: Mateu\Backend\InType\Application\Create\CreateInTypeCommandHandler
+    arguments: ['@intype.creator']
     tags:
-      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommand }
+      - { name: command_handler, handles: Mateu\Backend\InType\Application\Create\CreateInTypeCommand }
 
-  save.explotation.command.handler:
-    class: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommandHandler
-    arguments: ['@explotation.saver']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommand }

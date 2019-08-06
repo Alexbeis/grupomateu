@@ -3,8 +3,9 @@
 namespace Mateu\Backend\Explotation\Application\Create;
 
 use Mateu\Backend\Explotation\Domain\ExplotationCode;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class AddExplotationCommandHandler
+class AddExplotationCommandHandler implements MessageHandlerInterface
 {
     /**
      * @var ExplotationCreator
@@ -16,7 +17,7 @@ class AddExplotationCommandHandler
         $this->explotationCreator = $explotationCreator;
     }
 
-    public function handle(AddExplotationCommand $command)
+    public function __invoke(AddExplotationCommand $command)
     {
         $code = new ExplotationCode($command->getCode());
 

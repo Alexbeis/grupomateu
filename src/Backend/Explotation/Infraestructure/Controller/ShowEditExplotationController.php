@@ -1,9 +1,10 @@
 <?php
 
-namespace Mateu\Infraestructure\Controller\Explotation;
+namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
 use Mateu\Backend\Explotation\Application\Find\ExplotationFinder;
 use Mateu\Infraestructure\Controller\BaseController;
+use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Mateu\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class ShowEditExplotationController extends BaseController
+class ShowEditExplotationController extends BaseController implements ControllerInterface
 {
     /**
      * @Route("/explotation/edit/{id}", name="edit_explotation", methods={"GET"}, requirements={"id"= "\d+"})
@@ -40,5 +41,4 @@ class ShowEditExplotationController extends BaseController
             )
         );
     }
-
 }

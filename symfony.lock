@@ -232,6 +232,9 @@
             ".env"
         ]
     },
+    "symfony/form": {
+        "version": "v4.2.11"
+    },
     "symfony/framework-bundle": {
         "version": "4.2",
         "recipe": {
@@ -260,6 +263,9 @@
     "symfony/inflector": {
         "version": "v4.2.7"
     },
+    "symfony/intl": {
+        "version": "v4.2.11"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -268,6 +274,18 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
+    },
+    "symfony/messenger": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "2c72a5331d001fce2e8e8e94371b97afd5c32f34"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
     },
     "symfony/monolog-bridge": {
         "version": "v4.2.7"
@@ -285,6 +303,9 @@
             "config/packages/prod/monolog.yaml",
             "config/packages/test/monolog.yaml"
         ]
+    },
+    "symfony/options-resolver": {
+        "version": "v4.2.11"
     },
     "symfony/orm-pack": {
         "version": "v1.0.6"
@@ -304,6 +325,9 @@
             "phpunit.xml.dist",
             "tests/.gitignore"
         ]
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.11.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.11.0"
