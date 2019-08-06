@@ -2,7 +2,6 @@
 
 const swal = require('sweetalert2');
 import Race from './Race';
-import InType from './InType';
 import ValidatorFactory from './ValidatorFactory';
 
 (function(window, $, swal) {
@@ -10,11 +9,13 @@ import ValidatorFactory from './ValidatorFactory';
     /**
      * Main Object for Configuration variables
      * @param $raceWrapper
+     * @param $tableWrapper
      * @constructor
      */
-    window.GMConfiguration= function($raceWrapper) {
+    window.GMConfiguration= function($raceWrapper, $tableWrapper) {
 
         this.$raceWrapper = $raceWrapper;
+        this.$tableWrapper = $tableWrapper;
 
         this.$raceWrapper.on(
             'click',
@@ -22,13 +23,13 @@ import ValidatorFactory from './ValidatorFactory';
             this.handleAddConfiguration.bind(this)
         );
 
-        this.$raceWrapper.on(
+        $(document).on(
             'click',
             this._options.forms.delete,
             this.handleDeleteConfiguration.bind(this)
         );
 
-        this.selectors = [new Race(), new InType()];
+        this.selectors = [new Race()];
         this.validatorFactory = new ValidatorFactory();
 
         // App Init
@@ -52,28 +53,14 @@ import ValidatorFactory from './ValidatorFactory';
          */
         init: function() {
             // Load External pluggins TODO: Fix styles on select 2
-            //this._loadAndInitExternalPluggins();
-            this._loadOptions();
+            console.log('Loading options...');
         },
 
         /**
          *
          * @private
          */
-        _loadAndInitExternalPluggins: function() {
-            $('.js-select2').select2({
-                tags: "true",
-                placeholder: "Select an option",
-                allowClear: true
-            });
-        },
-
-        /**
-         *
-         * @private
-         */
-        _loadOptions: function() {
-
+        _loadTable: function() {
             //let entries = Object.entries(this.selectors);
             let self = this;
             this.selectors.forEach((instance) => {
@@ -89,12 +76,11 @@ import ValidatorFactory from './ValidatorFactory';
 
                 self._ajaxCall(options)
                     .then( (data) => {
-                        self._addOptionsToSelect(data, $('#' + instance.getName() +'-select'));
+                        self.$tableWrapper.replaceWith(data);
                     }).catch((err) => {
                         console.log(err);
                 })
             });
-
         },
 
         /**
@@ -112,7 +98,6 @@ import ValidatorFactory from './ValidatorFactory';
             if (!validator) return false;
             if (!validator.isValid(form)) {
                 this._markErrors(validator.getErrors());
-
                 return;
             }
 
@@ -129,9 +114,8 @@ import ValidatorFactory from './ValidatorFactory';
                 .then((data) => {
                     if(data.success) {
                         this._fireAlert({type:'success', title:data.message});
-                        //this._addoption(data, form.find('select'));
                         // TODO: Replace by loadOptionsByTheme
-                        this._loadOptions();
+                        this._loadTable();
                     } else {
                         this._fireAlert({type:'error', title:data.message});
                     }
@@ -140,8 +124,6 @@ import ValidatorFactory from './ValidatorFactory';
             });
 
             form.closest('.box').find('.overlay').addClass('hidden');
-
-
         },
 
         /**
@@ -150,13 +132,26 @@ import ValidatorFactory from './ValidatorFactory';
         handleDeleteConfiguration: function(e) {
             e.preventDefault();
             let $target = $(e.currentTarget);
-            let $form = $target.closest('form');
-            let url = $form.attr('action');
+            let url = $target.attr('href');
 
             this._ajaxCall({
                 url : url,
-                method: 'POST',
-                data: $form.serialize()
+                method: 'GET',
+            }).then((data) => {
+                if(data.success) {
+                    this._fireAlert({type:'success', title:data.message, onClose: () => {
+                        let $elementRow = $target.closest('tr');
+                        $elementRow.fadeOut('normal', function() {
+                            $(this).remove();
+                            });
+                        }});
+                } else {
+                    this._fireAlert({type:'error', title:data.message});
+                }
+
+            }).catch((err) => {
+                console.log(err);
+                this._fireAlert({type:'error', title:'Error desconocido'});
             });
 
         },
@@ -182,20 +177,6 @@ import ValidatorFactory from './ValidatorFactory';
                 timer: 2000
             };
             swal.fire($.extend(defOptions, options));
-        },
-
-        /**
-         * @param data
-         * @param $element
-         * @private
-         */
-        _addOptionsToSelect: function (data, $element) {
-
-            $element.children().remove();
-
-            for (let i = 0; i < data.length; i++) {
-                this._addoption(data[i], $element);
-            }
         },
 
         /**
@@ -235,8 +216,9 @@ import ValidatorFactory from './ValidatorFactory';
 })(window, jQuery, swal);
 
 let raceWrapper = $('.js-box');
+let tableWrapper = $('.js-table-conf');
 
 if (raceWrapper.length > 0) {
-    new GMConfiguration(raceWrapper);
+    new GMConfiguration(raceWrapper, tableWrapper);
 }
 

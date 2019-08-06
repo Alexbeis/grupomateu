@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface;
 use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class BaseController extends AbstractController
@@ -24,7 +25,7 @@ class BaseController extends AbstractController
      */
     protected $router;
 
-    public function __construct(CommandBus $bus, ContainerInterface $container, RouterInterface $router)
+    public function __construct(MessageBusInterface $bus, ContainerInterface $container, RouterInterface $router)
     {
         $this->bus = $bus;
         $this->container = $container;
@@ -33,12 +34,12 @@ class BaseController extends AbstractController
 
     protected function dispatch($command)
     {
-        $this->bus->handle($command);
+        $this->bus->dispatch($command);
     }
 
-    protected function createSuccessResponse($message = null)
+    protected function createSuccessResponse($message = null, $params = null)
     {
-        return $this->createJsonResponse(true, $message);
+        return $this->createJsonResponse(true, $message, $params);
     }
 
     protected function createFailResponse($message = null)
@@ -46,12 +47,13 @@ class BaseController extends AbstractController
         return $this->createJsonResponse(false, $message);
     }
 
-    private function createJsonResponse($sucess, $message)
+    private function createJsonResponse($sucess, $message, $params = null)
     {
         return new JsonResponse(
             [
                 'success' => $sucess,
-                'message' => $message
+                'message' => $message,
+                'params' => $params
             ]
         );
 

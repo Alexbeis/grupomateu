@@ -3,8 +3,9 @@
 namespace Mateu\Backend\Explotation\Application\Save;
 
 use Mateu\Backend\Explotation\Domain\ExplotationCode;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class SaveExplotationCommandHandler
+class SaveExplotationCommandHandler implements MessageHandlerInterface
 {
     /**
      * @var ExplotationSaver

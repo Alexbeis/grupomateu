@@ -21,6 +21,7 @@ class GetAllRaces
         return array_map(function($race) {
            return  [
                'id' => $race->getId(),
+               'code' => $race->getCode(),
                'name' => $race->getName()
            ];
         }, $this->raceRepository->getAll());

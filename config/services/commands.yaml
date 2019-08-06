@@ -1,38 +1,4 @@
 services:
-  ### CommandBus Handlers ###
-
-  ## Explotations ##
-
-  add.explotation.command.handler:
-    class: Mateu\Backend\Explotation\Application\Create\AddExplotationCommandHandler
-    arguments: ['@explotation.creator']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Create\AddExplotationCommand }
-
-  delete.explotation.command.handler:
-    class: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommandHandler
-    arguments: ['@explotation.deletor']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Delete\DeleteExplotationCommand }
-
-  save.explotation.command.handler:
-    class: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommandHandler
-    arguments: ['@explotation.saver']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Explotation\Application\Save\SaveExplotationCommand }
-
-  ## Races ##
-  create.race.command.handler:
-    class: Mateu\Backend\Race\Application\Create\CreateRaceCommandHandler
-    arguments: ['@race.creator']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Race\Application\Create\CreateRaceCommand }
-
-  delete.race.command.handler:
-    class: Mateu\Backend\Race\Application\Delete\DeleteRaceCommandHandler
-    arguments: ['@race.deletor']
-    tags:
-      - { name: command_handler, handles: Mateu\Backend\Race\Application\Delete\DeleteRaceCommand }
 
   ## In Types ##
   create.intype.command.handler:

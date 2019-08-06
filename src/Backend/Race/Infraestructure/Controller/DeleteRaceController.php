@@ -17,25 +17,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeleteRaceController extends BaseController
 {
     /**
-     * @param Request $request
-     * @Route("configuration/race/delete", name="delete_race", methods={"POST"})
+     * @param $id
      *
      * @return JsonResponse
+     * @Route("configuration/race/delete/{id}", name="delete_race", methods={"GET"})
+     *
      */
-    public function __invoke(Request $request)
+    public function __invoke($id)
     {
         try {
             $this->dispatch(
                 new DeleteRaceCommand(
-                    $request->get('race_id')
+                    $id
                 )
             );
 
         } catch (\Throwable $e) {
             $this->createFailResponse($e->getMessage());
+        } catch (\PDOException $e) {
+            $this->createFailResponse($e->getMessage());
         } catch (\Exception $e) {
             $this->createFailResponse($e->getMessage());
-
         }
 
         return $this->createSuccessResponse('Raza Eliminada correctamente');

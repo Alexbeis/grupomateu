@@ -19,7 +19,10 @@ class IndexConfigurationController extends BaseController
      */
     public function __invoke()
     {
-        return new Response($this->render('configuration/index.html.twig'));
+        return new Response(
+            $this->render(
+                'configuration/race/form/add.html.twig')
+        );
     }
 
 }

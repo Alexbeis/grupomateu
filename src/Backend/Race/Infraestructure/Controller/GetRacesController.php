@@ -23,8 +23,12 @@ class GetRacesController extends BaseController implements ControllerInterface
      */
     public function __invoke(GetAllRaces $allRaces)
     {
+        $view = $this->renderView('configuration/race/race-table.html.twig', [
+            'races' => $allRaces->get()
+        ]);
+
         return new JsonResponse(
-            $allRaces->get()
+            $view
         );
     }
 }

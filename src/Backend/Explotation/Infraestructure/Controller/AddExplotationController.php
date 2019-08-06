@@ -19,12 +19,13 @@ class AddExplotationController extends BaseController implements ControllerInter
     /**
      * @Route("/explotation/add/", name="add_explotation", methods={"POST", "GET"})
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function __invoke(Request $request)
     {
         try {
-            $this->bus->handle(
+            $this->dispatch(
                 new AddExplotationCommand(
                     $request->get('exp_code'),
                     $request->get('exp_name'),

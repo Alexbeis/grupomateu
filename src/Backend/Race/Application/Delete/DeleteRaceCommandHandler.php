@@ -2,7 +2,9 @@
 
 namespace Mateu\Backend\Race\Application\Delete;
 
-class DeleteRaceCommandHandler
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+
+class DeleteRaceCommandHandler implements MessageHandlerInterface
 {
     /**
      * @var RaceDeletor
@@ -14,7 +16,7 @@ class DeleteRaceCommandHandler
         $this->raceDeletor = $raceDeletor;
     }
 
-    public function handle(DeleteRaceCommand $command)
+    public function __invoke(DeleteRaceCommand $command)
     {
         $this->raceDeletor->delete($command->getId());
     }

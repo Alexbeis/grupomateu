@@ -2,7 +2,9 @@
 
 namespace Mateu\Backend\Race\Application\Create;
 
-class CreateRaceCommandHandler
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+
+class CreateRaceCommandHandler implements MessageHandlerInterface
 {
     /**
      * @var RaceCreator
@@ -14,7 +16,7 @@ class CreateRaceCommandHandler
         $this->creator = $creator;
     }
 
-    public function handle(CreateRaceCommand $command)
+    public function __invoke(CreateRaceCommand $command)
     {
         $uuid = $command->getUuid();
         $code = $command->getCode();

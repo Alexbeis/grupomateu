@@ -9,6 +9,7 @@ use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -20,16 +21,18 @@ class AddRaceController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request
-     * @Route("configuration/race/add", name="add_race", methods={"POST"})
+     * @param MessageBusInterface $messageBus
      *
      * @return JsonResponse
+     * @Route("configuration/race/add", name="add_race", methods={"POST"})
+     *
      */
     public function __invoke(Request $request)
     {
         try {
             $uuid =  Uuid::random()->getValue();
 
-            $this->dispatch(
+            $this->bus->dispatch(
                 new CreateRaceCommand(
                     $uuid,
                     $request->get('race_code'),

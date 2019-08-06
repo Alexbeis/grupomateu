@@ -4,7 +4,7 @@ export default class RaceValidator {
 
     constructor() {
         this.inputs = [
-            {name:'race_code_input', min:0, max:15},
+            {name:'race_code_input', min:3, max:15},
             {name:'race_name_input', min: 3, max:50}
             ];
         this.errors = [];
