@@ -2,39 +2,44 @@
 
 namespace Mateu\Infraestructure\Controller;
 
-use Psr\Container\ContainerInterface;
-use SimpleBus\SymfonyBridge\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class BaseController extends AbstractController
 {
     /**
-     * @var CommandBus
+     * @var MessageBus
      */
-    protected $bus;
+    protected $commandBus;
 
     /**
-     * @var ContainerInterface
+     * @var MessageBusInterface
      */
-    protected $container;
+    private $queryBus;
+
     /**
      * @var RouterInterface
      */
     protected $router;
 
-    public function __construct(MessageBusInterface $bus, ContainerInterface $container, RouterInterface $router)
+    public function __construct(MessageBusInterface $commandBus, MessageBusInterface $queryBus,  RouterInterface $router)
     {
-        $this->bus = $bus;
-        $this->container = $container;
+        $this->commandBus = $commandBus;
+        $this->queryBus = $queryBus;
         $this->router = $router;
     }
 
     protected function dispatch($command)
     {
-        $this->bus->dispatch($command);
+        $this->commandBus->dispatch($command);
+    }
+
+    protected function ask($query)
+    {
+        return $this->queryBus->dispatch($query);
     }
 
     protected function createSuccessResponse($message = null, $params = null)

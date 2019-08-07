@@ -2,11 +2,13 @@
 
 namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
+use Mateu\Backend\Explotation\Application\GetAll\GetExplotationsQuery;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,14 +23,15 @@ class AllExplotationsController extends BaseController implements ControllerInte
      *
      * @return Response
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke()
     {
-        $allExplotationsUseCase = $container->get('usecases.get.all.explotations');
+        $envelope = $this->ask(new GetExplotationsQuery());
+        $handledStamp = $envelope->last(HandledStamp::class);
 
         return $this->render(
             'explotations/index.html.twig',
             [
-                'explotations' => $allExplotationsUseCase->execute()
+                'explotations' => $handledStamp->getResult()
             ]
         );
     }

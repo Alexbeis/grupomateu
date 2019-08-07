@@ -1,8 +1,14 @@
 framework:
     messenger:
-        transports:
-             amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
-
+        buses:
+            command.bus:
+                middleware:
+                    - Mateu\Shared\Application\Bus\Middleware\AuditMiddleware
+            event.bus:
+                default_middleware: allow_no_handlers
+            query.bus: ~
+        default_bus: command.bus
         routing:
-            # Route your messages to the transports
-            'Mateu\Backend\Notification\Application\Create\NotificationCommand': amqp #name of the transport
+            Mateu\Backend\Notification\Application\Create\NotificationCommand: amqp
+        transports:
+            amqp: "%env(MESSENGER_TRANSPORT_DSN)%"

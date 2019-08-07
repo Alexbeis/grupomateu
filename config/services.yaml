@@ -20,6 +20,20 @@ services:
         exclude:
           - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+    #command_handlers:
+    #    namespace: Mateu\Backend\
+    #    resource: '%kernel.project_dir%/src/Backend/*/*/*CommandHandler.php'
+    #    autoconfigure: false
+    #    tags:
+    #        - { name: messenger.message_handler, bus: command.bus }
+
+    #query_handlers:
+    #    namespace: Mateu\Backend\
+    #    resource: '%kernel.project_dir%/src/Backend/*/*/*QueryHandler.php'
+    #    autoconfigure: false
+    #    tags:
+    #        - { name: messenger.message_handler, bus: query.bus }
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     Mateu\Infraestructure\Controller\:

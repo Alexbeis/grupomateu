@@ -3,8 +3,9 @@
 namespace Mateu\Backend\Explotation\Application\GetAll;
 
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class GetAllExplotationsUseCase
+class GetExplotationsQueryHandler implements MessageHandlerInterface
 {
     /**
      * @var ExplotationRepositoryInterface
@@ -16,12 +17,8 @@ class GetAllExplotationsUseCase
         $this->explotationRepository = $explotationRepository;
     }
 
-    public function execute()
+    public function __invoke(GetExplotationsQuery $explotationsQuery)
     {
-        $explotations = $this->explotationRepository->findAll();
-
-        return $explotations;
-
+        return $this->explotationRepository->findAll();
     }
-
 }

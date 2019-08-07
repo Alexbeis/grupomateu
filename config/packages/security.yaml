@@ -1,6 +1,6 @@
 security:
     encoders:
-        Mateu\Backend\User\Domain\Entity\User: bcrypt
+        Mateu\Backend\User\Domain\Entity\User: auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         database_users:
