@@ -18,10 +18,7 @@ class ExplotationDeletor
      * @var EntityManagerInterface
      */
     private $entityManager;
-    /**
-     * @var EventBus
-     */
-    private $eventBus;
+
     /**
      * @var LoggerInterface
      */
@@ -30,13 +27,11 @@ class ExplotationDeletor
     public function __construct(
         ExplotationRepositoryInterface $explotationRepository,
         EntityManagerInterface $entityManager,
-        EventBus $eventBus,
         LoggerInterface $logger
     )
     {
         $this->explotationRepository = $explotationRepository;
         $this->entityManager = $entityManager;
-        $this->eventBus = $eventBus;
         $this->logger = $logger;
     }
 
@@ -60,13 +55,7 @@ class ExplotationDeletor
         $this->explotationRepository->remove($explotation);
 
         $this->entityManager->flush();
-
-        foreach ($this->registeredEvents() as $event => $eventName) {
-
-            $this->eventBus->handle(
-                new $eventName($explotation->getCode(), $explotation->getCreatedBy())
-            );
-        }
+        
     }
 
     /**
