@@ -57,13 +57,11 @@
         }
     });
 
-    let BoxesWrapper = $('.js-boxes');
-
-    if (BoxesWrapper.length > 0) {
-        let GM = new GMDashboard(BoxesWrapper);
-    }
-
-
-    console.log('From webpack?');
 })(window, jQuery);
+
+let BoxesWrapper = $('.js-boxes');
+
+if (BoxesWrapper.length > 0) {
+    let GM = new GMDashboard(BoxesWrapper);
+}
 

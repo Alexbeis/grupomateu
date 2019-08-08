@@ -38,7 +38,7 @@ class ExplotationCreator
     {
         $code = new ExplotationCode($code);
         if ($found = $this->explotationFinder->__invoke($code->getCode())) {
-            throw new ExplotationCodeAlreadyUsed();
+            throw new ExplotationCodeAlreadyUsed(sprintf('Este código ya existe: %s', $code->getCode()));
         }
         $explotation = new Explotation();
         $explotation

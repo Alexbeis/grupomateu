@@ -1,23 +1,33 @@
+{% set route = app.request.attributes.get('_route') %}
+
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">PÁGINA PRINCIPAL</li>
-    <li><a href="https://adminlte.io/docs"><i class="fa fa-book active"></i> <span>Dashboard</span></a></li>
-    <li class="treeview">
+    <li  {% if route == 'index_dashboard' %} class="active"{% endif %}>
+        <a href="{{ path('index_dashboard') }}"><i class="fa fa-book"></i> <span>Dashboard</span></a>
+    </li>
+    <li class="treeview  {% if route in ['index_race'] %} active{% endif %}">
         <a href="#">
             <i class="fa fa-dashboard"></i> <span>Configuración</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
-        <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>Entradas</a></li>
+        <ul class="treeview-menu ">
+            <li><a href="index.html"><i class="fa fa-circle-o"></i>Entradas</a></li>
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Salidas</a></li>
-            <li><a href="{{ path('index_race') }}"><i class="fa fa-circle-o"></i> Razas</a></li>
+
+            <li {% if route == 'index_race' %} class="active"{% endif %}>
+                <a href="{{ path('index_race') }}"><i class="fa fa-circle-o"></i> Razas</a></li>
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Movimientos</a></li>
         </ul>
     </li>
     <li class="header">GRANJAS</li>
-    <li><a href="{{ path('index_explotations') }}"><i class="fa fa-book active"></i> <span>Explotaciones</span></a></li>
-    <li><a href="#"><i class="fa fa-book active"></i> <span>Animales</span></a></li>
+    <li {% if route == 'index_explotations' %} class="active"{% endif %}>
+        <a href="{{ path('index_explotations') }}"><i class="fa fa-book active"></i> <span>Explotaciones</span></a>
+    </li>
+    <li {% if route == 'index_animals' %} class="active"{% endif %}>
+        <a href="{{ path('index_animals') }}"><i class="fa fa-book active"></i> <span>Animales</span></a>
+    </li>
 
     <li class="header">MOVIMIENTOS</li>
     <li class="treeview">

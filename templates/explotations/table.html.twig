@@ -1,42 +1,44 @@
-<table id="explotations-table" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-    <tr>
-        <th>Código</th>
-        <th>Nombre</th>
-        <th>Localizada</th>
-        <th>Animales</th>
-        <th>Creada por</th>
-        <th>Fecha Creación</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for explotation in explotations %}
+<div class="table-responsive">
+    <table id="explotations-table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
         <tr>
-            <td>{{ explotation.code }}</td>
-            <td>{{ explotation.name }}</td>
-            <td>{{ explotation.localization }}</td>
-            <td>{{ explotation.animal.count }}</td>
-            <td>{{ explotation.createdBy }}</td>
-            <td>{{ explotation.createdAt|date('d-m-Y') }}</td>
-            <td>
-                {% include 'explotations/Actions/dropdownButton.html.twig' %}
-                <span class="js-spinner">
-                    <i class="fa fa-spinner fa-spin hidden"></i>
-                </span>
-            </td>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Localizada</th>
+            <th>Animales</th>
+            <th>Creada por</th>
+            <th>Fecha Creación</th>
+            <th>Acciones</th>
         </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <th>Código</th>
-        <th>Nombre</th>
-        <th>Localizada</th>
-        <th>Animales</th>
-        <th>Creada por</th>
-        <th>Fecha Creación</th>
-        <th>Acciones</th>
-    </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+        {% for explotation in explotations %}
+            <tr>
+                <td>{{ explotation.code }}</td>
+                <td>{{ explotation.name }}</td>
+                <td>{{ explotation.localization }}</td>
+                <td>{{ explotation.animal.count }}</td>
+                <td>{{ explotation.createdBy }}</td>
+                <td>{{ explotation.createdAt|date('d-m-Y') }}</td>
+                <td>
+                    {% include 'explotations/Actions/dropdownButton.html.twig' %}
+                    <span class="js-spinner">
+                        <i class="fa fa-spinner fa-spin hidden"></i>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Localizada</th>
+            <th>Animales</th>
+            <th>Creada por</th>
+            <th>Fecha Creación</th>
+            <th>Acciones</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>

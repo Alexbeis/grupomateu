@@ -1,1 +1,39 @@
 {% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Animales <small>Listado de Animales</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active">Animales</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h4>Tabla de Animales</h4>
+                            </div>
+                            <div class="col-xs-6 pull-right">
+                                <button type="button"
+                                        class="btn btn-info pull-right"
+                                        data-toggle="modal"
+                                        data-target="#modal-add-explotation"
+                                        data-url="{{ path("add_explotation") }}">
+                                    Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% include 'animals/animal/animal-table.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock body %}

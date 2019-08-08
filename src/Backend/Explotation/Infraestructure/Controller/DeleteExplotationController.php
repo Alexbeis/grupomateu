@@ -7,8 +7,10 @@ use Mateu\Backend\Explotation\Application\Delete\NotEmptyExplotationException;
 use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,7 +34,10 @@ class DeleteExplotationController extends BaseController implements ControllerIn
             $this->dispatch(
                 new DeleteExplotationCommand($id)
             );
-        } catch (NotEmptyExplotationException $e) {
+        } catch (HandlerFailedException $e) {
+            return $this->createFailResponse($e->getMessage());
+        }
+        catch (NotEmptyExplotationException $e) {
             return $this->createFailResponse($e->getMessage());
         } catch (ExplotationNotFound $e) {
             return $this->createFailResponse($e->getMessage());

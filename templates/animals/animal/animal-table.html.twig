@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table id="animal-table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Crotal</th>
+            <th>Número interno</th>
+            <th>Edad</th>
+            <th>Edad(meses)</th>
+            <th>Explotación</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for animal in animals %}
+            <tr>
+                <td></td>
+                <td>{{ animal.crotal }}</td>
+                <td>{{ animal.internalnum }}</td>
+                <td>{{ animal.birthdate|date('d-m-y') }}</td>
+                <td>{{ animal.birthdate|date('m') }}</td>
+                <td>{{ animal.explotation.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th></th>
+            <th>Crotal</th>
+            <th>Número interno</th>
+            <th>Edad</th>
+            <th>Edad(meses)</th>
+            <th>Explotación</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>

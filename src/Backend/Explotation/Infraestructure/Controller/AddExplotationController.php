@@ -7,6 +7,7 @@ use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,8 +33,14 @@ class AddExplotationController extends BaseController implements ControllerInter
                     null,
                     $this->getUser())
             );
+            //TODO: Make ajax request
+        } catch (HandlerFailedException $e) {
+
+            $this->get('session')->getFlashBag()->set('danger', $e->getMessage() );
+
+            return $this->redirectToRoute("index_explotations");
         } catch (\Exception $e) {
-            $this->get('session')->getFlashBag()->set('error', $e->getMessage() );
+            $this->get('session')->getFlashBag()->set('danger', $e->getMessage() );
 
             return $this->redirectToRoute("index_explotations");
         }
