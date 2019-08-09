@@ -5,7 +5,7 @@ namespace Mateu\Backend\Explotation\Application\GetAll;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class GetExplotationsQueryHandler implements MessageHandlerInterface
+class GetExplotationsQueryHandler
 {
     /**
      * @var ExplotationRepositoryInterface

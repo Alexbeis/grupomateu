@@ -2,7 +2,9 @@
 
 namespace Mateu\Backend\InType\Application\Create;
 
-class CreateInTypeCommandHandler
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+
+class CreateInTypeCommandHandler implements MessageHandlerInterface
 {
     /**
      * @var InTypeCreator
@@ -14,7 +16,7 @@ class CreateInTypeCommandHandler
         $this->creator = $creator;
     }
 
-    public function handle(CreateInTypeCommand $command)
+    public function __invoke(CreateInTypeCommand $command)
     {
         $this->creator->create(
             $command->getUuid(),

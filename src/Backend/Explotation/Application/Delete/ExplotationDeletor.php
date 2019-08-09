@@ -5,11 +5,17 @@ namespace Mateu\Backend\Explotation\Application\Delete;
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use SimpleBus\SymfonyBridge\Bus\EventBus;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class ExplotationDeletor
+final class ExplotationDeletor implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var ExplotationRepositoryInterface
      */
@@ -18,21 +24,26 @@ class ExplotationDeletor
      * @var EntityManagerInterface
      */
     private $entityManager;
-
     /**
-     * @var LoggerInterface
+     * @var MessageBusInterface
      */
-    private $logger;
+    private $eventBus;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
 
     public function __construct(
         ExplotationRepositoryInterface $explotationRepository,
         EntityManagerInterface $entityManager,
-        LoggerInterface $logger
+        MessageBusInterface $eventBus,
+        TokenStorageInterface $tokenStorage
     )
     {
         $this->explotationRepository = $explotationRepository;
         $this->entityManager = $entityManager;
-        $this->logger = $logger;
+        $this->eventBus = $eventBus;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -45,27 +56,24 @@ class ExplotationDeletor
         $explotation = $this->explotationRepository->find($id);
 
         if (!$explotation) {
-            throw new ExplotationNotFound('Explotation Not Found', 400);
+            $this->logger->debug(sprintf('Explotation with id: %d not found', $id));
+            throw new ExplotationNotFound('Explotación no encontrada', 400);
         }
 
         if ($explotation->getAnimal()->count() > 0) {
-            throw new NotEmptyExplotationException('Explotation must be empty of Animals');
+            $this->logger->debug(sprintf('Explotation (%s) must be empty of animals.', $explotation->getCode()));
+            throw new NotEmptyExplotationException('La explotación debe estar vacia de animales.');
         }
 
         $this->explotationRepository->remove($explotation);
 
         $this->entityManager->flush();
-        
-    }
 
-    /**
-     * Events related
-     * @return array
-     */
-    private function registeredEvents()
-    {
-        return [
-           'explotation_deleted' => ExplotationDeleted::class
-        ];
+        $this->eventBus->dispatch(
+            new ExplotationDeleted(
+                $explotation->getCode(),
+                $this->tokenStorage->getToken()->getUser()
+            )
+        );
     }
 }
