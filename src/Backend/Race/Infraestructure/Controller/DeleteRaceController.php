@@ -7,6 +7,7 @@ use Mateu\Infraestructure\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,18 +27,12 @@ class DeleteRaceController extends BaseController
     public function __invoke($id)
     {
         try {
-            $this->dispatch(
-                new DeleteRaceCommand(
-                    $id
-                )
-            );
+            $this->dispatch(new DeleteRaceCommand($id));
 
-        } catch (\Throwable $e) {
-            $this->createFailResponse($e->getMessage());
-        } catch (\PDOException $e) {
-            $this->createFailResponse($e->getMessage());
+        } catch (HandlerFailedException $e) {
+            return $this->createFailResponse($e->getMessage());
         } catch (\Exception $e) {
-            $this->createFailResponse($e->getMessage());
+            return $this->createFailResponse($e->getMessage());
         }
 
         return $this->createSuccessResponse('Raza Eliminada correctamente');

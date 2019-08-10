@@ -4,17 +4,13 @@ namespace Mateu\Backend\Race\Application\Delete;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Mateu\Backend\Race\Domain\RaceAlreadyUsedByAnimals;
+use Mateu\Backend\Race\Domain\RaceNotFound;
 use Mateu\Backend\Race\Infraestructure\RaceRepository;
 
 class RaceDeletor
 {
-    /**
-     * @var RaceRepository
-     */
     private $raceRepository;
-    /**
-     * @var EntityManagerInterface
-     */
     private $em;
 
     public function __construct(RaceRepository $raceRepository, EntityManagerInterface $em)
@@ -26,13 +22,22 @@ class RaceDeletor
     public function delete($id)
     {
         if (!$this->raceRepository->exist($id)) {
-            throw new Exception('Raza no válida');
+            throw new RaceNotFound('Raza no encontrada');
         }
 
         $race = $this->raceRepository->findOneBy(['id' => $id]);
 
-        $this->raceRepository->delete($race);
-        $this->em->flush();
+        if ($race->getAnimal()->count() > 0) {
+            throw new RaceAlreadyUsedByAnimals(
+                sprintf('Raza utilizada por %s animales', $race->getAnimal()->count())
+            );
+        }
+        try{
+            $this->raceRepository->delete($race);
+            $this->em->flush();
+        } catch (Exception $e) {
+            dd(get_class($e));
+        }
     }
 
 }

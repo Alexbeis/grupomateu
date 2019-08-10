@@ -9,6 +9,7 @@ use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +22,6 @@ class AddRaceController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request
-     * @param MessageBusInterface $messageBus
      *
      * @return JsonResponse
      * @Route("configuration/race/add", name="add_race", methods={"POST"})
@@ -32,7 +32,7 @@ class AddRaceController extends BaseController implements ControllerInterface
         try {
             $uuid =  Uuid::random()->getValue();
 
-            $this->bus->dispatch(
+            $this->dispatch(
                 new CreateRaceCommand(
                     $uuid,
                     $request->get('race_code'),
@@ -40,8 +40,10 @@ class AddRaceController extends BaseController implements ControllerInterface
                 )
             );
 
-        } catch (\Throwable $e) {
-            $this->createFailResponse($e->getMessage());
+        }  catch (HandlerFailedException $e) {
+            return $this->createFailResponse($e->getMessage());
+        } catch (\Exception $e) {
+            return $this->createFailResponse($e->getMessage());
         }
 
         return $this->createSuccessResponse('Raza creada correctamente');

@@ -60,11 +60,6 @@ class Animal
     private $genre;
 
     /**
-     * @ORM\Column(type="text", length=50)
-     */
-    private $procedence;
-
-    /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation" , inversedBy="animal")
      * @ORM\JoinColumn(nullable=false)
@@ -83,11 +78,10 @@ class Animal
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\InType\Domain\Entity\InType", inversedBy="animal")
-     * @JoinColumn(name="in_type_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", inversedBy="animals")
+     * @JoinColumn(name="register_id", referencedColumnName="id")
      */
-    private $inType;
-
+    private $register;
 
 
     public function __construct()
@@ -163,22 +157,6 @@ class Animal
     public function setWeightOut($weight_out): void
     {
         $this->weight_out = $weight_out;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProcedence()
-    {
-        return $this->procedence;
-    }
-
-    /**
-     * @param mixed $procedence
-     */
-    public function setProcedence($procedence): void
-    {
-        $this->procedence = $procedence;
     }
 
     /**
@@ -307,6 +285,25 @@ class Animal
     public function setInType($inType): void
     {
         $this->inType = $inType;
+    }
+
+    /**
+     * @param mixed $register
+     *
+     * @return Animal
+     */
+    public function setRegister($register)
+    {
+        $this->register = $register;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegister()
+    {
+        return $this->register;
     }
 
 

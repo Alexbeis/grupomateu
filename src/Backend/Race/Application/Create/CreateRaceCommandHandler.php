@@ -6,9 +6,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class CreateRaceCommandHandler implements MessageHandlerInterface
 {
-    /**
-     * @var RaceCreator
-     */
     private $creator;
 
     public function __construct(RaceCreator $creator)

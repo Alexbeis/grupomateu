@@ -1,11 +1,69 @@
 {% set route = app.request.attributes.get('_route') %}
 
 <ul class="sidebar-menu" data-widget="tree">
+    {#
+    #################################################################################
+       DASHBOARD
+    ##################################################################################
+    #}
     <li class="header">PÁGINA PRINCIPAL</li>
     <li  {% if route == 'index_dashboard' %} class="active"{% endif %}>
         <a href="{{ path('index_dashboard') }}"><i class="fa fa-book"></i> <span>Dashboard</span></a>
     </li>
-    <li class="treeview  {% if route in ['index_race'] %} active{% endif %}">
+    {#
+    #################################################################################
+       MOVIMIENTOS
+    ##################################################################################
+    #}
+    <li class="header">MOVIMIENTOS</li>
+    <li class="treeview {% if route in ['index_register'] %} active menu-open{% endif %}">
+        <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Entradas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li  {% if route == 'index_register' %} class="active"{% endif %}>
+                <a href="{{ path('index_register') }}"><i class="fa fa-circle-o"></i>Ver</a>
+            </li>
+            <li class=""><a href="index.html"><i class="fa fa-circle-o"></i>Manuales</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Automáticas</a></li>
+        </ul>
+    </li>
+    {#
+     #################################################################################
+        GRANJAS
+     ##################################################################################
+    #}
+    <li class="header">GRANJAS</li>
+    <li {% if route == 'index_explotations' %} class="active"{% endif %}>
+        <a href="{{ path('index_explotations') }}"><i class="fa fa-book active"></i> <span>Explotaciones</span></a>
+    </li>
+    <li {% if route == 'index_animals' %} class="active"{% endif %}>
+        <a href="{{ path('index_animals') }}"><i class="fa fa-book active"></i> <span>Animales</span></a>
+    </li>
+
+    {#
+     #################################################################################
+        PARTNERS
+     ##################################################################################
+    #}
+    <li class="header">Partners</li>
+    <li {% if route == 'index_explotations' %} class=""{% endif %}>
+        <a href="{{ path('index_explotations') }}"><i class="fa fa-book "></i> <span>Compradores</span></a>
+    </li>
+    <li {% if route == 'index_animals' %} class=""{% endif %}>
+        <a href="{{ path('index_animals') }}"><i class="fa fa-book "></i> <span>Suppliers</span></a>
+    </li>
+
+    {#
+    #################################################################################
+       CONFIGURACIÓN
+    ##################################################################################
+    #}
+    <li class="header">CONFIGURACIÓN</li>
+    <li class="treeview  {% if route in ['index_race'] %} active menu-open{% endif %}">
         <a href="#">
             <i class="fa fa-dashboard"></i> <span>Configuración</span>
             <span class="pull-right-container">
@@ -21,47 +79,5 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Movimientos</a></li>
         </ul>
     </li>
-    <li class="header">GRANJAS</li>
-    <li {% if route == 'index_explotations' %} class="active"{% endif %}>
-        <a href="{{ path('index_explotations') }}"><i class="fa fa-book active"></i> <span>Explotaciones</span></a>
-    </li>
-    <li {% if route == 'index_animals' %} class="active"{% endif %}>
-        <a href="{{ path('index_animals') }}"><i class="fa fa-book active"></i> <span>Animales</span></a>
-    </li>
 
-    <li class="header">MOVIMIENTOS</li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Entradas</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>Manuales</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Automáticas</a></li>
-        </ul>
-    </li>
-
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-        </ul>
-    </li>
-
-    <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-    <li class="header">LABELS</li>
-    <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
 </ul>

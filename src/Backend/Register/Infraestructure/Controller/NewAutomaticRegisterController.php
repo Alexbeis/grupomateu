@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Backend\Input\Infraestructure\Controller;
+namespace Mateu\Backend\Register\Infraestructure\Controller;
 
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AddInputsController
- * @package Mateu\Backend\Inputs\Infraestructure\Controller
+ * Class NewAutomaticRegisterController
+ * @package Mateu\Backend\Register\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class AddInputsController extends BaseController implements ControllerInterface
+class NewAutomaticRegisterController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request
@@ -21,6 +21,6 @@ class AddInputsController extends BaseController implements ControllerInterface
      */
     public function __invoke(Request $request)
     {
-        dd($request->get('entrance_app'));
+        dd($request->get('entrance_path'));
     }
 }

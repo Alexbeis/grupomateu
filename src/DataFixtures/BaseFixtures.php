@@ -10,6 +10,7 @@ use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\InType\Domain\Entity\InType;
 use Mateu\Backend\Purchaser\Domain\Entity\Purchaser;
 use Mateu\Backend\Race\Domain\Entity\Race;
+use Mateu\Backend\Register\Domain\Entity\Register;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
 use Mateu\Backend\User\Domain\Entity\User;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
@@ -180,8 +181,9 @@ class BaseFixtures extends Fixture implements FixtureInterface
         $this->loadInTypes($manager);
         $this->loadRaces($manager);
         $this->loadExplotations($manager);
-        $this->loadAnimals($manager);
         $this->loadSuppliers($manager);
+        //$this->loadAnimals($manager);
+        $this->loadRegisters($manager);
         $this->loadPurchasers($manager);
         //$this->loadOutTypes($manager);
 
@@ -248,6 +250,45 @@ class BaseFixtures extends Fixture implements FixtureInterface
         $manager->flush();
     }
 
+    private function loadRegisters(ObjectManager $manager)
+    {
+        for ($i = 0; $i < 50; $i++) {
+            $procedence = self::LOCATIONS[rand(0, count(self::LOCATIONS) - 1)];
+            $supplier = $this->getReference(self::SUPPLIERS[rand(0, count(self::SUPPLIERS) - 1)]['companyName']);
+            $inType = $this->getReference(self::INTYPES[rand(0, count(self::INTYPES) - 1)]['name']);
+
+            $explotation = $this->getReference(self::NAMES_TEXT[rand(0, count(self::NAMES_TEXT) - 1)]);
+            $race = $this->getReference(self::RACES[rand(0, count(self::RACES) - 1)]['code']);
+            $register = (new Register())
+                ->setProcedence($procedence)
+                ->setInType($inType)
+                ->setSupplier($supplier);
+
+            for ($j = 0; $j < rand(10,30); $j++) {
+                $animal = new Animal();
+                $crot = (string)rand(1000000000, 9999999999);
+                $crotMother = (string)rand(1000000000, 9999999999);
+                $num = substr($crot, -4);
+                $animal->setInternalNum($num);
+                $animal->setCrotal($crot);
+                $animal->setCrotalMother($crotMother);
+                $animal->setWeightIn(rand(10, 20));
+                $date = new \DateTime();
+                $date->modify('-' . rand(0, 10) . 'day');
+                $animal->setBirthDate($date);
+                $animal->setExplotation($explotation);
+                $genere = ($i%2 == 0)? 'Male':'Female';
+                $animal->setGenre($genere);
+                $animal->setRace($race);
+
+                $register->addAnimal($animal);
+            }
+            $manager->persist($register);
+            $manager->flush();
+        }
+
+    }
+
     private function loadAnimals(ObjectManager $manager)
     {
         for ($i = 0; $i < 500; $i++) {
@@ -258,7 +299,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $animal->setInternalNum($num);
             $animal->setCrotal($crot);
             $animal->setCrotalMother($crotMother);
-            $animal->setProcedence(self::LOCATIONS[rand(0, count(self::LOCATIONS) - 1)]);
+            //$animal->setProcedence(self::LOCATIONS[rand(0, count(self::LOCATIONS) - 1)]);
             $animal->setWeightIn(rand(10, 20));
             $date = new \DateTime();
             $date->modify('-' . rand(0, 10) . 'day');
@@ -267,10 +308,10 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $genere = ($i%2 == 0)? 'Male':'Female';
             $animal->setGenre($genere);
             $animal->setRace($this->getReference(self::RACES[rand(0, count(self::RACES) - 1)]['code']));
-            $animal->setInType($this->getReference(self::INTYPES[rand(0, count(self::INTYPES) - 1)]['name']));
+            //$animal->setInType($this->getReference(self::INTYPES[rand(0, count(self::INTYPES) - 1)]['name']));
 
             $manager->persist($animal);
-            if ($i % 100 == 0) {
+            if ($i % 50 == 0) {
                 $manager->flush();
             }
 
@@ -313,6 +354,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $supplier->setCreatedAt($date);
 
             $manager->persist($supplier);
+            $this->addReference($supplierData['companyName'], $supplier);
         }
 
         $manager->flush();

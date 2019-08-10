@@ -37,9 +37,10 @@ class InType
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="inType", cascade={"remove"}, orphanRemoval=true))
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", mappedBy="inType")
      */
-    private $animal;
+    private $register;
+
 
     public function __construct($uuid, $code, $name)
     {
@@ -76,13 +77,5 @@ class InType
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getAnimal():?ArrayCollection
-    {
-        return $this->animal;
     }
 }

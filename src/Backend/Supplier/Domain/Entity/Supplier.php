@@ -65,7 +65,7 @@ class Supplier
     private $phone;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $mobilePhone;
 
@@ -75,9 +75,14 @@ class Supplier
     private $fax;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $website;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", mappedBy="supplier")
+     */
+    private $registers;
 
 
     public function getId(): ?int

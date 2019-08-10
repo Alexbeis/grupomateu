@@ -8,13 +8,7 @@ use Mateu\Backend\Race\Domain\RaceRepositoryInterface;
 
 class RaceCreator
 {
-    /**
-     * @var RaceRepositoryInterface
-     */
     private $raceRepository;
-    /**
-     * @var EntityManagerInterface
-     */
     private $em;
 
     public function __construct(RaceRepositoryInterface $raceRepository, EntityManagerInterface $em)
@@ -32,5 +26,4 @@ class RaceCreator
 
         // TODO: Dispatch Related Events
     }
-
 }
