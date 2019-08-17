@@ -8,6 +8,7 @@ use Mateu\Backend\Explotation\Domain\ExplotationFinderByCode;
 use Mateu\Backend\Explotation\Domain\ExplotationFinderById;
 use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
+use Mateu\Backend\Group\Infraestructure\GroupRepository;
 
 class ExplotationSaver
 {
@@ -30,21 +31,27 @@ class ExplotationSaver
      * @var ExplotationFinderById
      */
     private $explotationFinderById;
+    /**
+     * @var GroupRepository
+     */
+    private $groupRepository;
 
     public function __construct(
         ExplotationRepositoryInterface $explotationRepository,
         ExplotationFinderByCode $explotationFinderByCode,
         ExplotationFinderById $explotationFinderById,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        GroupRepository $groupRepository
         )
     {
         $this->explotationRepository = $explotationRepository;
         $this->explotationFinderByCode = $explotationFinderByCode;
         $this->explotationFinderById = $explotationFinderById;
         $this->em = $em;
+        $this->groupRepository = $groupRepository;
     }
 
-    public function save($id, $code, $name, $localization)
+    public function save($id, $code, $name, $localization, $groupId)
     {
         $explotation = $this->explotationFinderById->__invoke($id);
 
@@ -58,12 +65,17 @@ class ExplotationSaver
             throw new ExplotationCodeAlreadyUsed('Código existente!');
         }
 
+        $group = $this->groupRepository->find($groupId);
+
         $explotation
             ->setCode($code)
             ->setName($name)
-            ->setLocalization($localization);
+            ->setLocalization($localization)
+            ->setGroup($group);
 
         $this->explotationRepository->save($explotation);
         $this->em->flush();
+
+        // TODO: Events
     }
 }

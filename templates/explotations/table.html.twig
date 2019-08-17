@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th>Código</th>
+            <th>Grupo</th>
             <th>Nombre</th>
             <th>Localizada</th>
             <th>Animales</th>
@@ -15,6 +16,10 @@
         {% for explotation in explotations %}
             <tr>
                 <td>{{ explotation.code }}</td>
+                <td>{% if explotation.group.name is not defined %} -
+                    {% else %}{{ explotation.group.name }}
+                    {% endif %}
+                </td>
                 <td>{{ explotation.name }}</td>
                 <td>{{ explotation.localization }}</td>
                 <td>{{ explotation.animal.count }}</td>
@@ -32,6 +37,7 @@
         <tfoot>
         <tr>
             <th>Código</th>
+            <th>Grupo</th>
             <th>Nombre</th>
             <th>Localizada</th>
             <th>Animales</th>

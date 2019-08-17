@@ -8,13 +8,15 @@ class SaveExplotationCommand
     private $name;
     private $code;
     private $localization;
+    private $group;
 
-    public function __construct($id, $name, $code, $localization)
+    public function __construct($id, $name, $code, $localization, $group)
     {
         $this->id = $id;
         $this->name = $name;
         $this->code = $code;
         $this->localization = $localization;
+        $this->group = $group;
     }
 
     /**
@@ -47,6 +49,14 @@ class SaveExplotationCommand
     public function getLocalization()
     {
         return $this->localization;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 
 }

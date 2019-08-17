@@ -45,6 +45,11 @@ class Explotation
      */
     private $createdBy;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Group\Domain\Entity\Group", inversedBy="explotations")
+     */
+    private $group;
+
 
     public function __construct()
     {
@@ -153,6 +158,26 @@ class Explotation
     public function __toString()
     {
         return (string) $this->getCode();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param mixed $group
+     *
+     * @return Explotation
+     */
+    public function setGroup($group): self
+    {
+        $this->group = $group;
+
+        return $this;
     }
 
 }

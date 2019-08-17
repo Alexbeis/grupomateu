@@ -253,17 +253,11 @@ desired effect
 
         <!-- Main content -->
         <section class="content container-fluid">
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="callout callout-{{type}}">{{message}}</div>
-                {% endfor %}
-            {% endfor %}
-
+            {% include 'partials/errors.html.twig' %}
 
             {% block body %}
 
             {% endblock %}
-
         </section>
         <!-- /.content -->
     </div>

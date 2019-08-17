@@ -25,6 +25,13 @@
                                         data-url="{{ path("add_explotation") }}">
                                     Añadir
                                 </button>
+                                <button type="button"
+                                        class="btn btn-info pull-right"
+                                        data-toggle="modal"
+                                        data-target="#modal-add-group"
+                                        data-url="{{ path("add_group") }}">
+                                    Añadir Grupo
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -34,7 +41,10 @@
                 </div>
             </div>
         </div>
-        {# MODALS #}
+        {#
+            #### MODALS ######
+        #}
         {% include 'explotations/modal/add.html.twig' %}
+        {% include 'explotations/modal/add-group.html.twig' %}
     </section>
 {% endblock body %}

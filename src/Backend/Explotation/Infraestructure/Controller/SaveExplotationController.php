@@ -31,7 +31,8 @@ class SaveExplotationController extends BaseController implements ControllerInte
                     $request->get('exp_id'),
                     $request->get('exp_name'),
                     $request->get('exp_code'),
-                    $request->get('exp_loca')
+                    $request->get('exp_loca'),
+                    $request->get('exp_group')
                 )
             );
 
