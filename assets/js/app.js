@@ -24,9 +24,11 @@ import '../../node_modules/admin-lte/bower_components/chart.js/Chart.min.js';
 
 
 // Custom js
+import './shared/AjaxCall.js';
 import './dashboard/GMDashboard.js';
 import './explotations/GMExplotations.js';
 import './explotations/GMExplotation.js';
+import './explotations/GMGroup.js';
 import './configuration/GMConfiguration.js';
 import './animals/GMAnimals.js';
 import './registers/GMRegisters.js';

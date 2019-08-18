@@ -27,6 +27,14 @@
                                    name="exp_code">
                             <span class="help-block hidden"></span>
                         </div>
+                        <label for="exp_group">Grupo</label>
+                        <select class="form-control" id="exp_group" name="exp_group">
+                            {% for group in groups %}
+                                <option value="{{ group.id}}">
+                                    {{group.name}}
+                                </option>
+                            {% endfor %}
+                        </select>
                     </div>
                         <!-- /.box-body -->
                 </div>

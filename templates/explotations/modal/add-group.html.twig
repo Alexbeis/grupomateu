@@ -1,0 +1,42 @@
+<div class="modal fade" id="modal-add-group" style="display: none;">
+    <div class="modal-dialog">
+        <form role="form" id="add-group-form" method="post" action="{{ path('add_group') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Nuevo Grupo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="group_name">Nombre</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="group_name"
+                                   placeholder="ej: Grupo 1"
+                                   name="group_name">
+                            <span class="help-block hidden"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_code">Código</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="group_code"
+                                   placeholder="ej: G001"
+                                   name="group_code">
+                            <span class="help-block hidden"></span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary js-add-group">Guardar</button>
+                </div>
+            </div> <!-- /.modal-content -->
+        </form>
+        <!-- /. form -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

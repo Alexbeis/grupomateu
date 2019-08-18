@@ -1,5 +1,7 @@
 'use strict';
 
+import AjaxCall from "../shared/AjaxCall";
+
 const swal = require('sweetalert2');
 
 (function(window, $, swal) {
@@ -9,6 +11,8 @@ const swal = require('sweetalert2');
         this.$wrapperForm = $wrapperForm;
         this.$wrapperTable = $wrapperTable;
         this.$moveAnimalButton = $('.js-move-animal');
+
+        this.ajaxCall = new AjaxCall();
 
         this.$wrapperForm.on(
             'click',
@@ -101,7 +105,7 @@ const swal = require('sweetalert2');
                 this._showSpinner();
                 var url = this.$wrapperForm.attr('action');
                 var data = this.$wrapperForm.serialize();
-                this._ajaxSave(url, data)
+                this.ajaxCall.send(url, 'POST' ,data)
                     .then(function (data) {
                         if(data.success) {
                            self._fireAlert({type:'success', title:data.message});

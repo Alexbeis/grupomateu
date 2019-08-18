@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\Group\Domain\Entity\Group;
 use Mateu\Backend\InType\Domain\Entity\InType;
 use Mateu\Backend\Purchaser\Domain\Entity\Purchaser;
 use Mateu\Backend\Race\Domain\Entity\Race;
@@ -165,6 +166,12 @@ class BaseFixtures extends Fixture implements FixtureInterface
       ['code' => '004', 'name' => 'Otro']
     ];
 
+    private const GROUPS = [
+      ['code' => 'G001', 'name' => 'Grupo1'],
+      ['code' => 'G002', 'name' => 'Grupo2'],
+      ['code' => 'G003', 'name' => 'Grupo3']
+    ];
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -179,6 +186,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
     {
         $this->loadUsers($manager);
         $this->loadInTypes($manager);
+        $this->loadGroups($manager);
         $this->loadRaces($manager);
         $this->loadExplotations($manager);
         $this->loadSuppliers($manager);
@@ -229,6 +237,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $date = new \DateTime();
             $date->modify('-' . rand(0, 10) . 'day');
             $e->setCreatedAt($date);
+            $e->setGroup($this->getReference(self::GROUPS[rand(0, count(self::GROUPS) - 1)]['name']));
 
             $this->addReference($explotation, $e);
             $manager->persist($e);
@@ -245,6 +254,18 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $this->addReference($inType['name'], $t);
 
             $manager->persist($t);
+        }
+
+        $manager->flush();
+    }
+
+    private function loadGroups(ObjectManager $manager)
+    {
+        foreach (self::GROUPS as $group) {
+            $g = Group::create($group['code'], $group['name']);
+            $this->addReference($group['name'], $g);
+
+            $manager->persist($g);
         }
 
         $manager->flush();

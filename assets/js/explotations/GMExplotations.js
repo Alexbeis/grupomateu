@@ -1,5 +1,7 @@
 'use strict';
 
+import AjaxCall from "../shared/AjaxCall";
+
 const swal = require('sweetalert2');
 
 (function(window, $, swal) {
@@ -9,6 +11,8 @@ const swal = require('sweetalert2');
         this.$wrapper = $wrapper;
 
         this.$modalWrapper = $modalWrapper;
+
+        this.ajaxCall = new AjaxCall();
 
         this.$wrapper.on(
             'click',
@@ -158,7 +162,7 @@ const swal = require('sweetalert2');
                 confirmButtonText: 'Bórrala'
             }).then((result) => {
                 if (result.value) {
-                    self._ajaxDelete(url)
+                    this.ajaxCall.send(url, 'DELETE')
                     .then(function (data) {
                         if (data.success) {
                             self._fireAlert({
@@ -186,20 +190,6 @@ const swal = require('sweetalert2');
 
                 }
             })
-        },
-
-        /**
-         *
-         * @param url
-         * @returns promise
-         */
-        _ajaxDelete: function (url) {
-            return $.ajax(
-                {
-                    url: url,
-                    method:'DELETE',
-                }
-            );
         },
 
         /**
