@@ -24,6 +24,7 @@ class AddExplotationCommandHandler implements MessageHandlerInterface
         $this->explotationCreator->create(
             $code->getCode(),
             $command->getName(),
+            $command->getGroupId(),
             $command->getLocalization(),
             $command->getCreatedBy()
         );

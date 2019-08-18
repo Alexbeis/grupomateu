@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Mateu\Backend\Group\Application\Create;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Group\Domain\Entity\Group;
@@ -27,3 +25,4 @@ class GroupCreator
         $this->em->flush();
     }
 }
+

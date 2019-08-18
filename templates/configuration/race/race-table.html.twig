@@ -9,8 +9,8 @@
     <tbody>
     {% for race in races %}
         <tr {{ race.id }}>
-            <td>{{ race.code }}</td>
-            <td>{{ race.name }}</td>
+            <td contenteditable="true" >{{ race.code }}</td>
+            <td contenteditable="true">{{ race.name }}</td>
             <td>
                 {% include 'configuration/race/partial/dropdownbutton.html.twig' %}
                 <span class="js-spinner">
