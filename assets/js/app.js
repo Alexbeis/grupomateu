@@ -20,7 +20,6 @@ import '../../node_modules/admin-lte/bower_components/jquery-ui/jquery-ui.js';
 import '../../node_modules/admin-lte/dist/js/adminlte.js';
 import '../../node_modules/admin-lte/plugins/iCheck/icheck.js';
 import '../../node_modules/admin-lte/bower_components/select2/dist/js/select2.min.js';
-import '../../node_modules/admin-lte/bower_components/chart.js/Chart.min.js';
 
 
 // Custom js

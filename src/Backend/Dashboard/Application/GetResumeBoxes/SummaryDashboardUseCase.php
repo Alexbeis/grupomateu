@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Domain\UseCases\Dashboard;
+namespace Mateu\Backend\Dashboard\Application\GetResumeBoxes;
 
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
@@ -38,9 +38,6 @@ class SummaryDashboardUseCase
         $this->purchaserRepository = $purchaserRepository;
     }
 
-    /**
-     * @retun array of entity Summaries
-     */
     public function execute()
     {
         $result = [

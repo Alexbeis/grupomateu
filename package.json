@@ -15,6 +15,7 @@
     "dependencies": {
         "admin-lte": "^2.4.10",
         "bootstrap": "^3.3.7",
+        "chart.js": "^2.8.0",
         "datatables.net-responsive": "^2.2.3",
         "jquery": "^3.4.1",
         "popper.js": "^1.15.0",

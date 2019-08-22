@@ -1,5 +1,7 @@
 'use strict';
 
+import AjaxCall from "../shared/AjaxCall";
+
 const swal = require('sweetalert2');
 import Race from './Race';
 import ValidatorFactory from './ValidatorFactory';
@@ -23,12 +25,19 @@ import ValidatorFactory from './ValidatorFactory';
             this.handleAddConfiguration.bind(this)
         );
 
+        this.$tableWrapper.on(
+            'click',
+            '.js-edit-race',
+            this.handleEditRace.bind(this)
+        );
+
+        // Bind on document because table is replaced full
         $(document).on(
             'click',
             this._options.forms.delete,
             this.handleDeleteConfiguration.bind(this)
         );
-
+        this.ajaxCall = new AjaxCall();
         this.selectors = [new Race()];
         this.validatorFactory = new ValidatorFactory();
 
@@ -69,12 +78,7 @@ import ValidatorFactory from './ValidatorFactory';
                 /*Next iteration if not exists url*/
                 if (!instance.getLoadUrl()) return;
 
-                let options = {
-                    url: instance.getLoadUrl(),
-                    method:'GET'
-                };
-
-                self._ajaxCall(options)
+                self.ajaxCall.send(instance.getLoadUrl(), 'GET')
                     .then( (data) => {
                         self.$tableWrapper.replaceWith(data);
                     }).catch((err) => {
@@ -89,12 +93,13 @@ import ValidatorFactory from './ValidatorFactory';
          */
         handleAddConfiguration: function (e) {
             e.preventDefault();
+            this._cleanMarkedErrors();
 
             let $target = $(e.currentTarget);
             let form = $target.closest('form');
             let url = form.attr('action');
             const type = form.attr('data-validator');
-            const validator = this.validatorFactory.create(type);
+            let validator = this.validatorFactory.create(type);
             if (!validator) return false;
             if (!validator.isValid(form)) {
                 this._markErrors(validator.getErrors());
@@ -104,18 +109,14 @@ import ValidatorFactory from './ValidatorFactory';
             form.closest('.box').find('.overlay').removeClass('hidden');
 
             let data = form.serialize();
-            let options = {
-                url:url,
-                method: 'POST',
-                data: data
-            };
 
-            this._ajaxCall(options)
+            this.ajaxCall.send(url, 'POST', data)
                 .then((data) => {
                     if(data.success) {
+                        this._cleanInputs();
                         this._fireAlert({type:'success', title:data.message});
-                        // TODO: Replace by loadOptionsByTheme
                         this._loadTable();
+
                     } else {
                         this._fireAlert({type:'error', title:data.message});
                     }
@@ -134,20 +135,18 @@ import ValidatorFactory from './ValidatorFactory';
             let $target = $(e.currentTarget);
             let url = $target.attr('href');
 
-            this._ajaxCall({
-                url : url,
-                method: 'GET',
-            }).then((data) => {
-                if(data.success) {
-                    this._fireAlert({type:'success', title:data.message, onClose: () => {
-                        let $elementRow = $target.closest('tr');
-                        $elementRow.fadeOut('normal', function() {
-                            $(this).remove();
-                            });
-                        }});
-                } else {
-                    this._fireAlert({type:'error', title:data.message});
-                }
+            this.ajaxCall.send(url,'GET')
+                .then((data) => {
+                    if(data.success) {
+                        this._fireAlert({type:'success', title:data.message, onClose: () => {
+                            let $elementRow = $target.closest('tr');
+                            $elementRow.fadeOut('normal', function() {
+                                $(this).remove();
+                                });
+                            }});
+                    } else {
+                        this._fireAlert({type:'error', title:data.message});
+                    }
 
             }).catch((err) => {
                 console.log(err);
@@ -157,36 +156,16 @@ import ValidatorFactory from './ValidatorFactory';
         },
 
         /**
-         * @returns Promise
-         * @private
-         * @param options
-         */
-        _ajaxCall: function (options) {
-            
-            return $.ajax(options)
-        },
-
-        /**
          * @param options
          * @private
          */
-        _fireAlert:function (options) {
+        _fireAlert: (options) => {
             let defOptions = {
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 2000
             };
             swal.fire($.extend(defOptions, options));
-        },
-
-        /**
-         * Add Single Option
-         * @param data
-         * @param $element
-         * @private
-         */
-        _addoption: (data, $element) => {
-            $element.append(`<option value="${data.id}">${data.name}</option>`);
         },
 
         /**
@@ -200,7 +179,8 @@ import ValidatorFactory from './ValidatorFactory';
                    .next()
                    .html(error.error)
                    .removeClass('hidden')
-                   .parent('.form-group').addClass('has-error');
+                   .parent('.form-group')
+                   .addClass('has-error');
             });
         },
 
@@ -209,7 +189,21 @@ import ValidatorFactory from './ValidatorFactory';
          * @private
          */
         _cleanMarkedErrors: () => {
+            $('.has-error').each((index, el) => {
+                $(el).removeClass('has-error')
+                    .find('.help-block')
+                    .addClass('hidden');
+            })
+        },
 
+        /**
+         *
+         * @private
+         */
+        _cleanInputs: function() {
+            this.$raceWrapper
+                .find('input')
+                .val('');
         }
     });
 
