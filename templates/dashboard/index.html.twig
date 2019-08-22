@@ -12,19 +12,15 @@
         </ol>
     </section>
     <section class="content">
-        <div class="row">
-            {% for item in totals %}
-                <div class="col-lg-3 col-xs-6 js-boxes">
-                    <!-- small box -->
-                    {% include 'dashboard/boxes/box.html.twig' %}
-                </div>
-            {% endfor %}
-        </div>
+
+        {% include 'dashboard/index-resume.html.twig' %}
+
+        {% include 'dashboard/index-stadistics.html.twig' %}
+
         <div class="row">
             <div class="col-lg-6 col-xs-12">
                 {% include 'dashboard/todolist.html.twig' %}
             </div>
         </div>
-
     </section>
 {% endblock %}

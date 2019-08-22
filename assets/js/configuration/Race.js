@@ -6,6 +6,7 @@ export default class Race {
         this.name = 'race';
         this.add = '#add_race';
         this.delete = '#delete_race';
+        this.editurl = 'edit'
         this.loadurl =  'get';
         this.addurl = 'configuration/races/add';
     }
