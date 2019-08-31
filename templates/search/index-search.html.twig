@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="content-header">
+        <h1>Animales <small>Herramienta de Búsqueda</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Búsqueda</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4>Busca según tu criterio</h4>
+                </div>
+                <div class="box-content">
+                    <div class="container">
+                        <div class="row" id="search">
+                            <form id="search-form" action="" method="GET" enctype="multipart/form-data">
+                                <div class="form-group col-xs-9">
+                                    <input name="text" class="form-control" type="text" placeholder="Search" />
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <button type="submit" class="btn btn-block btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row" id="filter">
+                            <form>
+                                <div class="form-group col-sm-3 col-xs-6">
+                                    <select data-filter="make" class="filter-make filter form-control">
+                                        <option value="">Select Make</option>
+                                        <option value="">Show All</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-6">
+                                    <select data-filter="model" class="filter-model filter form-control">
+                                        <option value="">Select Model</option>
+                                        <option value="">Show All</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-6">
+                                    <select data-filter="type" class="filter-type filter form-control">
+                                        <option value="">Select Type</option>
+                                        <option value="">Show All</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-6">
+                                    <select data-filter="price" class="filter-price filter form-control">
+                                        <option value="">Select Price Range</option>
+                                        <option value="">Show All</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row" id="results">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

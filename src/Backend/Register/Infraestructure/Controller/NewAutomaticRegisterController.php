@@ -17,7 +17,7 @@ class NewAutomaticRegisterController extends BaseController implements Controlle
 {
     /**
      * @param Request $request
-     * @Route( "input/new", name = "input_new", methods={"POST"})
+     * @Route( "register/new", name = "register_new", methods={"POST"})
      */
     public function __invoke(Request $request)
     {
