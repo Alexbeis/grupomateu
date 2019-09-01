@@ -13,6 +13,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@babel/polyfill": "^7.4.4",
         "admin-lte": "^2.4.10",
         "bootstrap": "^3.3.7",
         "chart.js": "^2.8.0",

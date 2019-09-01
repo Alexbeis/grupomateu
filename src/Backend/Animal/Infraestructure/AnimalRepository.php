@@ -3,6 +3,7 @@
 namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -33,6 +34,29 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
         $total = $qb->getQuery()->getSingleScalarResult();
 
         return $total;
+    }
 
+    public function computeTotalsPerExplotation()
+    {
+        $qb = $this->createQueryBuilder('animal');
+        $qb->select('exp.name', 'exp.code', 'count(animal.id) as total')
+            ->join('animal.explotation', 'exp')
+            ->groupBy('exp.id')
+            ->orderBy('count(animal.id)','DESC');
+        $result = $qb->getQuery()->getArrayResult();
+
+        return $result;
+    }
+
+    public function computeTotalsPerRace()
+    {
+        $qb = $this->createQueryBuilder('animal');
+        $qb->select('race.name', 'count(animal.id) as total')
+            ->join('animal.race', 'race')
+            ->groupBy('race.id')
+            ->orderBy('count(animal.id)','DESC');
+        $result = $qb->getQuery()->getArrayResult();
+
+        return $result;
     }
 }
