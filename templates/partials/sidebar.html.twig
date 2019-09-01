@@ -18,7 +18,7 @@
     <li class="header">MOVIMIENTOS</li>
     <li class="treeview {% if route in ['index_register'] %} active menu-open{% endif %}">
         <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Entradas</span>
+            <i class="fa fa-arrow-right"></i> <span>Entradas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -31,6 +31,22 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Automáticas</a></li>
         </ul>
     </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-arrow-left"></i> <span>Salidas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ path('index_register') }}"><i class="fa fa-circle-o"></i>Ver</a>
+            </li>
+            <li class=""><a href="index.html"><i class="fa fa-circle-o"></i>Manuales</a></li>
+        </ul>
+    </li>
+
     {#
      #################################################################################
         GRANJAS
@@ -50,14 +66,26 @@
         PARTNERS
      ##################################################################################
     #}
-    <li class="header">Partners</li>
+    <li class="header">PARTNERS</li>
     <li {% if route == 'index_explotations' %} class=""{% endif %}>
         <a href="{{ path('index_explotations') }}"><i class="fa fa-book "></i> <span>Compradores</span></a>
     </li>
     <li {% if route == 'index_animals' %} class=""{% endif %}>
         <a href="{{ path('index_animals') }}"><i class="fa fa-book "></i> <span>Suppliers</span></a>
     </li>
+    <li {% if route == 'index_animals' %} class=""{% endif %}>
+        <a href="{{ path('index_animals') }}"><i class="fa fa-truck "></i> <span>Transporters</span></a>
+    </li>
 
+    {#
+     #################################################################################
+        DATOS
+     ##################################################################################
+    #}
+    <li class="header">DATOS</li>
+    <li>
+        <a href="{{ path('index_search') }}"><i class="fa fa-search "></i> <span>Búsquedas</span></a>
+    </li>
     {#
     #################################################################################
        CONFIGURACIÓN

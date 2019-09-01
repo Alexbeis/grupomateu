@@ -5,7 +5,7 @@ namespace Mateu\Backend\Register\Infraestructure\Controller;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,14 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Mateu\Backend\Register\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class NewAutomaticRegisterController extends BaseController implements ControllerInterface
+class AutomaticRegisterController extends BaseController implements ControllerInterface
 {
     /**
-     * @param Request $request
-     * @Route( "register/new", name = "register_new", methods={"POST"})
+     * @Route("/register/auto", name="register_auto", methods={"GET"})
      */
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        dd($request->get('entrance_path'));
+        return new Response(
+            $this->render('registers/register/register-form.html.twig',[] )
+        );
+
     }
+
 }

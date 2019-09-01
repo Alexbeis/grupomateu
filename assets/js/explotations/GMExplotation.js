@@ -1,6 +1,7 @@
 'use strict';
 
 import AjaxCall from "../shared/AjaxCall";
+require ('../shared/datatable_extension_custom_filter');
 
 const swal = require('sweetalert2');
 
@@ -66,7 +67,7 @@ const swal = require('sweetalert2');
          * Load Datatable data
          */
         loadDatatable: function() {
-            this.$wrapperTable.DataTable({
+            let datatable = this.$wrapperTable.DataTable({
                 "pageLength": 10,
                 "pagingType": "simple",
                 'columnDefs': [{
@@ -78,6 +79,10 @@ const swal = require('sweetalert2');
                         return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
                     }
                 }],
+            });
+
+            $('#min_old, #max_old').keyup( function() {
+                datatable.draw();
             });
         },
 

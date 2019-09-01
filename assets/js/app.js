@@ -24,6 +24,8 @@ import '../../node_modules/admin-lte/bower_components/select2/dist/js/select2.mi
 
 // Custom js
 import './shared/AjaxCall.js';
+import './shared/ChartGenerator';
+import './dashboard/GMStatistics.js';
 import './dashboard/GMDashboard.js';
 import './explotations/GMExplotations.js';
 import './explotations/GMExplotation.js';
