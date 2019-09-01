@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Race\Domain\Entity\Race;
 use Mateu\Backend\Race\Domain\RaceRepositoryInterface;
 
-class RaceCreator
+final class RaceCreator
 {
     private $raceRepository;
     private $em;
@@ -19,6 +19,8 @@ class RaceCreator
 
     public function create($uuid, $code, $name)
     {
+        // TODO: Check if RACE Code/name exists
+
         $race = Race::create($uuid, $code, $name);
 
         $this->raceRepository->save($race);

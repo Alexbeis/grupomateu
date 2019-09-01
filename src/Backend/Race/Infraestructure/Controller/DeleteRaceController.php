@@ -21,7 +21,7 @@ class DeleteRaceController extends BaseController
      * @param $id
      *
      * @return JsonResponse
-     * @Route("configuration/race/delete/{id}", name="delete_race", methods={"GET"})
+     * @Route("configuration/race/delete/{id}", name="delete_race", methods={"POST"})
      *
      */
     public function __invoke($id)

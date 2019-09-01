@@ -3,6 +3,7 @@
 namespace Mateu;
 
 use Mateu\Infraestructure\Controller\ControllerInterface;
+use Mateu\Shared\Infraestructure\ConsoleCommand\ConsoleCommandInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -56,5 +57,8 @@ class Kernel extends BaseKernel
     {
         $container->registerForAutoconfiguration(ControllerInterface::class)
             ->addTag('controller.service_arguments');
+
+        $container->registerForAutoconfiguration(ConsoleCommandInterface::class)
+            ->addTag('console.command');
     }
 }

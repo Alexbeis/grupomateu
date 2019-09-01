@@ -25,11 +25,6 @@ import ValidatorFactory from './ValidatorFactory';
             this.handleAddConfiguration.bind(this)
         );
 
-        this.$tableWrapper.on(
-            'click',
-            '.js-edit-race',
-            this.handleEditRace.bind(this)
-        );
 
         // Bind on document because table is replaced full
         $(document).on(
@@ -135,7 +130,7 @@ import ValidatorFactory from './ValidatorFactory';
             let $target = $(e.currentTarget);
             let url = $target.attr('href');
 
-            this.ajaxCall.send(url,'GET')
+            this.ajaxCall.send(url,'POST')
                 .then((data) => {
                     if(data.success) {
                         this._fireAlert({type:'success', title:data.message, onClose: () => {
