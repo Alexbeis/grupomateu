@@ -3,8 +3,11 @@
 namespace Mateu\Backend\Animal\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\Table;
 use Mateu\Backend\Animal\Domain\BirthdayMonthCalculator;
+use Mateu\Backend\Annex\Domain\Entity\Annex;
 use Mateu\Backend\History\Domain\Entity\History;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +15,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Mateu\Backend\Animal\Infraestructure\AnimalRepository")
+ * @Table(indexes={
+ *     @Index(name="crotal_idx", columns={"crotal"}),
+ *     @Index(name="internal_idx", columns={"internal_num"})}
+ *     )
  */
 class Animal
 {
@@ -82,6 +89,11 @@ class Animal
      * @JoinColumn(name="register_id", referencedColumnName="id")
      */
     private $register;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Mateu\Backend\Annex\Domain\Entity\Annex", mappedBy="animal")
+     */
+    private $annex;
 
 
     public function __construct()
@@ -272,22 +284,6 @@ class Animal
     }
 
     /**
-     * @return mixed
-     */
-    public function getInType()
-    {
-        return $this->inType;
-    }
-
-    /**
-     * @param mixed $inType
-     */
-    public function setInType($inType): void
-    {
-        $this->inType = $inType;
-    }
-
-    /**
      * @param mixed $register
      *
      * @return Animal
@@ -304,6 +300,25 @@ class Animal
     public function getRegister()
     {
         return $this->register;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnnex():?Annex
+    {
+        return $this->annex;
+    }
+
+    /**
+     * @param mixed $annex
+     *
+     * @return Animal
+     */
+    public function setAnnex($annex): self
+    {
+        $this->annex = $annex;
+        return $this;
     }
 
 

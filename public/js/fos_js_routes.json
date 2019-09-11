@@ -1,0 +1,1 @@
+{"base_url":"","routes":{"annex_create":{"tokens":[["text","\/admin\/annex\/create"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":["POST"],"schemes":[]},"annex_delete":{"tokens":[["text","\/admin\/annex\/delete"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":["DELETE"],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http"}

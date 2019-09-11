@@ -5,7 +5,9 @@ require ('../shared/datatable_extension_custom_filter');
 
 const swal = require('sweetalert2');
 
-(function(window, $, swal) {
+
+
+(function(window, $, swal, Routing) {
 
     window.GMExplotation = function($wrapperForm, $wrapperTable) {
 
@@ -19,6 +21,12 @@ const swal = require('sweetalert2');
             'click',
             this.options._selectors.save,
             this.handleExplotationSave.bind(this)
+        );
+
+        this.$wrapperTable.on(
+            'click',
+            this.options._selectors.annex,
+            this.handleAnnexAnimal.bind(this)
         );
 
         this.$moveAnimalButton.on(
@@ -35,6 +43,7 @@ const swal = require('sweetalert2');
             _selectors: {
                 form: '#expl_save_form',
                 save: '.js-save-explotation',
+                annex: '.js-annex-animal',
                 inputs:[
                     {
                         input:'#exp_name',
@@ -131,6 +140,24 @@ const swal = require('sweetalert2');
             console.log('Moving animals');
         },
 
+        handleAnnexAnimal: function(e) {
+          e.preventDefault();
+          let $target = $(e.currentTarget);
+          let id = $target.data('id');
+          let isAnnexed = $target.data('annexed') == '0'? false: true;
+          let method = isAnnexed ? 'DELETE' : 'POST';
+          let url = isAnnexed ? Routing.generate('annex_delete'): Routing.generate('annex_create');
+          this.ajaxCall
+              .send(url, method, {id: id})
+              .then((data) => {
+                  console.log(data);
+              })
+              .catch((err) => {
+
+            });
+
+        },
+
         /**
          *
          * @param value
@@ -151,8 +178,13 @@ const swal = require('sweetalert2');
          * @private
          */
         _addError:function(element, message){
-            element.closest('.form-group').addClass('has-error');
-            element.next('.help-block').html(message).removeClass('hidden');
+            element
+                .closest('.form-group')
+                .addClass('has-error');
+            element
+                .next('.help-block')
+                .html(message)
+                .removeClass('hidden');
         },
 
         /**
@@ -165,22 +197,6 @@ const swal = require('sweetalert2');
                 $id.closest('.form-group').removeClass('has-error');
                 $id.next('.help-block').html('').addClass('hidden');
             });
-        },
-
-        /**
-         *
-         * @param url
-         * @param data
-         * @returns promise
-         */
-        _ajaxSave: function (url, data) {
-            return $.ajax(
-                {
-                    url: url,
-                    method:'POST',
-                    data: data
-                }
-            );
         },
 
         /**
@@ -220,7 +236,7 @@ const swal = require('sweetalert2');
     });
 
 
-})(window, jQuery, swal);
+})(window, jQuery, swal, Routing);
 
 let ExplotationWrapperForm = $('#expl_save_form');
 let ExplotationAnimalTable = $('#exp-animal-table');

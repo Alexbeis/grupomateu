@@ -1,5 +1,5 @@
 // any CSS you require will output into a single css file (app.css in this case)
-import '../css/app.css';
+
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../../node_modules/admin-lte/bower_components/font-awesome/css/font-awesome.min.css';
 import '../../node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.css';
@@ -7,6 +7,7 @@ import '../../node_modules/admin-lte/dist/css/AdminLTE.min.css';
 import '../../node_modules/admin-lte/dist/css/skins/skin-blue.min.css';
 import '../../node_modules/admin-lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css';
 import '../../node_modules/admin-lte/bower_components/select2/dist/css/select2.min.css';
+import '../css/app.css';
 
 const $ = require('jquery');
 global.$ = global.jquery = $;
