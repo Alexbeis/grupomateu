@@ -33,8 +33,8 @@ class AnnexRepository extends ServiceEntityRepository implements AnnexRepository
         return null !== $this->findByAnimalCrotal($crotal);
     }
 
-    public function findByAnimalCrotal($crotal)
+    public function remove($annex)
     {
-        return $this->findOneBy(['animal_crotal'=> $crotal]);
+        $this->_em->remove($annex);
     }
 }

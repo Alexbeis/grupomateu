@@ -38,23 +38,17 @@
                 {% set isAnnexed = animal.annex %}
 
                 <div class="btn-group">
-                    {% if isAnnexed %}
-                        <a href="#"
-                           type="button"
-                           class="btn btn-warning js-annex-animal"
-                            data-annexed="{{ isAnnexed ? '1':'0' }}"
-                            data-id="{{ animal.id }}">
-                            Quitar
-                        </a>
-                    {% else %}
-                        <a href="#"
-                           type="button"
-                           class="btn btn-default js-annex-animal"
-                           data-annexed="{{ isAnnexed ? '1': '0' }}"
-                           data-id="{{ animal.id }}">
-                            Annexar
-                        </a>
-                    {% endif %}
+                    <a href="{{ path('annex_create') }}"
+                       class="btn
+                        {{ isAnnexed ? 'btn-warning disabled': 'btn-default' }}
+                        js-annex-animal"
+                       data-id="{{ animal.id }}"
+                    >
+                        {{ isAnnexed ? 'Anexado': 'Anexar' }}
+                        <span class="js-spinner">
+                            &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
+                        </span>
+                    </a>
                 </div>
             </td>
         </tr>

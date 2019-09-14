@@ -7,7 +7,7 @@ const swal = require('sweetalert2');
 
 
 
-(function(window, $, swal, Routing) {
+(function(window, $, swal) {
 
     window.GMExplotation = function($wrapperForm, $wrapperTable) {
 
@@ -144,16 +144,26 @@ const swal = require('sweetalert2');
           e.preventDefault();
           let $target = $(e.currentTarget);
           let id = $target.data('id');
-          let isAnnexed = $target.data('annexed') == '0'? false: true;
-          let method = isAnnexed ? 'DELETE' : 'POST';
-          let url = isAnnexed ? Routing.generate('annex_delete'): Routing.generate('annex_create');
+          let url = $target.attr('href');
+          const $spinner = $target.find('.js-spinner > i');
+          $spinner.removeClass('hidden');
           this.ajaxCall
-              .send(url, method, {id: id})
+              .send(url, 'POST', {id: id})
               .then((data) => {
-                  console.log(data);
+                  if (data.success) {
+                      this._fireAlert({type:'success', title:data.message});
+                      $target
+                          .addClass('btn-warning disabled')
+                          .removeClass('btn-default')
+                          .text('Anexado');
+
+                  } else {
+                      this._fireAlert({type:'error', title:data.message});
+                  }
+                  $spinner.addClass('hidden');
               })
               .catch((err) => {
-
+                  $spinner.addClass('hidden');
             });
 
         },
@@ -236,7 +246,7 @@ const swal = require('sweetalert2');
     });
 
 
-})(window, jQuery, swal, Routing);
+})(window, jQuery, swal);
 
 let ExplotationWrapperForm = $('#expl_save_form');
 let ExplotationAnimalTable = $('#exp-animal-table');

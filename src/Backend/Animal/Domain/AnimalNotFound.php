@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Backend\Animal\Application\Find;
+namespace Mateu\Backend\Animal\Domain;
 
 use Exception;
 
