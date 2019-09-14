@@ -35,4 +35,20 @@ class Annex
     {
         return new self($animal);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAnimal()
+    {
+        return $this->animal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

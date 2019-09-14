@@ -1,0 +1,50 @@
+
+<table id="annex-table" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Crotal</th>
+        <th>Número interno</th>
+        <th>Edad</th>
+        <th>Edad(meses)</th>
+        <th>Explotación</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for annex in annexes %}
+        <tr id="row_{{ annex.id }}">
+            <td></td>
+            <td>{{ annex.animal.crotal }}</td>
+            <td>{{ annex.animal.internalnum }}</td>
+            <td>{{ annex.animal.birthdate|date('d-m-y') }}</td>
+            <td>{{ annex.animal.birthdate|calculateMonths }} </td>
+            <td>{{ annex.animal.explotation.name }} </td>
+            <td>
+                <div class="btn-group">
+                    <a href="{{ path('annex_delete') }}"
+                       class="btn btn-default js-remove-annex"
+                        data-id="{{ annex.animal.id }}"
+                        >
+                        Borrar
+                        <span class="js-spinner">
+                            &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
+                        </span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th></th>
+        <th>Crotal</th>
+        <th>Número interno</th>
+        <th>Edad</th>
+        <th>Edad(meses)</th>
+        <th>Explotación</th>
+        <th>Acciones</th>
+    </tr>
+    </tfoot>
+</table>

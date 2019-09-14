@@ -33,7 +33,7 @@
             <td>{{ animal.crotal }}</td>
             <td>{{ animal.internalnum }}</td>
             <td>{{ animal.birthdate|date('d-m-y') }}</td>
-            <td>{{ animal.birthdate|date('m') }} </td>
+            <td>{{ animal.birthdate|calculateMonths }} </td>
             <td>
                 {% set isAnnexed = animal.annex %}
 
