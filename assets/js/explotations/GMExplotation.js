@@ -76,7 +76,7 @@ const swal = require('sweetalert2');
          * Load Datatable data
          */
         loadDatatable: function() {
-            let datatable = this.$wrapperTable.DataTable({
+            let datatable = this.$wrapperTable.dataTable({
                 "pageLength": 10,
                 "pagingType": "simple",
                 'columnDefs': [{
@@ -150,16 +150,7 @@ const swal = require('sweetalert2');
           this.ajaxCall
               .send(url, 'POST', {id: id})
               .then((data) => {
-                  if (data.success) {
-                      this._fireAlert({type:'success', title:data.message});
-                      $target
-                          .addClass('btn-warning disabled')
-                          .removeClass('btn-default')
-                          .text('Anexado');
-
-                  } else {
-                      this._fireAlert({type:'error', title:data.message});
-                  }
+                  this._processResponse(data, $target);
                   $spinner.addClass('hidden');
               })
               .catch((err) => {
@@ -241,8 +232,20 @@ const swal = require('sweetalert2');
             let $button = this.$wrapperForm.find(this.options._selectors.save);
             $button.find('.js-spinner > i').addClass('hidden');
             $button.attr('disabled', false);
-        }
+        },
 
+        _processResponse(data, $target) {
+            if (data.success) {
+                this._fireAlert({type:'success', title:data.message});
+                $target
+                    .addClass('btn-warning disabled')
+                    .removeClass('btn-default')
+                    .text('Anexado');
+
+            } else {
+                this._fireAlert({type:'error', title:data.message});
+            }
+        }
     });
 
 

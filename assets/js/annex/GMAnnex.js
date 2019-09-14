@@ -40,7 +40,7 @@ import AjaxCall from "../shared/AjaxCall";
         /**
          * Load Datatable data
          */
-        loadDatatable: function() {
+        loadDatatable() {
             this.$wrapper.dataTable({
                 pageLength: 10,
                 responsive: true,
@@ -50,13 +50,13 @@ import AjaxCall from "../shared/AjaxCall";
         /**
          * Load modal events
          */
-        loadEvents: function() {
+        loadEvents() {
             //$('#modal-add-explotation').on('hidden.bs.modal',  () => {
             //    this._cleanErrors();
             //})
         },
 
-        handleAnnexDelete: function(e) {
+        handleAnnexDelete(e) {
             e.preventDefault();
             let $target = $(e.currentTarget);
             this._showAlert($target);
@@ -67,7 +67,7 @@ import AjaxCall from "../shared/AjaxCall";
          * @private
          * @param id
          */
-        _deleteRow: function (id) {
+        _deleteRow(id) {
             this.$wrapper
                 .DataTable()
                 .row(id)
@@ -80,14 +80,12 @@ import AjaxCall from "../shared/AjaxCall";
          * @param $target
          * @private
          */
-        _showAlert: function ($target) {
+        _showAlert($target) {
 
             this._showSpinner($target);
 
             let id = $target.data('id');
-            let rowId = $target.closest('tr').attr('id');
             let url = $target.attr('href');
-            const self = this;
 
             swal.fire({
                 title: self.options.text.title,
@@ -98,27 +96,8 @@ import AjaxCall from "../shared/AjaxCall";
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Bórrala'
             }).then((result) => {
-                if (result.value) {
-                    this.ajaxCall
-                        .send(url, 'DELETE', {id: id})
-                        .then((data) => {
-                            if (data.success) {
-                                this._fireAlert({type:'success', title:data.message});
-                                this._deleteRow('#'+ rowId);
-
-                            } else {
-                                this._fireAlert({type:'error', title:data.message});
-                            }
-                            this._hideSpinner($target);
-                        })
-                        .catch((err) => {
-                            this._hideSpinner($target);
-                        });
-
-                } else if (result.dismiss) {
-                    this._hideSpinner($target);
-                }
-            })
+                this._makeDeleteCall(result, url, id, $target)
+            });
         },
 
         /**
@@ -126,7 +105,7 @@ import AjaxCall from "../shared/AjaxCall";
          * @param options
          * @private
          */
-        _fireAlert:function (options) {
+        _fireAlert(options) {
             swal.fire(options);
         },
 
@@ -134,7 +113,7 @@ import AjaxCall from "../shared/AjaxCall";
          *
          * @private
          */
-        _showSpinner:function ($target) {
+        _showSpinner($target) {
             $target
                 .find('.js-spinner > i')
                 .removeClass('hidden');
@@ -146,14 +125,54 @@ import AjaxCall from "../shared/AjaxCall";
          *
          * @private
          */
-        _hideSpinner: function ($target) {
+        _hideSpinner($target) {
             $target
                 .find('.js-spinner > i')
                 .addClass('hidden');
             $target
                 .removeClass('disabled');
-        }
+        },
 
+        /**
+         * @param result
+         * @param url
+         * @param id
+         * @param $target
+         * @private
+         */
+        _makeDeleteCall(result, url, id, $target) {
+            let rowId = $target.closest('tr').attr('id');
+
+            if (result.value) {
+                this.ajaxCall
+                    .send(url, 'DELETE', {id: id})
+                    .then((data) => {
+                        this._processResponse(data, rowId);
+                        this._hideSpinner($target);
+                    })
+                    .catch((err) => {
+                        this._hideSpinner($target);
+                    });
+
+            } else if (result.dismiss) {
+                this._hideSpinner($target);
+            }
+        },
+
+        /**
+         * @param data
+         * @param rowId
+         * @private
+         */
+        _processResponse(data, rowId) {
+            if (data.success) {
+                this._fireAlert({type:'success', title:data.message});
+                this._deleteRow('#'+ rowId);
+
+            } else {
+                this._fireAlert({type:'error', title:data.message});
+            }
+        }
     });
 
 
