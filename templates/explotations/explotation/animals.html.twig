@@ -1,13 +1,17 @@
-<div class="col-xs-6">
-    <div class="form-group">
-        <label for="scanner">Min Edad (meses):</label>
-        <input type="number" class="form-control" id="min_old">
-    </div>
-</div>
-<div class="col-xs-6">
-    <div class="form-group">
-        <label for="scanner">Max Edad (meses):</label>
-        <input type="number" class="form-control" id="max_old">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-2">
+            <div class="form-group">
+                <label for="scanner">Min Edad (meses):</label>
+                <input type="number" class="form-control" id="min_old">
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="form-group">
+                <label for="scanner">Max Edad (meses):</label>
+                <input type="number" class="form-control" id="max_old">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -19,6 +23,7 @@
         <th>Número interno</th>
         <th>Edad</th>
         <th>Edad(meses)</th>
+        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -28,7 +33,24 @@
             <td>{{ animal.crotal }}</td>
             <td>{{ animal.internalnum }}</td>
             <td>{{ animal.birthdate|date('d-m-y') }}</td>
-            <td>{{ animal.birthdate|date('m') }}</td>
+            <td>{{ animal.birthdate|calculateMonths }} </td>
+            <td>
+                {% set isAnnexed = animal.annex %}
+
+                <div class="btn-group">
+                    <a href="{{ path('annex_create') }}"
+                       class="btn
+                        {{ isAnnexed ? 'btn-warning disabled': 'btn-default' }}
+                        js-annex-animal"
+                       data-id="{{ animal.id }}"
+                    >
+                        {{ isAnnexed ? 'Anexado': 'Anexar' }}
+                        <span class="js-spinner">
+                            &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
+                        </span>
+                    </a>
+                </div>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
@@ -39,6 +61,7 @@
         <th>Número interno</th>
         <th>Edad</th>
         <th>Edad(meses)</th>
+        <th>Acciones</th>
     </tr>
     </tfoot>
 </table>

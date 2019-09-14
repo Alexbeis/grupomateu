@@ -295,7 +295,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
                 $animal->setCrotalMother($crotMother);
                 $animal->setWeightIn(rand(10, 20));
                 $date = new \DateTime();
-                $date->modify('-' . rand(0, 10) . 'day');
+                $date->modify('-' . rand(0, 500) . 'day');
                 $animal->setBirthDate($date);
                 $animal->setExplotation($explotation);
                 $genere = ($i%2 == 0)? 'Male':'Female';

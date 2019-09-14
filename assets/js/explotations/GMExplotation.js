@@ -5,6 +5,8 @@ require ('../shared/datatable_extension_custom_filter');
 
 const swal = require('sweetalert2');
 
+
+
 (function(window, $, swal) {
 
     window.GMExplotation = function($wrapperForm, $wrapperTable) {
@@ -21,6 +23,12 @@ const swal = require('sweetalert2');
             this.handleExplotationSave.bind(this)
         );
 
+        this.$wrapperTable.on(
+            'click',
+            this.options._selectors.annex,
+            this.handleAnnexAnimal.bind(this)
+        );
+
         this.$moveAnimalButton.on(
             'click',
             this.handleMoveAnimal.bind(this)
@@ -35,6 +43,7 @@ const swal = require('sweetalert2');
             _selectors: {
                 form: '#expl_save_form',
                 save: '.js-save-explotation',
+                annex: '.js-annex-animal',
                 inputs:[
                     {
                         input:'#exp_name',
@@ -67,7 +76,7 @@ const swal = require('sweetalert2');
          * Load Datatable data
          */
         loadDatatable: function() {
-            let datatable = this.$wrapperTable.DataTable({
+            let datatable = this.$wrapperTable.dataTable({
                 "pageLength": 10,
                 "pagingType": "simple",
                 'columnDefs': [{
@@ -131,6 +140,25 @@ const swal = require('sweetalert2');
             console.log('Moving animals');
         },
 
+        handleAnnexAnimal: function(e) {
+          e.preventDefault();
+          let $target = $(e.currentTarget);
+          let id = $target.data('id');
+          let url = $target.attr('href');
+          const $spinner = $target.find('.js-spinner > i');
+          $spinner.removeClass('hidden');
+          this.ajaxCall
+              .send(url, 'POST', {id: id})
+              .then((data) => {
+                  this._processResponse(data, $target);
+                  $spinner.addClass('hidden');
+              })
+              .catch((err) => {
+                  $spinner.addClass('hidden');
+            });
+
+        },
+
         /**
          *
          * @param value
@@ -151,8 +179,13 @@ const swal = require('sweetalert2');
          * @private
          */
         _addError:function(element, message){
-            element.closest('.form-group').addClass('has-error');
-            element.next('.help-block').html(message).removeClass('hidden');
+            element
+                .closest('.form-group')
+                .addClass('has-error');
+            element
+                .next('.help-block')
+                .html(message)
+                .removeClass('hidden');
         },
 
         /**
@@ -165,22 +198,6 @@ const swal = require('sweetalert2');
                 $id.closest('.form-group').removeClass('has-error');
                 $id.next('.help-block').html('').addClass('hidden');
             });
-        },
-
-        /**
-         *
-         * @param url
-         * @param data
-         * @returns promise
-         */
-        _ajaxSave: function (url, data) {
-            return $.ajax(
-                {
-                    url: url,
-                    method:'POST',
-                    data: data
-                }
-            );
         },
 
         /**
@@ -215,8 +232,20 @@ const swal = require('sweetalert2');
             let $button = this.$wrapperForm.find(this.options._selectors.save);
             $button.find('.js-spinner > i').addClass('hidden');
             $button.attr('disabled', false);
-        }
+        },
 
+        _processResponse(data, $target) {
+            if (data.success) {
+                this._fireAlert({type:'success', title:data.message});
+                $target
+                    .addClass('btn-warning disabled')
+                    .removeClass('btn-default')
+                    .text('Anexado');
+
+            } else {
+                this._fireAlert({type:'error', title:data.message});
+            }
+        }
     });
 
 

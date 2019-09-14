@@ -47,6 +47,10 @@
         </ul>
     </li>
 
+    <li {% if route == 'index_annexes' %} class="active"{% endif %}>
+        <a href="{{ path('index_annexes') }}"><i class="fa fa-book active"></i> <span>Annexos</span></a>
+    </li>
+
     {#
      #################################################################################
         GRANJAS
