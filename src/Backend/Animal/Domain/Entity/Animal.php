@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\Animal\Domain\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -98,7 +99,6 @@ class Animal
 
     public function __construct()
     {
-        $this->explotation = new ArrayCollection();
         $this->history = new ArrayCollection();
     }
 
@@ -117,10 +117,14 @@ class Animal
 
     /**
      * @param mixed $crotal
+     *
+     * @return Animal
      */
-    public function setCrotal($crotal): void
+    public function setCrotal($crotal): self
     {
         $this->crotal = $crotal;
+
+        return $this;
     }
 
     /**
@@ -133,10 +137,14 @@ class Animal
 
     /**
      * @param mixed $internal_num
+     *
+     * @return Animal
      */
-    public function setInternalNum($internal_num): void
+    public function setInternalNum($internal_num): self
     {
         $this->internal_num = $internal_num;
+
+        return $this;
     }
 
     /**
@@ -149,10 +157,14 @@ class Animal
 
     /**
      * @param mixed $weight_in
+     *
+     * @return Animal
      */
-    public function setWeightIn($weight_in): void
+    public function setWeightIn($weight_in): self
     {
         $this->weight_in = $weight_in;
+
+        return $this;
     }
 
     /**
@@ -165,10 +177,14 @@ class Animal
 
     /**
      * @param mixed $weight_out
+     *
+     * @return Animal
      */
-    public function setWeightOut($weight_out): void
+    public function setWeightOut($weight_out): self
     {
         $this->weight_out = $weight_out;
+
+        return $this;
     }
 
     /**
@@ -181,10 +197,14 @@ class Animal
 
     /**
      * @param mixed $explotation
+     *
+     * @return Animal
      */
-    public function setExplotation($explotation): void
+    public function setExplotation($explotation): self
     {
         $this->explotation = $explotation;
+
+        return $this;
     }
 
     /**
@@ -197,10 +217,14 @@ class Animal
 
     /**
      * @param mixed $birth_date
+     *
+     * @return Animal
      */
-    public function setBirthDate($birth_date): void
+    public function setBirthDate($birth_date): self
     {
         $this->birth_date = $birth_date;
+
+        return $this;
     }
 
     /**
@@ -213,10 +237,13 @@ class Animal
 
     /**
      * @param mixed $history
+     *
+     * @return Animal
      */
-    public function setHistory($history): void
+    public function setHistory($history): self
     {
         $this->history = $history;
+        return $this;
     }
     public function __toString()
     {
@@ -234,10 +261,14 @@ class Animal
 
     /**
      * @param mixed $crotal_mother
+     *
+     * @return Animal
      */
-    public function setCrotalMother($crotal_mother)
+    public function setCrotalMother($crotal_mother):self
     {
         $this->crotal_mother = $crotal_mother;
+
+        return $this;
     }
 
     /**
@@ -250,10 +281,14 @@ class Animal
 
     /**
      * @param mixed $genre
+     *
+     * @return Animal
      */
-    public function setGenre($genre)
+    public function setGenre($genre):self
     {
         $this->genre = $genre;
+
+        return $this;
     }
 
     /**
@@ -262,9 +297,9 @@ class Animal
      */
     public function getMonthsOld()
     {
-        $calculator = new BirthdayMonthCalculator($this->birth_date->format('Y-m-d'));
+        $calculator = new BirthdayMonthCalculator();
 
-        return $calculator->getMonthAge('NOW');
+        return $calculator->getMonthAge($this->birth_date, new DateTime());
     }
 
     /**
@@ -277,10 +312,14 @@ class Animal
 
     /**
      * @param mixed $race
+     *
+     * @return Animal
      */
-    public function setRace($race)
+    public function setRace($race):self
     {
         $this->race = $race;
+
+        return $this;
     }
 
     /**
@@ -291,6 +330,7 @@ class Animal
     public function setRegister($register)
     {
         $this->register = $register;
+
         return $this;
     }
 
@@ -318,8 +358,7 @@ class Animal
     public function setAnnex($annex): self
     {
         $this->annex = $annex;
+
         return $this;
     }
-
-
 }

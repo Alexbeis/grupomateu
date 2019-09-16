@@ -33,6 +33,8 @@ import './explotations/GMExplotation.js';
 import './explotations/GMGroup.js';
 import './configuration/GMConfiguration.js';
 import './animals/GMAnimals.js';
+import './animals/GMAnimal.js';
+import './animals/GMHistory.js';
 import './registers/GMRegisters.js';
 import './annex/GMAnnex.js';
 

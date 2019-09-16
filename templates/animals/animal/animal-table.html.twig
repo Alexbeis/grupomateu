@@ -8,6 +8,7 @@
             <th>Edad</th>
             <th>Edad(meses)</th>
             <th>Explotación</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +20,9 @@
                 <td>{{ animal.birthdate|date('d-m-y') }}</td>
                 <td>{{ animal.birthdate|calculateMonths }}</td>
                 <td>{{ animal.explotation.name }}</td>
+                <td>
+                    <a class="btn btn-default" href="{{ path('edit_animal', {'id':animal.id}) }}#ficha">Ver/editar</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -30,6 +34,7 @@
             <th>Edad</th>
             <th>Edad(meses)</th>
             <th>Explotación</th>
+            <th>Acciones</th>
         </tr>
         </tfoot>
     </table>

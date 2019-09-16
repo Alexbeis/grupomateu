@@ -76,7 +76,7 @@ const swal = require('sweetalert2');
          * Load Datatable data
          */
         loadDatatable: function() {
-            let datatable = this.$wrapperTable.dataTable({
+            this.$wrapperTable.dataTable({
                 "pageLength": 10,
                 "pagingType": "simple",
                 'columnDefs': [{
@@ -90,8 +90,8 @@ const swal = require('sweetalert2');
                 }],
             });
 
-            $('#min_old, #max_old').keyup( function() {
-                datatable.draw();
+            $('#min_old, #max_old').keyup( () => {
+                this.$wrapperTable.DataTable().draw();
             });
         },
 
@@ -255,5 +255,5 @@ let ExplotationWrapperForm = $('#expl_save_form');
 let ExplotationAnimalTable = $('#exp-animal-table');
 
 if (ExplotationWrapperForm.length > 0) {
-    let GM = new GMExplotation(ExplotationWrapperForm, ExplotationAnimalTable);
+    new GMExplotation(ExplotationWrapperForm, ExplotationAnimalTable);
 }

@@ -1,0 +1,48 @@
+<section id="animal-history-tab" class="content history-tab">
+    <div class="row">
+        <div class="box">
+            <form action="{{ path('history_create') }}" method="POST" id="history-form">
+                <input type="hidden" name="ani_id" value="{{ animal.id }}">
+                <div class="box-header">
+                    <h3 class="box-title">Nuevo comentario</h3>
+                </div>
+                <div class="box-body">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label>Textarea</label>
+                            <textarea
+                                    id="history-area"
+                                    name="ani_hist"
+                                    class="form-control"
+                                    rows="3"
+                                    placeholder="Enter ...">
+                            </textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <a href="{{ path('index_animals') }}" class="btn btn-default">Cancelar</a>
+                    <button type="submit" class="btn btn-primary pull-right js-save-history">Guardar</button>
+                </div>
+            </form>
+            <div class="overlay hidden">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Historial</h3>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    {% include 'animals/animal/history-table.html.twig' %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

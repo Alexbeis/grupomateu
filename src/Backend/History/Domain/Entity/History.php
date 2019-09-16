@@ -3,6 +3,7 @@
 namespace Mateu\Backend\History\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,16 +28,16 @@ class History
      */
     private $comment;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal" , inversedBy="history")
      */
     private $animal;
 
-    public function __construct()
-    {
-        $this->animal = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\User\Domain\Entity\User")
+     * @JoinColumn(name="created_by_id", referencedColumnName="id")
+     */
+    private $created_by;
 
     /**
      * @return mixed
@@ -44,14 +45,6 @@ class History
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -64,12 +57,14 @@ class History
 
     /**
      * @param mixed $comment
+     *
+     * @return History
      */
-    public function setComment($comment): void
+    public function setComment($comment): self
     {
         $this->comment = $comment;
+        return $this;
     }
-
 
     /**
      * @return mixed
@@ -81,15 +76,38 @@ class History
 
     /**
      * @param mixed $animal
+     *
+     * @return History
      */
-    public function setAnimal($animal): void
+    public function setAnimal($animal): self
     {
         $this->animal = $animal;
+
+        return $this;
     }
 
     public function __toString()
     {
         return (string) $this->getComment();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
+
+    /**
+     * @param mixed $created_by
+     *
+     * @return History
+     */
+    public function setCreatedBy($created_by): self
+    {
+        $this->created_by = $created_by;
+        return $this;
     }
 
 }

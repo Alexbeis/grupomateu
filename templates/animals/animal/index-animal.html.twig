@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="content-header">
+        <h1>Animal<small>Crotal</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="{{ path('index_animals') }}"><i class="fa fa-caret-left"></i> Animales</a></li>
+            <li class="active">Crotal</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div id="animal-tabs" class="nav-tabs-custom ">
+           {% include 'animals/animal/tabs/animal-nav-tabs.html.twig' %}
+            <div class="tab-content">
+                <div class="tab-pane active" id="sheet">
+                    {% include 'animals/animal/tabs/animal-info-tab.html.twig' %}
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="history">
+                    {% include 'animals/animal/tabs/animal-med-history-tab.html.twig' %}
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="movements">
+                    {% include 'animals/animal/tabs/animal-movements-tab.html.twig' %}
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+    </section>
+
+{% endblock %}

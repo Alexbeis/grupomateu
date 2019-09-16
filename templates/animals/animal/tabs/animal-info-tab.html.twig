@@ -1,0 +1,104 @@
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <form method="post" action="{{ path('animal_save') }}" class="">
+                <input type="hidden" name="ani_id" value="{{ animal.id }}">
+                <div class="box-body">
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_intnum">Num.interno</label>
+                        <input type="text"
+                               class="form-control"
+                               id="ani_intnum"
+                               name="ani_intnum"
+                               value="{{ animal.internalNum }}">
+                        <span class="help-block hidden"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_crotal">Crotal</label>
+                        <input type="text"
+                               class="form-control"
+                               id="ani_crotal"
+                               name="ani_crotal"
+                               value="{{ animal.crotal }}">
+                        <span class="help-block hidden"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_crotal_mother">Crotal Madre</label>
+                        <input type="text"
+                               class="form-control"
+                               id="ani_crotal_mother"
+                               name="ani_crotal_mother"
+                               value="{{ animal.crotalMother }}">
+                        <span class="help-block hidden"></span>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_weight_in">Peso Entrada </label>
+                        <input type="number"
+                               class="form-control"
+                               id="ani_weight_in"
+                               name="ani_weight_in"
+                               value="{{ animal.weightIn }}">
+                        <span class="help-block hidden"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_weight_out">Peso Salida</label>
+                        <input type="number"
+                               class="form-control"
+                               id="ani_weight_out"
+                               name="ani_weight_out"
+                               value="{{ animal.weightOut }}">
+                        <span class="help-block hidden"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_birthdate">Fecha Nacimiento</label>
+                        <input type="date"
+                               class="form-control"
+                               id="ani_birthdate"
+                               placeholder="ej: EXP_XXXXXX"
+                               name="ani_birthdate"
+                               value="{{ animal.birthDate|date('Y-m-d') }}">
+                        <span class="help-block hidden"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_genre">Género</label>
+                        <select name="ani_genre" class="form-control" id="ani_genre">
+                            <option value="male" {% if animal.genre == 'Male' %} selected {% endif %}>Macho</option>
+                            <option value="female" {% if animal.genre == 'Female' %} selected {% endif %} >Hembra</option>
+                        </select>
+                        <span class="help-block hidden"></span>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_exp">Explotación</label>
+                        <select name="ani_exp" class="form-control" id="ani_exp" disabled>
+                            <option value="male">{{ animal.explotation.name }}</option>
+                        </select>
+                        <span class="help-block hidden"></span>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_race">Raza</label>
+                        <select name="ani_race" class="form-control" id="ani_race">
+                            {% for race in races %}
+                                <option value="{{ race.id }}"
+                                        {% if animal.race.id == race.id %} selected {% endif %}
+                                >
+                                    {{ race.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <span class="help-block hidden"></span>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a href="{{ path('index_animals') }}" class="btn btn-default">Cancelar</a>
+                    <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                </div>
+                <!-- /.box-footer -->
+            </form>
+        </div>
+    </div>
+</section>
