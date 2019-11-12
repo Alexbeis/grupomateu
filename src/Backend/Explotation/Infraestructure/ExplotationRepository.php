@@ -41,6 +41,21 @@ class ExplotationRepository extends ServiceEntityRepository implements Explotati
 
     }
 
+    public function getExplotationWithAnimals($id)
+    {
+        $qb = $this->createQueryBuilder('explotation');
+        $query =
+            $qb
+                ->join('Mateu\Backend\Animal\Domain\Entity\Animal', 'animal')
+                ->join('Mateu\Backend\Group\Domain\Entity\Group', 'group')
+                ->where('explotation.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery();
+
+        return $query->getOneOrNullResult();
+
+    }
+
 
     // /**
     //  * @return Explotation[] Returns an array of Explotation objects

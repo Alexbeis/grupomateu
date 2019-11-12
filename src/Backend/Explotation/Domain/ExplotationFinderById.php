@@ -24,6 +24,8 @@ class ExplotationFinderById
 
     public function __invoke($id): ?Explotation
     {
-        return  $this->explotationRepository->find($id);
+        //return  $this->explotationRepository->find($id);
+        //dd($this->explotationRepository->getExplotationWithAnimals($id));
+        return  $this->explotationRepository->getExplotationWithAnimals($id);
     }
 }

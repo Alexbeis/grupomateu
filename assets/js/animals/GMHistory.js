@@ -13,6 +13,7 @@
         );
 
 
+        this.loadDatatable();
         this.loadEvents();
     };
 
@@ -41,6 +42,7 @@
          */
         handleHistorySave: function(e) {
             e.preventDefault();
+            this._showSpinner();
             let $form = this.$wrapper.find('form');
             this._cleanErrors();
             let canSubmit = true;
@@ -50,12 +52,21 @@
                 if (!this._isValid(value, obj.max, obj.min)) {
                     canSubmit = false;
                     this._addError($id, obj.error)
+                    this._hideSpinner();
                 }
             });
-            console.log(canSubmit);
+
             if (canSubmit) {
                 $form.submit();
             }
+        },
+
+        loadDatatable() {
+          $('#history-table').dataTable({
+              "columnDefs": [
+                  { "width": "50%", "targets": 0 }
+              ]
+          });
         },
 
         /**
@@ -83,7 +94,7 @@
          */
         _isValid: function(value, max, min) {
 
-            return value.length <= max && value.length >= min;
+            return value.trim().length <= max && value.trim().length >= min;
         },
 
         /**
@@ -127,8 +138,8 @@
             let $button = this.$wrapper.find(this.options._selectors.save);
             $button
                 .find('.js-spinner > i')
-                .removeClass('hidden')
-                .attr('disabled', true);
+                .removeClass('hidden');
+            $button.addClass('disabled');
         },
 
         /**
@@ -139,8 +150,8 @@
             let $button = this.$wrapper.find(this.options._selectors.save);
             $button
                 .find('.js-spinner > i')
-                .addClass('hidden')
-                .attr('disabled', false);
+                .addClass('hidden');
+            $button.removeClass('disabled');
         }
     });
 

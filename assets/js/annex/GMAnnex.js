@@ -88,9 +88,9 @@ import AjaxCall from "../shared/AjaxCall";
             let url = $target.attr('href');
 
             swal.fire({
-                title: self.options.text.title,
-                text: self.options.text.advice,
-                type: self.options.text.warning,
+                title: this.options.text.title,
+                text: this.options.text.advice,
+                type: this.options.text.warning,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',

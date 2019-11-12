@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-xs-12 col-md-4">
                                 <div class="btn-group-horizontal pull-right">
-                                    <a href="" type="button" class="btn btn-primary">Mover</a>
+                                    <a href="" type="button" class="btn btn-primary js-move-animal">Mover</a>
                                     <a href="" type="button" class="btn btn-primary">Exportar csv</a>
                                 </div>
                             </div>
@@ -107,6 +107,10 @@
             </div>
         </div>
 
+        {#
+        ##### MODALS ####
+        #}
+        {% include 'explotations/modal/move-animal-modal.html.twig' %}
     </section>
 
 {% endblock %}

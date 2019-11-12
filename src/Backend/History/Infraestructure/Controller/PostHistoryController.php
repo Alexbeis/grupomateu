@@ -31,11 +31,11 @@ class PostHistoryController extends BaseController implements ControllerInterfac
                 )
             );
 
-            $this->get('session')->getFlashBag()->set('danger', 'Historia Creada correctamente.' );
+            $this->get('session')->getFlashBag()->set('success', 'Historia Creada correctamente.' );
 
 
         } catch (HandlerFailedException $e) {
-
+            $this->get('session')->getFlashBag()->set('danger', $e->getMessage());
         }
         return $this->redirectToRoute("edit_animal", ['id' => $request->request->get('ani_id')]);
 

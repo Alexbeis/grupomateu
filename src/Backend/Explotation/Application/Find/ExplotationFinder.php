@@ -23,7 +23,7 @@ class ExplotationFinder
         $explotation = $this->finder->__invoke($id);
 
         if (!$explotation) {
-            throw new ExplotationNotFound('404 not found');
+            throw new ExplotationNotFound('Explotación not found');
         }
 
         return $explotation;

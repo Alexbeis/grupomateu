@@ -45,6 +45,12 @@ class Register
      */
     private $inType;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\User\Domain\Entity\User")
+     * @JoinColumn(name="created_by_id", referencedColumnName="id")
+     */
+    private $created_by;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
@@ -134,5 +140,24 @@ class Register
     public function getSupplier() :?Supplier
     {
         return $this->supplier;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
+
+    /**
+     * @param mixed $created_by
+     *
+     * @return Register
+     */
+    public function setCreatedBy($created_by): self
+    {
+        $this->created_by = $created_by;
+        return $this;
     }
 }

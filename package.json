@@ -15,11 +15,12 @@
     "dependencies": {
         "@babel/polyfill": "^7.4.4",
         "admin-lte": "^2.4.10",
-        "bootstrap": "^3.3.7",
+        "bootstrap": "^3.4.1",
         "chart.js": "^2.8.0",
         "datatables.net-responsive": "^2.2.3",
         "jquery": "^3.4.1",
         "popper.js": "^1.15.0",
+        "select2": "^4.0.10",
         "sweetalert2": "^8.11.6"
     }
 }

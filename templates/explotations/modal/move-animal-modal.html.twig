@@ -1,0 +1,43 @@
+<div class="modal fade" id="modal-movements" role="dialog">
+    <div class="modal-dialog">
+        <form action="{{ path('move_animals') }}" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Movimiento de Crotales</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Crotales</label>
+                                <select id="multiple" class="js-crotals-move form-control"  name="animals[]" multiple>
+                                    {% for animal in explotation.animal %}
+                                        <option value="{{ animal.id }}">{{ animal.crotal }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Explotaciones</label>
+                                <select id="single" class="js-expl-to form-control" name="expl_to">
+                                    {% for expl in explotations %}
+                                        <option value=""></option>
+                                        {% if expl.id != explotation.id %}
+                                            <option value="{{ expl.id }}">{{ expl.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary js-generate-movement">Generar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

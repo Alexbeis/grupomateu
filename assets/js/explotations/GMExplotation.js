@@ -1,6 +1,7 @@
 'use strict';
 
 import AjaxCall from "../shared/AjaxCall";
+
 require ('../shared/datatable_extension_custom_filter');
 
 const swal = require('sweetalert2');
@@ -14,6 +15,7 @@ const swal = require('sweetalert2');
         this.$wrapperForm = $wrapperForm;
         this.$wrapperTable = $wrapperTable;
         this.$moveAnimalButton = $('.js-move-animal');
+        this.mover = new GMMover($('#modal-movements'));
 
         this.ajaxCall = new AjaxCall();
 
@@ -34,7 +36,8 @@ const swal = require('sweetalert2');
             this.handleMoveAnimal.bind(this)
         );
 
-        this.loadDatatable()
+        this.loadDatatable();
+        this.loadEvents();
     };
 
     $.extend(window.GMExplotation.prototype, {
@@ -83,13 +86,15 @@ const swal = require('sweetalert2');
                     'targets': 0,
                     'searchable':false,
                     'orderable':false,
-                    'className': 'js-animal-selected',
-                    'render': function (data, type, full, meta){
-                        return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
-                    }
+                    'className': 'js-animal-selected'
                 }],
             });
+        },
 
+        /**
+         * Tooltip and datatables events
+         */
+        loadEvents() {
             $('#min_old, #max_old').keyup( () => {
                 this.$wrapperTable.DataTable().draw();
             });
@@ -137,7 +142,7 @@ const swal = require('sweetalert2');
 
         handleMoveAnimal: function(e){
             e.preventDefault();
-            console.log('Moving animals');
+            this.mover.handleMove();
         },
 
         handleAnnexAnimal: function(e) {

@@ -1,7 +1,48 @@
-Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-It has survived not only five centuries, but also the leap into electronic typesetting,
-remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-like Aldus PageMaker including versions of Lorem Ipsum.
+<section id="animal-movements-tab">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="movements-table" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Creado Por</th>
+                                <th>Creado el</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for movement in animal.movements %}
+                                <tr>
+                                    <td>{{ movement.from }}</td>
+                                    <td>{{ movement.to }}</td>
+                                    <td>{{ movement.createdBy.username }}</td>
+                                    <td>{{ movement.createdAt|date('d-m-Y') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>
+                                        <em>no movements found</em>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Creado Por</th>
+                                <th>Creado el</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

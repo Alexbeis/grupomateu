@@ -283,7 +283,12 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $register = (new Register())
                 ->setProcedence($procedence)
                 ->setInType($inType)
-                ->setSupplier($supplier);
+                ->setSupplier($supplier)
+                ->setCreatedBy(
+                    $this->getReference(
+                        self::USERS[rand(0, count(self::USERS) - 1)] ['username']
+                    )
+                );
 
             for ($j = 0; $j < rand(10,30); $j++) {
                 $animal = new Animal();
@@ -294,6 +299,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
                 $animal->setCrotal($crot);
                 $animal->setCrotalMother($crotMother);
                 $animal->setWeightIn(rand(10, 20));
+                $animal->setIsIll(false);
                 $date = new \DateTime();
                 $date->modify('-' . rand(0, 500) . 'day');
                 $animal->setBirthDate($date);

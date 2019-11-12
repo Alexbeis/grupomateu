@@ -3,6 +3,7 @@
 namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
 use Mateu\Backend\Explotation\Application\Find\ExplotationFinder;
+use Mateu\Backend\Explotation\Application\GetAll\GetExplotationsQuery;
 use Mateu\Backend\Group\Application\GetAll\GetAllGroupsQuery;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
@@ -20,7 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShowEditExplotationController extends BaseController implements ControllerInterface
 {
     /**
-     * @Route("/explotation/edit/{id}", name="edit_explotation", methods={"GET"}, requirements={"id"= "\d+"})
+     * @Route("/explotation/edit/{id}",
+     *     name="edit_explotation",
+     *     methods={"GET"},
+     *     requirements=
+     *     {
+     *      "id"= "\d+",
+     *      "_locale": "en|es"
+     *     }
+     *      )
      * @param $id
      * @param ExplotationFinder $explotationFinder
      *
@@ -32,8 +41,12 @@ class ShowEditExplotationController extends BaseController implements Controller
             // TODO: control exceptions from finder
             $explotation = $explotationFinder($id);
 
-            $envelope = $this->ask(new GetAllGroupsQuery());
-            $handledStamp = $envelope->last(HandledStamp::class);
+            $groupEnvelope = $this->ask(new GetAllGroupsQuery());
+            $groupedHandledStamp = $groupEnvelope->last(HandledStamp::class);
+
+            $explotationEnvelope = $this->ask(new GetExplotationsQuery());
+            $explotationHandledStamp = $explotationEnvelope->last(HandledStamp::class);
+
         } catch (\Throwable $e) {
 
             $this->get('session')->getFlashBag()->set('danger', sprintf($e->getMessage()));
@@ -44,7 +57,8 @@ class ShowEditExplotationController extends BaseController implements Controller
             $this->render('explotations/explotation/index.html.twig',
                 [
                     'explotation' => $explotation,
-                    'groups' => $handledStamp->getResult()
+                    'explotations' => $explotationHandledStamp->getResult(),
+                    'groups' => $groupedHandledStamp->getResult(),
                 ]
             )
         );

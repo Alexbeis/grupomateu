@@ -68,6 +68,11 @@ class Animal
     private $genre;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $is_ill;
+
+    /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation" , inversedBy="animal")
      * @ORM\JoinColumn(nullable=false)
@@ -78,6 +83,11 @@ class Animal
      * @ORM\OneToMany(targetEntity="Mateu\Backend\History\Domain\Entity\History", mappedBy="animal")
      */
     private $history;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Movement\Domain\Entity\Movement", mappedBy="animal", fetch="EXTRA_LAZY")
+     */
+    private $movements;
 
     /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Race\Domain\Entity\Race", inversedBy="animal")
@@ -100,6 +110,7 @@ class Animal
     public function __construct()
     {
         $this->history = new ArrayCollection();
+        $this->movements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -360,5 +371,42 @@ class Animal
         $this->annex = $annex;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsIll()
+    {
+        return $this->is_ill;
+    }
+
+    /**
+     * @param mixed $is_ill
+     *
+     * @return Animal
+     */
+    public function setIsIll($is_ill): self
+    {
+        $this->is_ill = $is_ill;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getMovements()
+    {
+        return $this->movements;
+    }
+
+    /**
+     * @param ArrayCollection $movements
+     *
+     * @return ArrayCollection|null
+     */
+    public function setMovements($movements): ?ArrayCollection
+    {
+        $this->movements = $movements;
     }
 }
