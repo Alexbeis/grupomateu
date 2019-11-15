@@ -24,17 +24,17 @@ class BaseFixtures extends Fixture implements FixtureInterface
     private const USERS = [
         [
             'username' => 'alex_beis',
-            'email' => 'admin@admin.com',
-            'password' => 'admin123',
+            'email' => 'superadmin@admin.com',
+            'password' => 'sadmin123',
             'fullName' => 'Alex Beis',
-            'roles' => [User::ROLE_ADMIN]
+            'roles' => [User::ROLE_SUPERADMIN]
         ],
         [
             'username' => 'rob_smith',
-            'email' => 'rob_smith@smith.com',
-            'password' => 'rob12345',
+            'email' => 'admin@admin.com',
+            'password' => 'admin123',
             'fullName' => 'Rob Smith',
-            'roles' => [User::ROLE_USER]
+            'roles' => [User::ROLE_ADMIN]
         ],
         [
             'username' => 'marry_gold',

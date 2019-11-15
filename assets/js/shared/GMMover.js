@@ -35,21 +35,61 @@
                         allowClear: true
                     });
                 });
-                $('#single').select2({
-
-                });
+                $('#single').select2();
             });
 
             this.$wrapper.modal({backdrop: true});
         },
 
         executeMovement(e) {
-           e.preventDefault();
-           console.log('clicked!');
-            if ($('.js-crotals-move').val() === 0 ){
-                console.log('Empty!');
+            e.preventDefault();
+            this._cleanErrors();
+
+            const form = $('#move-animals-form');
+            let isValid = true;
+
+            if ($('.js-crotals-move').val().length === 0) {
+                this._addError($('#multiple'));
+                isValid = false;
             }
-        }
+
+            if ($('.js-expl-to').val().length === 0) {
+                this._addError($('#single'));
+                isValid = false;
+            }
+
+            if (isValid) {
+                form.submit();
+            }
+        },
+        /**
+         *
+         * @param element
+         * @private
+         */
+        _addError(element){
+            element
+                .closest('.form-group')
+                .addClass('has-error');
+            element
+                .siblings('.help-block')
+                .removeClass('hidden');
+        },
+
+        /**
+         *
+         * @private
+         */
+        _cleanErrors(){
+            $('select').each((i, obj) => {
+                $(obj)
+                    .closest('.form-group')
+                    .removeClass('has-error');
+                $(obj)
+                    .siblings('.help-block')
+                    .addClass('hidden');
+            });
+        },
     });
 
 })(window, jQuery);

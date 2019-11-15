@@ -30,12 +30,12 @@ class Movement
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $from;
+    private $initial;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $to;
+    private $last;
 
     /**
      * /**
@@ -50,8 +50,8 @@ class Movement
 
     public function __construct($from, $to, Animal $animal, User $createdBy)
     {
-        $this->from = $from;
-        $this->to = $to;
+        $this->initial = $from;
+        $this->last = $to;
         $this->createdBy = $createdBy;
         $this->animal = $animal;
     }
@@ -64,17 +64,17 @@ class Movement
     /**
      * @return mixed
      */
-    public function getFrom()
+    public function getInitial()
     {
-        return $this->from;
+        return $this->initial;
     }
 
     /**
      * @return mixed
      */
-    public function getTo()
+    public function getLast()
     {
-        return $this->to;
+        return $this->last;
     }
 
     /**

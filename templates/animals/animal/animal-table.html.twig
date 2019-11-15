@@ -2,24 +2,33 @@
     <table id="animal-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
         <tr>
-            <th></th>
             <th>Crotal</th>
             <th>Número interno</th>
             <th>Edad</th>
             <th>Edad(meses)</th>
             <th>Explotación</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
         {% for animal in animals %}
             <tr>
-                <td></td>
                 <td>{{ animal.crotal }}</td>
                 <td>{{ animal.internalnum }}</td>
                 <td>{{ animal.birthdate|date('d-m-y') }}</td>
                 <td>{{ animal.birthdate|calculateMonths }}</td>
                 <td>{{ animal.explotation.name }}</td>
+                <td>
+                    <div
+                        class="label label-{{ animal.isill ? 'danger' : 'success' }}">
+                        {%  if animal.isill %}
+                            Enfermo
+                        {% else %}
+                            Sano
+                        {% endif %}
+                    </div>
+                </td>
                 <td>
                     <a class="btn btn-default" href="{{ path('edit_animal', {'id':animal.id}) }}#ficha">Ver/editar</a>
                 </td>
@@ -28,12 +37,12 @@
         </tbody>
         <tfoot>
         <tr>
-            <th></th>
             <th>Crotal</th>
             <th>Número interno</th>
             <th>Edad</th>
             <th>Edad(meses)</th>
             <th>Explotación</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
         </tfoot>

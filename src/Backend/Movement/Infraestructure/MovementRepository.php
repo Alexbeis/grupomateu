@@ -13,4 +13,9 @@ class MovementRepository extends ServiceEntityRepository
         parent::__construct($registry, Movement::class);
     }
 
+    public function save(Movement $movement)
+    {
+        $this->_em->persist($movement);
+    }
+
 }

@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-movements" role="dialog">
     <div class="modal-dialog">
-        <form action="{{ path('move_animals') }}" method="post">
+        <form id="move-animals-form" action="{{ path('move_animals') }}" method="post">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -10,6 +10,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <input type="hidden" value="{{ explotation.id }}" name="expl_from">
                             <div class="form-group">
                                 <label>Crotales</label>
                                 <select id="multiple" class="js-crotals-move form-control"  name="animals[]" multiple>
@@ -17,6 +18,7 @@
                                         <option value="{{ animal.id }}">{{ animal.crotal }}</option>
                                     {% endfor %}
                                 </select>
+                                <span class="help-block hidden">Cannot be empty</span>
                             </div>
 
                             <div class="form-group">
@@ -29,6 +31,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </select>
+                                <span class="help-block hidden">Cannot be empty</span>
                             </div>
                         </div>
                     </div>

@@ -16,8 +16,8 @@
                             <tbody>
                             {% for movement in animal.movements %}
                                 <tr>
-                                    <td>{{ movement.from }}</td>
-                                    <td>{{ movement.to }}</td>
+                                    <td>{{ movement.initial }}</td>
+                                    <td>{{ movement.last }}</td>
                                     <td>{{ movement.createdBy.username }}</td>
                                     <td>{{ movement.createdAt|date('d-m-Y') }}</td>
                                 </tr>
