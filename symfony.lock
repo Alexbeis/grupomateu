@@ -153,6 +153,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "php": {
+        "version": "7.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -204,6 +207,9 @@
     "symfony/cache": {
         "version": "v4.2.7"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.7"
+    },
     "symfony/config": {
         "version": "v4.2.7"
     },
@@ -219,9 +225,6 @@
             "bin/console",
             "config/bootstrap.php"
         ]
-    },
-    "symfony/contracts": {
-        "version": "v1.0.2"
     },
     "symfony/debug": {
         "version": "v4.2.7"
@@ -250,8 +253,14 @@
     "symfony/dotenv": {
         "version": "v4.2.7"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.2"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.2.7"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/filesystem": {
         "version": "v4.2.7"
@@ -270,9 +279,6 @@
         "files": [
             ".env"
         ]
-    },
-    "symfony/form": {
-        "version": "v4.2.11"
     },
     "symfony/framework-bundle": {
         "version": "4.2",
@@ -301,9 +307,6 @@
     },
     "symfony/inflector": {
         "version": "v4.2.7"
-    },
-    "symfony/intl": {
-        "version": "v4.2.11"
     },
     "symfony/maker-bundle": {
         "version": "1.0",
@@ -367,9 +370,6 @@
             "phpunit.xml.dist",
             "tests/.gitignore"
         ]
-    },
-    "symfony/polyfill-intl-icu": {
-        "version": "v1.11.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.12.0"
@@ -437,6 +437,9 @@
     "symfony/serializer-pack": {
         "version": "v1.0.2"
     },
+    "symfony/service-contracts": {
+        "version": "v1.1.8"
+    },
     "symfony/stopwatch": {
         "version": "v4.2.7"
     },
@@ -452,6 +455,9 @@
             "config/packages/translation.yaml",
             "translations/.gitignore"
         ]
+    },
+    "symfony/translation-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/twig-bridge": {
         "version": "v4.2.7"
