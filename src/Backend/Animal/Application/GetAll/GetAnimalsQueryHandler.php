@@ -2,17 +2,17 @@
 
 namespace Mateu\Backend\Animal\Application\GetAll;
 
-use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\AnimalRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class GetAnimalsQueryHandler implements MessageHandlerInterface
 {
     /**
-     * @var AnimalRepositoryInterface
+     * @var AnimalRepository
      */
     private $animalRepository;
 
-    public function __construct(AnimalRepositoryInterface $animalRepository)
+    public function __construct(AnimalRepository $animalRepository)
     {
         $this->animalRepository = $animalRepository;
     }

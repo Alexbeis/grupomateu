@@ -5,7 +5,7 @@ namespace Mateu\Backend\Animal\Application\Save;
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Animal\Application\Find\AnimalFinder;
 use Mateu\Backend\Animal\Domain\AnimalNotFound;
-use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\AnimalRepository;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Race\Domain\RaceNotFound;
 use Mateu\Backend\Race\Domain\RaceRepositoryInterface;
@@ -30,7 +30,7 @@ final class AnimalSaver
     private $raceRepository;
 
     public function __construct(
-        AnimalRepositoryInterface $animalRepository,
+        AnimalRepository $animalRepository,
         RaceRepositoryInterface $raceRepository,
         EntityManagerInterface $em,
         AnimalFinder $animalFinder

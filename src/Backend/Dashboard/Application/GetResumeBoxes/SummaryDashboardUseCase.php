@@ -2,7 +2,7 @@
 
 namespace Mateu\Backend\Dashboard\Application\GetResumeBoxes;
 
-use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\AnimalRepository;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
 use Mateu\Backend\Purchaser\Domain\PurchaserRepositoryInterface;
 use Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface;
@@ -10,7 +10,7 @@ use Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface;
 class SummaryDashboardUseCase
 {
     /**
-     * @var AnimalRepositoryInterface
+     * @var AnimalRepository
      */
     private $animalRepository;
     /**
@@ -26,7 +26,7 @@ class SummaryDashboardUseCase
      */
     private $purchaserRepository;
 
-    public function __construct(AnimalRepositoryInterface $animalRepository,
+    public function __construct(AnimalRepository $animalRepository,
                                 ExplotationRepositoryInterface $explotationRepository,
                                 SupplierRepositoryInterface $supplierRepository,
                                 PurchaserRepositoryInterface $purchaserRepository
@@ -70,5 +70,4 @@ class SummaryDashboardUseCase
         return $result ;
 
     }
-
 }

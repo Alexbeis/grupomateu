@@ -3,8 +3,7 @@
 namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
-use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\AnimalRepository;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -15,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Animal[]    findAll()
  * @method Animal[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AnimalRepository extends ServiceEntityRepository implements AnimalRepositoryInterface
+class AnimalRepositoryMysql extends ServiceEntityRepository implements AnimalRepository
 {
     public function __construct(RegistryInterface $registry)
     {

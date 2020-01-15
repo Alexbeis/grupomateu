@@ -2,13 +2,13 @@
 
 namespace Mateu\Backend\Animal\Application\GetAnimalsPerRace;
 
-use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\AnimalRepository;
 
 final class GetAnimalsRacesStatistics
 {
     private $animalRepository;
 
-    public function __construct(AnimalRepositoryInterface $animalRepository)
+    public function __construct(AnimalRepository $animalRepository)
     {
         $this->animalRepository = $animalRepository;
     }
