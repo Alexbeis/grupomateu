@@ -73,6 +73,11 @@ class Animal
     private $is_ill;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $gone;
+
+    /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation" , inversedBy="animal")
      * @ORM\JoinColumn(nullable=false)
@@ -96,10 +101,10 @@ class Animal
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", inversedBy="animals")
-     * @JoinColumn(name="register_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", inversedBy="animals")
+     * @JoinColumn(name="incoming_register_id", referencedColumnName="id")
      */
-    private $register;
+    private $incoming_register;
 
     /**
      * @ORM\OneToOne(targetEntity="Mateu\Backend\Annex\Domain\Entity\Annex", mappedBy="animal")
@@ -254,6 +259,7 @@ class Animal
     public function setHistory($history): self
     {
         $this->history = $history;
+
         return $this;
     }
     public function __toString()
@@ -395,7 +401,7 @@ class Animal
     /**
      * @return ArrayCollection|null
      */
-    public function getMovements()
+    public function getMovements(): ?ArrayCollection
     {
         return $this->movements;
     }
@@ -403,10 +409,30 @@ class Animal
     /**
      * @param ArrayCollection $movements
      *
-     * @return ArrayCollection|null
+     * @return Animal
      */
-    public function setMovements($movements): ?ArrayCollection
+    public function setMovements($movements)
     {
         $this->movements = $movements;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getGone()
+    {
+        return $this->gone;
+    }
+
+    /**
+     * @param mixed $gone
+     *
+     * @return Animal
+     */
+    public function setGone($gone): self
+    {
+        $this->gone = $gone;
+        return $this;
     }
 }

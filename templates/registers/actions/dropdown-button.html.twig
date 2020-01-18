@@ -1,0 +1,14 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-default">Acción</button>
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Ver</a></li>
+        <li><a href="{{ path('edit_explotation', {'id': 2})}}">Editar</a></li>
+        <li><a href="">Descarga CSV</a></li>
+        <li class="divider"></li>
+        <li><a class="js-remove-explotation" href="{{ path('delete_explotation', {'id': 1})}}"><i class="fa fa-trash"></i>Borrar</a></li>
+    </ul>
+</div>

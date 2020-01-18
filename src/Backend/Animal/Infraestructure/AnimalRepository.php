@@ -41,8 +41,11 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
         $qb = $this->createQueryBuilder('animal');
         $qb->select('exp.name', 'exp.code', 'count(animal.id) as total')
             ->join('animal.explotation', 'exp')
+            ->andWhere($qb->expr()->eq('animal.gone', '?1'))
             ->groupBy('exp.id')
-            ->orderBy('count(animal.id)','DESC');
+            ->orderBy('count(animal.id)','DESC')
+            ->setParameter(1, false);
+
         $result = $qb->getQuery()->getArrayResult();
 
         return $result;

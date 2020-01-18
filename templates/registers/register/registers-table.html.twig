@@ -2,31 +2,36 @@
     <table id="register-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
         <tr>
-            <th></th>
             <th>Tipo de entrada</th>
             <th>Procedencia</th>
             <th>Animales</th>
             <th>Creado el</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
         {% for register in registers %}
         <tr>
-            <td></td>
             <td>{{ register.intype.name }}</td>
             <td>{{ register.procedence}}</td>
-            <td>{{ register.animals.count }}</td>
+            <td>{{ register.animalsCount }}</td>
             <td>{{ register.createdat|date('d-m-y') }}</td>
+            <td>
+                {% include 'registers/actions/dropdown-button.html.twig' %}
+                <span class="js-spinner">
+                    <i class="fa fa-spinner fa-spin hidden"></i>
+                </span>
+            </td>
         </tr>
         {% endfor %}
         </tbody>
         <tfoot>
         <tr>
-            <th></th>
             <th>Tipo de entrada</th>
             <th>Procedencia</th>
             <th>Animales</th>
             <th>Creado el</th>
+            <th>Acciones</th>
         </tr>
         </tfoot>
     </table>

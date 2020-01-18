@@ -1,8 +1,8 @@
 <?php
 
-namespace Mateu\Backend\Register\Infraestructure\Controller;
+namespace Mateu\Backend\IncomingRegister\Infraestructure\Controller;
 
-use Mateu\Backend\Register\Application\Get\GetRegistersQuery;
+use Mateu\Backend\IncomingRegister\Application\Get\GetIncomingRegistersQuery;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -12,11 +12,11 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class RegisterController
- * @package Mateu\Backend\Register\Infraestructure\Controller
+ * Class IncomingRegistersController
+ * @package Mateu\Backend\IncomingRegister\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class RegisterController extends BaseController implements ControllerInterface
+class IncomingRegistersController extends BaseController implements ControllerInterface
 {
     /**
      * @Route("/registers", name="index_register", methods={"GET"})
@@ -26,7 +26,7 @@ class RegisterController extends BaseController implements ControllerInterface
      */
     public function __invoke(Request $request)
     {
-        $envelope = $this->ask(new GetRegistersQuery());
+        $envelope = $this->ask(new GetIncomingRegistersQuery());
         $handledStamp = $envelope->last(HandledStamp::class);
 
         return new Response(

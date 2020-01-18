@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Backend\Register\Domain\Entity;
+namespace Mateu\Backend\IncomingRegister\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -11,9 +11,9 @@ use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
 
 /**
- * @ORM\Entity(repositoryClass="Mateu\Backend\Register\Infraestructure\RegisterRepository")
+ * @ORM\Entity(repositoryClass="Mateu\Backend\IncomingRegister\Infraestructure\IncomingRegisterRepository")
  */
-class Register
+class IncomingRegister
 {
     use TimestampableEntity;
 
@@ -23,6 +23,11 @@ class Register
      * @ORM\Column(type="integer", options={"unsigned" = true})
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=40, nullable=false)
+     */
+    private $uuid;
     /**
      * @ORM\Column(type="text", length=50, nullable=true)
      */
@@ -35,7 +40,7 @@ class Register
     private $supplier;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="register", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="incoming_register", cascade={"persist"})
      */
     private $animals;
 
@@ -50,6 +55,11 @@ class Register
      * @JoinColumn(name="created_by_id", referencedColumnName="id")
      */
     private $created_by;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $animalsCount;
 
     public function __construct()
     {
@@ -158,6 +168,46 @@ class Register
     public function setCreatedBy($created_by): self
     {
         $this->created_by = $created_by;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getAnimalsCount()
+    {
+        return $this->animalsCount;
+    }
+
+    /**
+     * @param mixed $animalsCount
+     *
+     * @return Register
+     */
+    public function setAnimalsCount($animalsCount): self
+    {
+        $this->animalsCount = $animalsCount;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param mixed $uuid
+     *
+     * @return Register
+     */
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
         return $this;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Backend\Register\Infraestructure\Controller;
+namespace Mateu\Backend\IncomingRegister\Infraestructure\Controller;
 
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class NewAutomaticRegisterController
- * @package Mateu\Backend\Register\Infraestructure\Controller
+ * Class AutomaticIncomingRegisterController
+ * @package Mateu\Backend\IncomingRegister\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class AutomaticRegisterController extends BaseController implements ControllerInterface
+class AutomaticIncomingRegisterController extends BaseController implements ControllerInterface
 {
     /**
      * @Route("/register/auto", name="register_auto", methods={"GET"})

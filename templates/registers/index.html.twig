@@ -17,8 +17,16 @@
                             <div class="col-xs-6">
                                 <h4>Tabla de Registros</h4>
                             </div>
-                            <div class="col-xs-6 pull-right">
-
+                            <div class="col-xs-6">
+                                <div class="pull-right">
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#modal-add-register"
+                                            data-url="{{ path("add_explotation") }}">
+                                        Nuevo
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -28,6 +36,8 @@
                 </div>
             </div>
         </div>
+        ## MODALS ##
+        {% include 'registers/modal/add-register.html.twig' %}
     </section>
 
 {% endblock body %}

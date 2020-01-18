@@ -3,7 +3,7 @@ controllers:
     type: annotation
     prefix: /admin
 
-controllers_ha:
+app_annotations:
     resource: ../../src/Backend/
     type: annotation
     prefix: /admin

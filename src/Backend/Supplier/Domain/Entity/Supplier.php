@@ -80,7 +80,7 @@ class Supplier
     private $website;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", mappedBy="supplier")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="supplier")
      */
     private $registers;
 

@@ -37,7 +37,7 @@ class InType
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", mappedBy="inType")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="inType")
      */
     private $register;
 

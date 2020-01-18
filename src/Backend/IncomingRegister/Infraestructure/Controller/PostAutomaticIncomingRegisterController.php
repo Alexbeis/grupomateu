@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Backend\Register\Infraestructure\Controller;
+namespace Mateu\Backend\IncomingRegister\Infraestructure\Controller;
 
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package Mateu\Backend\Register\Infraestructure\Controller
  * @IsGranted("ROLE_ADMIN")
  */
-class NewAutomaticRegisterController extends BaseController implements ControllerInterface
+class PostAutomaticIncomingRegisterController extends BaseController implements ControllerInterface
 {
     /**
      * @param Request $request

@@ -8,10 +8,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\Group\Domain\Entity\Group;
+use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
 use Mateu\Backend\InType\Domain\Entity\InType;
 use Mateu\Backend\Purchaser\Domain\Entity\Purchaser;
 use Mateu\Backend\Race\Domain\Entity\Race;
-use Mateu\Backend\Register\Domain\Entity\Register;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
 use Mateu\Backend\User\Domain\Entity\User;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
@@ -280,8 +280,9 @@ class BaseFixtures extends Fixture implements FixtureInterface
 
             $explotation = $this->getReference(self::NAMES_TEXT[rand(0, count(self::NAMES_TEXT) - 1)]);
             $race = $this->getReference(self::RACES[rand(0, count(self::RACES) - 1)]['code']);
-            $register = (new Register())
+            $register = (new IncomingRegister())
                 ->setProcedence($procedence)
+                ->setUuid((Uuid::random())->getValue())
                 ->setInType($inType)
                 ->setSupplier($supplier)
                 ->setCreatedBy(
@@ -295,20 +296,23 @@ class BaseFixtures extends Fixture implements FixtureInterface
                 $crot = (string)rand(1000000000, 9999999999);
                 $crotMother = (string)rand(1000000000, 9999999999);
                 $num = substr($crot, -4);
-                $animal->setInternalNum($num);
-                $animal->setCrotal($crot);
-                $animal->setCrotalMother($crotMother);
-                $animal->setWeightIn(rand(10, 20));
-                $animal->setIsIll(false);
                 $date = new \DateTime();
                 $date->modify('-' . rand(0, 500) . 'day');
-                $animal->setBirthDate($date);
-                $animal->setExplotation($explotation);
                 $genere = ($i%2 == 0)? 'Male':'Female';
-                $animal->setGenre($genere);
-                $animal->setRace($race);
+                $animal
+                    ->setInternalNum($num)
+                    ->setCrotal($crot)
+                    ->setCrotalMother($crotMother)
+                    ->setWeightIn(rand(10, 20))
+                    ->setIsIll(false)
+                    ->setBirthDate($date)
+                    ->setExplotation($explotation)
+                    ->setGenre($genere)
+                    ->setGone(false)
+                    ->setRace($race);
 
                 $register->addAnimal($animal);
+                $register->setAnimalsCount($register->getAnimalsCount() + 1);
             }
             $manager->persist($register);
             $manager->flush();
@@ -354,10 +358,7 @@ class BaseFixtures extends Fixture implements FixtureInterface
             $this->addReference($race['code'], $r);
             $manager->persist($r);
         }
-
         $manager->flush();
-
-
     }
 
     private function loadSuppliers(ObjectManager $manager)
