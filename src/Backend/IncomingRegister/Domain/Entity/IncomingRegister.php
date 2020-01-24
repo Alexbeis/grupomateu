@@ -8,6 +8,7 @@ use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
 
 /**
@@ -34,18 +35,23 @@ class IncomingRegister
     private $procedence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Supplier\Domain\Entity\Supplier", inversedBy="registers")
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Supplier\Domain\Entity\Supplier", inversedBy="incomingRegisters")
      * @JoinColumn(name="supplier_id", referencedColumnName="id")
      */
     private $supplier;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="incoming_register", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="incomingRegister", cascade={"persist"})
      */
     private $animals;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\InType\Domain\Entity\InType", inversedBy="register")
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation", inversedBy="incomingRegisters")
+     */
+    private $explotation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\InType\Domain\Entity\InType", inversedBy="incomingRegisters")
      * @JoinColumn(name="in_type_id", referencedColumnName="id")
      */
     private $inType;
@@ -77,7 +83,7 @@ class IncomingRegister
     /**
      * @param mixed $procedence
      *
-     * @return Register
+     * @return IncomingRegister
      */
     public function setProcedence($procedence): self
     {
@@ -97,7 +103,7 @@ class IncomingRegister
     /**
      * @param mixed
      *
-     * @return Register
+     * @return IncomingRegister
      */
     public function setAnimals($animals): self
     {
@@ -109,17 +115,17 @@ class IncomingRegister
     public function addAnimal(Animal $animal) :void
     {
         if (!$this->animals->contains($animal)) {
-            $animal->setRegister($this);
             $this->animals->add($animal);
+            $animal->setIncomingRegister($this);
         }
     }
 
     /**
      * @param mixed $inType
      *
-     * @return Register
+     * @return IncomingRegister
      */
-    public function setInType($inType)
+    public function setInType($inType) :self
     {
         $this->inType = $inType;
         return $this;
@@ -136,7 +142,7 @@ class IncomingRegister
     /**
      * @param mixed $supplier
      *
-     * @return Register
+     * @return IncomingRegister
      */
     public function setSupplier($supplier): self
     {
@@ -163,7 +169,7 @@ class IncomingRegister
     /**
      * @param mixed $created_by
      *
-     * @return Register
+     * @return IncomingRegister
      */
     public function setCreatedBy($created_by): self
     {
@@ -182,7 +188,7 @@ class IncomingRegister
     /**
      * @param mixed $animalsCount
      *
-     * @return Register
+     * @return IncomingRegister
      */
     public function setAnimalsCount($animalsCount): self
     {
@@ -202,12 +208,31 @@ class IncomingRegister
     /**
      * @param mixed $uuid
      *
-     * @return Register
+     * @return IncomingRegister
      */
     public function setUuid($uuid): self
     {
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    /**
+     * @param mixed $explotation
+     *
+     * @return IncomingRegister
+     */
+    public function setExplotation($explotation)
+    {
+        $this->explotation = $explotation;
+        return $this;
+}
+
+    /**
+     * @return Explotation
+     */
+    public function getExplotation()
+    {
+        return $this->explotation;
     }
 }

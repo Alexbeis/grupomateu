@@ -37,7 +37,7 @@ class TestExportController extends BaseController implements ControllerInterface
     {
         return new PdfResponse(
             $snappy->getOutputFromHtml(
-                '<h1>Test</h1><div>Test!!!</div>'
+                $this->renderView('exports/incoming-register/incoming-register-pdf.html.twig')
             ),
             sprintf('%s.pdf', $uuid)
         );

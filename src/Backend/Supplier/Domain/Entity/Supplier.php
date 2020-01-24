@@ -82,8 +82,11 @@ class Supplier
     /**
      * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="supplier")
      */
-    private $registers;
+    private $incomingRegisters;
 
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {

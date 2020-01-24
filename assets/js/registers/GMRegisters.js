@@ -8,7 +8,6 @@ const swal = require('sweetalert2');
 
         this.$wrapper = $wrapper;
 
-
         this.$wrapper.on(
             'click',
             this.options._selectors.remove,
@@ -43,14 +42,32 @@ const swal = require('sweetalert2');
          */
         loadDatatable: function() {
             this.$wrapper.DataTable({
+                bProcessing: true,
+                serverSide: true,
+                searchDelay: 1000,
+                ajax: function (data, callback, settings) {
+                    let dataSource = '/admin/registros-entrada/paginados/';
+                    $.post(dataSource, data, function (rdata) {
+                        console.log(rdata);
+                        callback({
+                            "draw":data.draw,
+                            "data": rdata.data,
+                            "recordsTotal": rdata.recordsTotal,
+                            "recordsFiltered": rdata.recordsFiltered
+                        });
+                    }, 'json');
+                },
                 pageLength: 10,
                 responsive: true,
                 columnDefs: [
-                    { responsivePriority: 1, targets: 0 },
-                    { responsivePriority: 2, targets: 1 },
-                    { responsivePriority: 3, targets: -1 },
+                    { data: 'type',responsivePriority: 1, targets: 0 },
+                    { data: 'procedence', responsivePriority: 2, targets: 1 },
+                    { data: 'animalsCount', responsivePriority: 3, targets: 2 },
+                    { data: 'createdAt', responsivePriority: -1, targets: 3 },
+                    { data: 'actions', responsivePriority: -1, targets: 4 , orderable : false},
                 ]
             });
+
         },
 
         /**

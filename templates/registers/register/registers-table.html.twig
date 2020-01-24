@@ -10,20 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for register in registers %}
-        <tr>
-            <td>{{ register.intype.name }}</td>
-            <td>{{ register.procedence}}</td>
-            <td>{{ register.animalsCount }}</td>
-            <td>{{ register.createdat|date('d-m-y') }}</td>
-            <td>
-                {% include 'registers/actions/dropdown-button.html.twig' %}
-                <span class="js-spinner">
-                    <i class="fa fa-spinner fa-spin hidden"></i>
-                </span>
-            </td>
-        </tr>
-        {% endfor %}
+
         </tbody>
         <tfoot>
         <tr>

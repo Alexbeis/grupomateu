@@ -49,7 +49,8 @@ class ExplotationRepository extends ServiceEntityRepository implements Explotati
                 ->join('Mateu\Backend\Animal\Domain\Entity\Animal', 'animal')
                 ->join('Mateu\Backend\Group\Domain\Entity\Group', 'group')
                 ->where('explotation.id = :id')
-                ->setParameter('id', $id)
+                ->andWhere('animal.outgoingRegister IS NULL')
+                ->setParameters(['id' => $id])
                 ->getQuery();
 
         return $query->getOneOrNullResult();

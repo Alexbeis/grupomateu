@@ -22,9 +22,9 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
         parent::__construct($registry, Animal::class);
     }
 
-    public function save()
+    public function save(Animal $animal)
     {
-        // TODO: Implement save() method.
+        $this->_em->persist($animal);
     }
 
     public function getTotal()
@@ -41,10 +41,9 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
         $qb = $this->createQueryBuilder('animal');
         $qb->select('exp.name', 'exp.code', 'count(animal.id) as total')
             ->join('animal.explotation', 'exp')
-            ->andWhere($qb->expr()->eq('animal.gone', '?1'))
+            ->andWhere('animal.outgoingRegister IS NULL')
             ->groupBy('exp.id')
-            ->orderBy('count(animal.id)','DESC')
-            ->setParameter(1, false);
+            ->orderBy('count(animal.id)','DESC');
 
         $result = $qb->getQuery()->getArrayResult();
 

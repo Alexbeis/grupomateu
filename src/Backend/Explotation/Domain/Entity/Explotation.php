@@ -41,6 +41,11 @@ class Explotation
     private $animal;
 
     /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="explotation")
+     */
+    private $incomingRegisters;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\User\Domain\Entity\User")
      */
     private $createdBy;
@@ -179,5 +184,4 @@ class Explotation
 
         return $this;
     }
-
 }

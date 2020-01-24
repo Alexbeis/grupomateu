@@ -3,9 +3,9 @@
 namespace Mateu\Backend\Supplier\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
 use Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Supplier|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class SupplierRepository extends ServiceEntityRepository implements SupplierRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Supplier::class);
     }

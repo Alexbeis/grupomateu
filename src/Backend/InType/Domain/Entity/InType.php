@@ -39,7 +39,7 @@ class InType
     /**
      * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="inType")
      */
-    private $register;
+    private $incomingRegisters;
 
 
     public function __construct($uuid, $code, $name)

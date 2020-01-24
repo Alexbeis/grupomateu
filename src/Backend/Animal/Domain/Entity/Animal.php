@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\PersistentCollection;
 use Mateu\Backend\Animal\Domain\BirthdayMonthCalculator;
 use Mateu\Backend\Annex\Domain\Entity\Annex;
 use Mateu\Backend\History\Domain\Entity\History;
@@ -73,11 +74,6 @@ class Animal
     private $is_ill;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": false})
-     */
-    private $gone;
-
-    /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation" , inversedBy="animal")
      * @ORM\JoinColumn(nullable=false)
@@ -104,7 +100,14 @@ class Animal
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", inversedBy="animals")
      * @JoinColumn(name="incoming_register_id", referencedColumnName="id")
      */
-    private $incoming_register;
+    private $incomingRegister;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", inversedBy="animals")
+     * @JoinColumn(name="outgoing_register_id", referencedColumnName="id")
+     */
+    private $outgoingRegister;
+
 
     /**
      * @ORM\OneToOne(targetEntity="Mateu\Backend\Annex\Domain\Entity\Annex", mappedBy="animal")
@@ -340,26 +343,6 @@ class Animal
     }
 
     /**
-     * @param mixed $register
-     *
-     * @return Animal
-     */
-    public function setRegister($register)
-    {
-        $this->register = $register;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRegister()
-    {
-        return $this->register;
-    }
-
-    /**
      * @return mixed
      */
     public function getAnnex():?Annex
@@ -401,7 +384,7 @@ class Animal
     /**
      * @return ArrayCollection|null
      */
-    public function getMovements(): ?ArrayCollection
+    public function getMovements(): ?PersistentCollection
     {
         return $this->movements;
     }
@@ -418,21 +401,34 @@ class Animal
     }
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public function getGone()
+    public function getIncomingRegister()
     {
-        return $this->gone;
+        return $this->incomingRegister;
     }
 
     /**
-     * @param mixed $gone
-     *
-     * @return Animal
+     * @param mixed $incomingRegister
      */
-    public function setGone($gone): self
+    public function setIncomingRegister($incomingRegister): void
     {
-        $this->gone = $gone;
-        return $this;
+        $this->incomingRegister = $incomingRegister;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOutgoingRegister()
+    {
+        return $this->outgoingRegister;
+    }
+
+    /**
+     * @param mixed $outgoingRegister
+     */
+    public function setOutgoingRegister($outgoingRegister): void
+    {
+        $this->outgoingRegister = $outgoingRegister;
     }
 }
