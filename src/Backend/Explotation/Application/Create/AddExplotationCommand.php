@@ -2,7 +2,6 @@
 
 namespace Mateu\Backend\Explotation\Application\Create;
 
-
 use Mateu\Backend\User\Domain\Entity\User;
 
 class AddExplotationCommand

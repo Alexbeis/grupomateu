@@ -16,6 +16,16 @@ class IncomingRegisterRepository extends ServiceEntityRepository implements Inco
         parent::__construct($registry, IncomingRegister::class);
     }
 
+    public function save(IncomingRegister $incomingRegister)
+    {
+        $this->_em->persist($incomingRegister);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
     public function getPaginatedIncomingRegisters(array $data)
     {
         $start = $data['start'] ? $data['start'] : 0;
@@ -63,6 +73,7 @@ class IncomingRegisterRepository extends ServiceEntityRepository implements Inco
                 'procedence' => $element->getProcedence(),
                 'animalsCount' => $element->getAnimalsCount(),
                 'createdAt' => $element->getCreatedAt()->format('d-m-y'),
+                'createdBy' => $element->getCreatedBy()->getUsername(),
                 'uuid' => $element->getUuid()
             ];
         }, $paginator->getQuery()->execute());

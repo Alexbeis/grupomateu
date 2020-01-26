@@ -21,7 +21,7 @@ class AutomaticIncomingRegisterController extends BaseController implements Cont
     public function __invoke()
     {
         return new Response(
-            $this->render('registers/register/register-form.html.twig',[] )
+            $this->render('register-animal-form.html.twig',[] )
         );
 
     }

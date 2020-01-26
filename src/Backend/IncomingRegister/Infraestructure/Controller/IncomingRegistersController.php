@@ -3,7 +3,6 @@
 namespace Mateu\Backend\IncomingRegister\Infraestructure\Controller;
 
 use Mateu\Backend\Explotation\Application\GetAll\GetExplotationsQuery;
-use Mateu\Backend\IncomingRegister\Application\Get\GetIncomingRegistersQuery;
 use Mateu\Backend\InType\Application\GetAll\GetAllInTypes;
 use Mateu\Backend\Supplier\Application\Get\GetSuppliersQuery;
 use Mateu\Infraestructure\Controller\BaseController;
@@ -38,9 +37,6 @@ class IncomingRegistersController extends BaseController implements ControllerIn
      */
     public function __invoke(Request $request, Countries $countries, GetAllInTypes $inTypes)
     {
-        $envelRegister = $this->ask(new GetIncomingRegistersQuery());
-        $handledRegister = $envelRegister->last(HandledStamp::class);
-
         $envelExpl = $this->ask(new GetExplotationsQuery());
         $handledExpl = $envelExpl->last(HandledStamp::class);
 
@@ -51,7 +47,6 @@ class IncomingRegistersController extends BaseController implements ControllerIn
             $this->render(
                 'registers/index.html.twig',
                 [
-                    "registers" => $handledRegister->getResult(),
                     "countries" => $countries->getList(),
                     "inTypes" => $inTypes->get(),
                     "explotations" => $handledExpl->getResult(),

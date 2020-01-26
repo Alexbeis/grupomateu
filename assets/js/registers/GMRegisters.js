@@ -8,12 +8,6 @@ const swal = require('sweetalert2');
 
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on(
-            'click',
-            this.options._selectors.remove,
-            this.handleAnimalDelete.bind(this)
-        );
-
         this.loadDatatable()
         //this.loadEvents();
 
@@ -45,10 +39,10 @@ const swal = require('sweetalert2');
                 bProcessing: true,
                 serverSide: true,
                 searchDelay: 1000,
+                order: [[ 3, "desc" ]],
                 ajax: function (data, callback, settings) {
                     let dataSource = '/admin/registros-entrada/paginados/';
                     $.post(dataSource, data, function (rdata) {
-                        console.log(rdata);
                         callback({
                             "draw":data.draw,
                             "data": rdata.data,
@@ -64,7 +58,8 @@ const swal = require('sweetalert2');
                     { data: 'procedence', responsivePriority: 2, targets: 1 },
                     { data: 'animalsCount', responsivePriority: 3, targets: 2 },
                     { data: 'createdAt', responsivePriority: -1, targets: 3 },
-                    { data: 'actions', responsivePriority: -1, targets: 4 , orderable : false},
+                    { data: 'createdBy', responsivePriority: -1, targets: 4, orderable: false},
+                    { data: 'actions', responsivePriority: -1, targets: 5 , orderable : false},
                 ]
             });
 
@@ -79,39 +74,6 @@ const swal = require('sweetalert2');
             //})
         },
 
-        /**
-         * Handle explotation Row on the table
-         * @param e
-         */
-        handleAnimalDelete: function (e) {
-            e.preventDefault();
-            let target = e.currentTarget;
-            this.showAlert(target);
-        },
-
-        /**
-         * Handle Add Explotation from modal
-         * @param e
-         */
-        handleAnimalAdd: function(e) {
-            e.preventDefault();
-
-            this._cleanErrors();
-            let canSubmit = true;
-            let $form = $(e.currentTarget).closest('#add-exp-form');
-            this.options._selectors.inputs.forEach((id) => {
-                let $id = $(id);
-                let value = $id.val();
-                if (!this._isValid(value)) {
-                    canSubmit = false;
-                    this._addError($id)
-                }
-            });
-
-            if (canSubmit) {
-                $form.submit();
-            }
-        },
         /**
          *
          * @param value
@@ -237,5 +199,5 @@ let RegistersTableWrapper = $('#register-table');
 //let ModalWrapper = $('#modal-add-explotation');
 
 if (RegistersTableWrapper.length > 0) {
-    let GM = new GMRegisters(RegistersTableWrapper);
+    new GMRegisters(RegistersTableWrapper);
 }

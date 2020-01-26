@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateu\Backend\IncomingRegister\Application\Get;
+namespace Mateu\Backend\IncomingRegister\Application\GetAll;
 
 use Mateu\Backend\IncomingRegister\Domain\IncomingRegisterRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;

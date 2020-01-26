@@ -2,7 +2,6 @@
 
 namespace Mateu\Backend\IncomingRegister\Infraestructure\Controller;
 
-use Mateu\Backend\IncomingRegister\Domain\IncomingRegisterRepositoryInterface;
 use Mateu\Backend\IncomingRegister\Infraestructure\IncomingRegisterRepository;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
@@ -40,10 +39,14 @@ class GetPaginatedIncomingRegistersController extends BaseController implements 
         $result = $registerRepository->getPaginatedIncomingRegisters($data);
 
         foreach ($result['data'] as &$r) {
-            $r['actions'] = $this->renderView('registers/actions/dropdown-button.html.twig');
+            $r['actions'] = $this->renderView(
+                'registers/actions/dropdown-button.html.twig',
+                [
+                    'uuid' => $r['uuid']
+                ]
+            );
         }
 
         return new JsonResponse($result);
     }
-
 }

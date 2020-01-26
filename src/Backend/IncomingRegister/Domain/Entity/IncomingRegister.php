@@ -3,16 +3,24 @@
 namespace Mateu\Backend\IncomingRegister\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
+use Mateu\Backend\InType\Domain\Entity\InType;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
+use Mateu\Backend\User\Domain\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="Mateu\Backend\IncomingRegister\Infraestructure\IncomingRegisterRepository")
+ *  @Table(indexes={
+ *     @Index(name="inc_register_uuid_idx", columns={"uuid"}),
+ *     }
+ * )
  */
 class IncomingRegister
 {
@@ -26,11 +34,11 @@ class IncomingRegister
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=40, nullable=false)
+     * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      */
     private $uuid;
     /**
-     * @ORM\Column(type="text", length=50, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $procedence;
 
@@ -70,6 +78,24 @@ class IncomingRegister
     public function __construct()
     {
         $this->animals = new ArrayCollection();
+    }
+
+    public static function fromPhaseOne(
+        string $uuid,
+        InType $inType,
+        Explotation $explotation,
+        string $procedence,
+        Supplier $supplier,
+        User $user
+    ) {
+        return (new self())
+            ->setUuid($uuid)
+            ->setExplotation($explotation)
+            ->setSupplier($supplier)
+            ->setInType($inType)
+            ->setProcedence($procedence)
+            ->setCreatedBy($user)
+            ->setAnimalsCount(0);
     }
 
     /**
@@ -159,9 +185,9 @@ class IncomingRegister
     }
 
     /**
-     * @return mixed
+     * @return User
      */
-    public function getCreatedBy()
+    public function getCreatedBy():User
     {
         return $this->created_by;
     }
