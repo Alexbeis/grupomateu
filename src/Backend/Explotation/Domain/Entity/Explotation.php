@@ -3,6 +3,8 @@
 namespace Mateu\Backend\Explotation\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -183,5 +185,21 @@ class Explotation
         $this->group = $group;
 
         return $this;
+    }
+
+    /**
+     * Get Ill Animals from current Explotation
+     * @return Collection|null
+     */
+    public function getIllAnimals():?Collection
+    {
+        //TODO: Get criteria from repository
+        $criteria = Criteria::create()
+            ->andWhere(
+                Criteria::expr()->eq('is_ill', true)
+            )
+            ->orderBy(['updatedAt' => 'DESC']);
+
+        return $this->animal->matching($criteria);
     }
 }

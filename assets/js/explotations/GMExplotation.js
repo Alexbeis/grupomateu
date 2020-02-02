@@ -84,8 +84,8 @@ const swal = require('sweetalert2');
                 "pagingType": "simple",
                 'columnDefs': [{
                     'targets': 0,
-                    'searchable':false,
-                    'orderable':false,
+                    'searchable':true,
+                    'orderable':true,
                     'className': 'js-animal-selected'
                 }],
             });

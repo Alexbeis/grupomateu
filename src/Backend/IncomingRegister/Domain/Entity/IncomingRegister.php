@@ -261,4 +261,12 @@ class IncomingRegister
     {
         return $this->explotation;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

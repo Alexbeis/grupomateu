@@ -9,8 +9,13 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\PersistentCollection;
 use Mateu\Backend\Animal\Domain\BirthdayMonthCalculator;
+use Mateu\Backend\Animal\Domain\CrotalMotherNum;
+use Mateu\Backend\Animal\Domain\CrotalNum;
 use Mateu\Backend\Annex\Domain\Entity\Annex;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\History\Domain\Entity\History;
+use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
+use Mateu\Backend\Race\Domain\Entity\Race;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -119,6 +124,25 @@ class Animal
     {
         $this->history = new ArrayCollection();
         $this->movements = new ArrayCollection();
+    }
+
+    public static function fromAutoAdding(
+        CrotalNum $crotalNum,
+        CrotalMotherNum $crotalMother,
+        DateTime $birthDate,
+        Explotation $explotation,
+        Race $race,
+        string $genre
+    ) {
+        return (new self())
+            ->setBirthDate($birthDate)
+            ->setCrotal($crotalNum->value())
+            ->setInternalNum( substr($crotalNum->value(), -4))
+            ->setCrotalMother($crotalMother->value())
+            ->setExplotation($explotation)
+            ->setRace($race)
+            ->setIsIll(false)
+            ->setGenre($genre);
     }
 
     public function getId(): ?int
@@ -401,19 +425,22 @@ class Animal
     }
 
     /**
-     * @return mixed
+     * @return null|IncomingRegister
      */
-    public function getIncomingRegister()
+    public function getIncomingRegister():?IncomingRegister
     {
         return $this->incomingRegister;
     }
 
     /**
-     * @param mixed $incomingRegister
+     * @param IncomingRegister $incomingRegister
+     *
+     * @return Animal
      */
-    public function setIncomingRegister($incomingRegister): void
+    public function setIncomingRegister(IncomingRegister $incomingRegister): self
     {
         $this->incomingRegister = $incomingRegister;
+        return $this;
     }
 
     /**
@@ -426,9 +453,13 @@ class Animal
 
     /**
      * @param mixed $outgoingRegister
+     *
+     * @return Animal
      */
-    public function setOutgoingRegister($outgoingRegister): void
+    public function setOutgoingRegister($outgoingRegister): self
     {
         $this->outgoingRegister = $outgoingRegister;
+
+        return $this;
     }
 }

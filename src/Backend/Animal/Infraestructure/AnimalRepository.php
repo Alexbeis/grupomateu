@@ -3,10 +3,9 @@
 namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 
 /**
@@ -17,9 +16,15 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class AnimalRepository extends ServiceEntityRepository implements AnimalRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Animal::class);
+    }
+
+    public function existsByCrotalNum($crotalNum)
+    {
+        return null !== $this->findOneByCrotalNum($crotalNum);
+
     }
 
     public function save(Animal $animal)
@@ -30,7 +35,9 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
     public function getTotal()
     {
         $qb = $this->createQueryBuilder('animal');
-        $qb->select('count(animal.id)');
+        $qb
+            ->select('count(animal.id)')
+            ->andWhere('animal.outgoingRegister IS NULL');
         $total = $qb->getQuery()->getSingleScalarResult();
 
         return $total;
