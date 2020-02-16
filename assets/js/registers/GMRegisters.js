@@ -4,12 +4,26 @@ const swal = require('sweetalert2');
 
 (function(window, $, swal) {
 
-    window.GMRegisters = function($wrapper) {
+    window.GMRegisters = function($wrapper, $modalWrapper) {
 
         this.$wrapper = $wrapper;
+        this.$modalWrapper = $modalWrapper;
 
-        this.loadDatatable()
-        //this.loadEvents();
+        this.loadDatatable();
+
+        this.$wrapper.on(
+            'click',
+            this.options._selectors.remove,
+            this.handleIncRegisterDelete.bind(this)
+        );
+
+        this.$modalWrapper.on(
+            'click',
+            this.options._selectors.new,
+            this.handleCreateNewIncomingRegister.bind(this)
+        );
+
+        this.loadEvents();
 
     };
 
@@ -17,9 +31,9 @@ const swal = require('sweetalert2');
 
         options: {
             _selectors: {
-                remove: '.js-remove-explotation',
-                add: '.js-add-explotation',
-                inputs:['#exp_name', '#exp_code']
+                remove: '.js-remove-inc-register',
+                new: '.js-add-incregister',
+                inputs:['#inc_reg_explotation', '#inc_reg_procedence', '#inc_reg_intype', '#inc_reg_supplier']
             },
             text:{
                 title: "Estás seguro?",
@@ -62,16 +76,16 @@ const swal = require('sweetalert2');
                     { data: 'actions', responsivePriority: -1, targets: 5 , orderable : false},
                 ]
             });
-
         },
 
         /**
          * Load modal events
          */
         loadEvents: function() {
-            //$('#modal-add-explotation').on('hidden.bs.modal',  () => {
-            //    this._cleanErrors();
-            //})
+            this.$modalWrapper.on('hidden.bs.modal',  () => {
+                this._resetForm();
+                this._cleanErrors();
+            })
         },
 
         /**
@@ -90,7 +104,9 @@ const swal = require('sweetalert2');
          * @private
          */
         _addError:function(element){
-            element.closest('.form-group').addClass('has-error');
+            element
+                .closest('.form-group')
+                .addClass('has-error');
         },
 
         /**
@@ -100,8 +116,39 @@ const swal = require('sweetalert2');
         _cleanErrors:function(){
             this.options._selectors.inputs.forEach((id) => {
                 let $id = $(id);
-                $id.closest('.form-group').removeClass('has-error');
+                $id
+                    .closest('.form-group')
+                    .removeClass('has-error');
             });
+        },
+
+        _resetForm: function() {
+            this.$modalWrapper
+                .find('form')[0]
+                .reset();
+        },
+
+        handleIncRegisterDelete: function(e) {
+            e.preventDefault();
+            console.log(e.target);
+
+        },
+
+        handleCreateNewIncomingRegister: function(e) {
+            e.preventDefault();
+            this._cleanErrors()
+            const $target = e.target;
+            const $form = $target.closest('form');
+            let valid = true;
+
+            this.options._selectors.inputs.forEach((element) => {
+                if ($(element).val().length === 0) {
+                    this._addError($(element));
+                    valid=false;
+                }
+            });
+
+            if (valid) $form.submit();
         },
 
         /**
@@ -196,8 +243,8 @@ const swal = require('sweetalert2');
 
 
 let RegistersTableWrapper = $('#register-table');
-//let ModalWrapper = $('#modal-add-explotation');
+let ModalWrapper = $('#modal-add-inc-register');
 
 if (RegistersTableWrapper.length > 0) {
-    new GMRegisters(RegistersTableWrapper);
+    new GMRegisters(RegistersTableWrapper, ModalWrapper);
 }

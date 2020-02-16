@@ -3,6 +3,9 @@
 namespace Mateu\Backend\IncomingRegister\Application\AddAnimal;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Mateu\Backend\Animal\Application\Find\AnimalFinder;
+use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\CrotalAlreadyExist;
 use Mateu\Backend\Animal\Domain\CrotalMotherNum;
 use Mateu\Backend\Animal\Domain\CrotalNum;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
@@ -27,15 +30,21 @@ final class AnimalAdder
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var AnimalRepositoryInterface
+     */
+    private $animalRepository;
 
     public function __construct(
         RaceRepositoryInterface $raceRepository,
         IncomingRegisterRepositoryInterface $incomingRegisterRepository,
+        AnimalRepositoryInterface $animalRepository,
         EntityManagerInterface $entityManager
     ) {
         $this->raceRepository = $raceRepository;
         $this->incomingRegisterRepository = $incomingRegisterRepository;
         $this->entityManager = $entityManager;
+        $this->animalRepository = $animalRepository;
     }
 
     public function add(int $incRegisterId, StringValueObject $data)
@@ -72,6 +81,10 @@ final class AnimalAdder
 
         $crotalNum = new CrotalNum($crotal);
         $crotalNumMother = new CrotalMotherNum($crotalMother);
+
+        if ($this->animalRepository->existsByCrotalNum($crotalNum->value())) {
+            throw new CrotalAlreadyExist(sprintf('Crotal: %s existente', $crotalNum->value()));
+        }
 
         $animal = Animal::fromAutoAdding(
             $crotalNum,

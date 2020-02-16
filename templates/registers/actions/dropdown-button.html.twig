@@ -5,11 +5,16 @@
         <span class="sr-only">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Ver</a></li>
-        <li><a href="{{ path('register_get', {'uuid': uuid}) }}">Editar</a></li>
+        <li><a href="{{ path('register_get', {'uuid': uuid}) }}">Ver/Editar</a></li>
         <li><a href="">Descarga CSV</a></li>
         <li><a href="">Descarga PDF</a></li>
         <li class="divider"></li>
-        <li><a class="js-remove-explotation" href=""><i class="fa fa-trash"></i>Borrar</a></li>
+        <li>
+            <a class="js-remove-inc-register"
+               href="">
+                <i class="fa fa-trash"></i>
+                Borrar
+            </a>
+        </li>
     </ul>
 </div>

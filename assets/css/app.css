@@ -1,3 +1,13 @@
 .action-button .btn-primary{
     height: 34px!important;
 }
+
+td.details-control {
+    text-align:center;
+    color:forestgreen;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    text-align:center;
+    color:red;
+}

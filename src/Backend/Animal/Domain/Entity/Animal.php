@@ -86,12 +86,12 @@ class Animal
     private $explotation;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\History\Domain\Entity\History", mappedBy="animal")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\History\Domain\Entity\History", mappedBy="animal", cascade={"remove"})
      */
     private $history;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Movement\Domain\Entity\Movement", mappedBy="animal", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Movement\Domain\Entity\Movement", mappedBy="animal", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $movements;
 

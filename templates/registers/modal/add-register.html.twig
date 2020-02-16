@@ -13,7 +13,7 @@
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="inc_reg_intype">Explotación</label>
-                                    <select id="single" class="js-inc_expl form-control" name="inc_reg_expl">
+                                    <select id="inc_reg_explotation" class="js-inc_expl form-control" name="inc_reg_expl">
                                         <option value=""></option>
                                         {% for explotation in explotations %}
                                             <option value="{{explotation.id}}">{{ explotation.name }}</option>
@@ -23,13 +23,15 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
-                                <label for="inc_reg_procedence">Procedencia</label>
-                                <select class="form-control" id="inc_reg_procedence" name="inc_reg_procedence">
-                                    <option value=""></option>
-                                    {% for code ,country in countries %}
-                                        <option value="{{code}}">{{ country }}</option>
-                                    {% endfor %}
-                                </select>
+                                <div class="form-group">
+                                    <label for="inc_reg_procedence">Procedencia</label>
+                                    <select class="form-control" id="inc_reg_procedence" name="inc_reg_procedence">
+                                        <option value=""></option>
+                                        {% for code ,country in countries %}
+                                            <option value="{{code}}">{{ country }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
@@ -47,18 +49,17 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
-                                <label for="inc_reg_supplier">Proveedor</label>
-                                <select class="form-control" id="inc_reg_supplier" name="inc_reg_supplier">
-                                    <option value=""></option>
-                                    {% for supplier in suppliers %}
-                                        <option value="{{ supplier.id }}">{{ supplier.companyName}}</option>
-                                    {% endfor %}
-                                </select>
+                                <div class="form-group">
+                                    <label for="inc_reg_supplier">Proveedor</label>
+                                    <select class="form-control" id="inc_reg_supplier" name="inc_reg_supplier">
+                                        <option value=""></option>
+                                        {% for supplier in suppliers %}
+                                            <option value="{{ supplier.id }}">{{ supplier.companyName}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
-
-
-                        </select>
                     </div>
                     <!-- /.box-body -->
                 </div>

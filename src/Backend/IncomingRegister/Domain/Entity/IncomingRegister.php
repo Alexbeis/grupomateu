@@ -49,7 +49,7 @@ class IncomingRegister
     private $supplier;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="incomingRegister", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="incomingRegister", cascade={"persist", "remove"})
      */
     private $animals;
 
@@ -138,11 +138,24 @@ class IncomingRegister
         return $this;
     }
 
+    /**
+     * @param Animal $animal
+     */
     public function addAnimal(Animal $animal) :void
     {
         if (!$this->animals->contains($animal)) {
             $this->animals->add($animal);
             $animal->setIncomingRegister($this);
+        }
+    }
+
+    /**
+     * @param Animal $animal
+     */
+    public function removeAnimal(Animal $animal)
+    {
+        if ($this->animals->contains($animal)) {
+            $this->animals->removeElement($animal);
         }
     }
 

@@ -22,8 +22,7 @@ class ResponseListener
         //var_dump($this->requestStack->getMasterRequest()->getRequestFormat());
         $response = $event->getResponse();
 
-        //dd($response);
-        
-    }
+            //dd($response->getContent());
 
+    }
 }

@@ -1,4 +1,7 @@
-<form role="form" id="add-inc-register-form" method="post" action="{{ path('register_create') }}">
+<form role="form" id="add-inc-register-form" method="post" action="{{ path('register_save') }}">
+    <input type='hidden' name='_method' value='PUT'>
+    <input type="hidden" name="inc_reg_uuid" value="{{ incomingRegister.uuid }}">
+    <input type="hidden" name="inc_reg_id" value="{{ incomingRegister.id }}">
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
@@ -61,7 +64,14 @@
         </div>
         <div class="pull-right">
             <button type="button" class="btn btn-default pull-left">Cerrar</button>
-            <button type="submit" class="btn btn-primary js-add-incregister">Guardar</button>
+            <button
+                    type="submit"
+                    class="btn btn-primary js-add-incregister">
+                Guardar
+                <span class="js-spinner-">
+                    <i class="fa fa-spinner fa-spin hidden"></i>
+                </span>
+            </button>
         </div>
     </div>
     <!-- /.box-body -->

@@ -23,7 +23,7 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
 
     public function existsByCrotalNum($crotalNum)
     {
-        return null !== $this->findOneByCrotalNum($crotalNum);
+        return null !== $this->findOneByCrotal($crotalNum);
 
     }
 
