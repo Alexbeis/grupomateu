@@ -6,8 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\IncomingRegister\Application\AddAnimal\IncomingRegisterAnimalAdded;
 use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
 use Mateu\Backend\IncomingRegister\Domain\IncomingRegisterRepositoryInterface;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class IncomingRegisterAnimalAddedEventHandler
+class IncreaseByOneWhenAnimalAddedEventHandler implements MessageHandlerInterface
 {
     /**
      * @var IncomingRegisterRepositoryInterface
@@ -38,5 +39,4 @@ class IncomingRegisterAnimalAddedEventHandler
 
         $this->entityManager->flush();
     }
-
 }

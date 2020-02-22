@@ -32,7 +32,7 @@ const swal = require('sweetalert2');
         options: {
             _selectors: {
                 remove: '.js-remove-inc-register',
-                new: '.js-add-incregister',
+                new: '.js-create-incregister',
                 inputs:['#inc_reg_explotation', '#inc_reg_procedence', '#inc_reg_intype', '#inc_reg_supplier']
             },
             text:{
@@ -50,6 +50,9 @@ const swal = require('sweetalert2');
          */
         loadDatatable: function() {
             this.$wrapper.DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+                },
                 bProcessing: true,
                 serverSide: true,
                 searchDelay: 1000,
@@ -148,7 +151,11 @@ const swal = require('sweetalert2');
                 }
             });
 
-            if (valid) $form.submit();
+            if (valid) {
+                $($target).prop('disabled', true);
+                $($target).find('.fa-spin').toggleClass('hidden');
+                $form.submit();
+            }
         },
 
         /**

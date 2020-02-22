@@ -1,4 +1,4 @@
-.action-button .btn-primary{
+.action-button .btn-primary, #register-table .btn-info{
     height: 34px!important;
 }
 

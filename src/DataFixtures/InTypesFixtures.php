@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mateu\Backend\InType\Domain\Entity\InType;
+use Mateu\Backend\InType\Domain\InTypeCode;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 
 class InTypesFixtures extends Fixture implements FixtureInterface
@@ -24,7 +25,11 @@ class InTypesFixtures extends Fixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach (self::INTYPES as $inType) {
-            $t = InType::create(Uuid::random()->getValue(), $inType['code'], $inType['name']);
+            $t = InType::create(
+                Uuid::random()->getValue(),
+                new InTypeCode($inType['code']),
+                $inType['name']
+            );
             $this->addReference($inType['name'], $t);
 
             $manager->persist($t);

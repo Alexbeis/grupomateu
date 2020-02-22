@@ -15,6 +15,7 @@ use Mateu\Backend\IncomingRegister\Domain\IncomingRegisterRepositoryInterface;
 use Mateu\Backend\Race\Domain\RaceNotFound;
 use Mateu\Backend\Race\Domain\RaceRepositoryInterface;
 use Mateu\Shared\Domain\ValueObject\StringValueObject;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class AnimalAdder
 {
@@ -34,17 +35,23 @@ final class AnimalAdder
      * @var AnimalRepositoryInterface
      */
     private $animalRepository;
+    /**
+     * @var MessageBusInterface
+     */
+    private $eventBus;
 
     public function __construct(
         RaceRepositoryInterface $raceRepository,
         IncomingRegisterRepositoryInterface $incomingRegisterRepository,
         AnimalRepositoryInterface $animalRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MessageBusInterface $eventBus
     ) {
         $this->raceRepository = $raceRepository;
         $this->incomingRegisterRepository = $incomingRegisterRepository;
         $this->entityManager = $entityManager;
         $this->animalRepository = $animalRepository;
+        $this->eventBus = $eventBus;
     }
 
     public function add(int $incRegisterId, StringValueObject $data)
@@ -96,6 +103,14 @@ final class AnimalAdder
         );
 
         $incomingRegister->addAnimal($animal);
+
         $this->entityManager->flush();
+
+        /**
+         * Emit Event
+         */
+        $this->eventBus->dispatch(
+            new IncomingRegisterAnimalAdded($incRegisterId, $animal->getId())
+        );
     }
 }

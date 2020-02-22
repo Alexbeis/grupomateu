@@ -7,7 +7,7 @@ use Mateu\Backend\IncomingRegister\Application\DeleteAnimal\AnimalDeleted;
 use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
 use Mateu\Backend\IncomingRegister\Domain\IncomingRegisterRepositoryInterface;
 
-class AnimalDeletedEventHandler
+class DecreaseByOneWhenAnimalDeletedEventHandler
 {
     /**
      * @var EntityManagerInterface

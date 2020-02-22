@@ -10,7 +10,7 @@ use Mateu\Backend\Movement\Infraestructure\MovementRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Security\Core\Security;
 
-class AnimalMovedEventHandler implements MessageHandlerInterface
+class GenerateMovementWhenAnimalMovedEventHandler implements MessageHandlerInterface
 {
     /**
      * @var MovementRepository
@@ -44,7 +44,7 @@ class AnimalMovedEventHandler implements MessageHandlerInterface
     public function __invoke(AnimalMoved $event)
     {
         $animal= $this->animalFinder->find($event->getAnimalId());
-        $movement = Movement::create(
+        $movement = Movement::createStandard(
             $event->getFrom(),
             $event->getTo(),
             $animal,

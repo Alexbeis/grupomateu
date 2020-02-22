@@ -16,6 +16,9 @@ doctrine:
             collate: utf8mb4_unicode_ci
 
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            outTypeCode: 'Mateu\Backend\OutType\Domain\DoctrineTypes\OutTypeCodeType'
+            inTypeCode: 'Mateu\Backend\InType\Domain\DoctrineTypes\InTypeCodeType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

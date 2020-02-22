@@ -18,6 +18,7 @@ const swal = require('sweetalert2');
 
         const showOrHideSpinner = function (el) {
             let $spinner = el.querySelector(options.elements.spinner);
+            console.log($spinner);
             $spinner.childNodes.forEach((element) => {
                 if (element.tagName === 'I') {
                     element
@@ -73,21 +74,20 @@ const swal = require('sweetalert2');
         };
 
         const handleSave = function (e) {
-            e.preventDefault();
             const $target = e.target;
-            setElementAsDisabled($target);
             showOrHideSpinner($target);
+            setElementAsDisabled($target);
         };
 
         const handleIncRegisterDelete = (e) => {
             e.preventDefault();
 
             if (e.target.tagName === 'A') {
-
                 $target = e.target;
             } else {
                 $target = e.target.parentElement;
             }
+
             showOrHideSpinner($target);
             setElementAsDisabled($target);
 

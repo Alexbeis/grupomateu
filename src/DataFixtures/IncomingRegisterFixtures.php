@@ -58,6 +58,7 @@ class IncomingRegisterFixtures extends Fixture implements FixtureInterface, Depe
             $explotation = $this->getReference(
                 ExplotationFixtures::NAMES_TEXT[rand(0, count(ExplotationFixtures::NAMES_TEXT) - 1)]
             );
+
             $race = $this->getReference(RacesFixtures::RACES[rand(0, count(RacesFixtures::RACES) - 1)]['code']);
 
             $register = (new IncomingRegister())
@@ -65,6 +66,7 @@ class IncomingRegisterFixtures extends Fixture implements FixtureInterface, Depe
                 ->setUuid((Uuid::random())->getValue())
                 ->setInType($inType)
                 ->setSupplier($supplier)
+                ->setExplotation($explotation)
                 ->setCreatedBy(
                     $this->getReference(
                         UserFixtures::USERS[rand(0, count(UserFixtures::USERS) - 1)] ['username']

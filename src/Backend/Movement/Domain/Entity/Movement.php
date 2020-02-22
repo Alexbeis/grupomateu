@@ -38,6 +38,11 @@ class Movement
     private $last;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $type;
+
+    /**
      * /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal" , inversedBy="movements")
      */
@@ -48,17 +53,23 @@ class Movement
      */
     private $createdBy;
 
-    public function __construct($from, $to, Animal $animal, User $createdBy)
+    public function __construct($from, $to, Animal $animal, User $createdBy, string $type)
     {
         $this->initial = $from;
         $this->last = $to;
         $this->createdBy = $createdBy;
         $this->animal = $animal;
+        $this->type = $type;
     }
 
-    public static function create($from, $to, Animal $animal, User $createdBy)
+    public static function createStandard($from, $to, Animal $animal, User $createdBy)
     {
-        return new self($from, $to, $animal, $createdBy);
+        return new self($from, $to, $animal, $createdBy, 'standard');
+    }
+
+    public static function createIncomingRegister($from, $to, Animal $animal, User $createdBy)
+    {
+        return new self($from, $to, $animal, $createdBy, 'in_register');
     }
 
     /**

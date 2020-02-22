@@ -12,14 +12,10 @@ class AddAnimalCommandHandler implements MessageHandlerInterface
      * @var AnimalAdder
      */
     private $animalAdder;
-    /**
-     * @var MessageBusInterface
-     */
-    private $eventBus;
 
-    public function __construct(AnimalAdder $animalAdder, MessageBusInterface $eventBus) {
+
+    public function __construct(AnimalAdder $animalAdder) {
         $this->animalAdder = $animalAdder;
-        $this->eventBus = $eventBus;
     }
 
     public function __invoke(AddAnimalCommand $addAnimalCommand)
@@ -29,9 +25,5 @@ class AddAnimalCommandHandler implements MessageHandlerInterface
                 $addAnimalCommand->getIncRegisterId(),
                 new CodeFromScanner($addAnimalCommand->getData())
             );
-
-        $this->eventBus->dispatch(
-            new IncomingRegisterAnimalAdded($addAnimalCommand->getIncRegisterId())
-        );
     }
 }
