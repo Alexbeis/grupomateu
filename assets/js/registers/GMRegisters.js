@@ -4,19 +4,26 @@ const swal = require('sweetalert2');
 
 (function(window, $, swal) {
 
-    window.GMRegisters = function($wrapper) {
+    window.GMRegisters = function($wrapper, $modalWrapper) {
 
         this.$wrapper = $wrapper;
+        this.$modalWrapper = $modalWrapper;
 
+        this.loadDatatable();
 
         this.$wrapper.on(
             'click',
             this.options._selectors.remove,
-            this.handleAnimalDelete.bind(this)
+            this.handleIncRegisterDelete.bind(this)
         );
 
-        this.loadDatatable()
-        //this.loadEvents();
+        this.$modalWrapper.on(
+            'click',
+            this.options._selectors.new,
+            this.handleCreateNewIncomingRegister.bind(this)
+        );
+
+        this.loadEvents();
 
     };
 
@@ -24,9 +31,9 @@ const swal = require('sweetalert2');
 
         options: {
             _selectors: {
-                remove: '.js-remove-explotation',
-                add: '.js-add-explotation',
-                inputs:['#exp_name', '#exp_code']
+                remove: '.js-remove-inc-register',
+                new: '.js-create-incregister',
+                inputs:['#inc_reg_explotation', '#inc_reg_procedence', '#inc_reg_intype', '#inc_reg_supplier']
             },
             text:{
                 title: "Estás seguro?",
@@ -43,12 +50,33 @@ const swal = require('sweetalert2');
          */
         loadDatatable: function() {
             this.$wrapper.DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+                },
+                bProcessing: true,
+                serverSide: true,
+                searchDelay: 1000,
+                order: [[ 3, "desc" ]],
+                ajax: function (data, callback, settings) {
+                    let dataSource = '/admin/registros-entrada/paginados/';
+                    $.post(dataSource, data, function (rdata) {
+                        callback({
+                            "draw":data.draw,
+                            "data": rdata.data,
+                            "recordsTotal": rdata.recordsTotal,
+                            "recordsFiltered": rdata.recordsFiltered
+                        });
+                    }, 'json');
+                },
                 pageLength: 10,
                 responsive: true,
                 columnDefs: [
-                    { responsivePriority: 1, targets: 0 },
-                    { responsivePriority: 2, targets: 1 },
-                    { responsivePriority: 3, targets: -1 },
+                    { data: 'type',responsivePriority: 1, targets: 0 },
+                    { data: 'procedence', responsivePriority: 2, targets: 1 },
+                    { data: 'animalsCount', responsivePriority: 3, targets: 2 },
+                    { data: 'createdAt', responsivePriority: -1, targets: 3 },
+                    { data: 'createdBy', responsivePriority: -1, targets: 4, orderable: false},
+                    { data: 'actions', responsivePriority: -1, targets: 5 , orderable : false},
                 ]
             });
         },
@@ -57,44 +85,12 @@ const swal = require('sweetalert2');
          * Load modal events
          */
         loadEvents: function() {
-            //$('#modal-add-explotation').on('hidden.bs.modal',  () => {
-            //    this._cleanErrors();
-            //})
+            this.$modalWrapper.on('hidden.bs.modal',  () => {
+                this._resetForm();
+                this._cleanErrors();
+            })
         },
 
-        /**
-         * Handle explotation Row on the table
-         * @param e
-         */
-        handleAnimalDelete: function (e) {
-            e.preventDefault();
-            let target = e.currentTarget;
-            this.showAlert(target);
-        },
-
-        /**
-         * Handle Add Explotation from modal
-         * @param e
-         */
-        handleAnimalAdd: function(e) {
-            e.preventDefault();
-
-            this._cleanErrors();
-            let canSubmit = true;
-            let $form = $(e.currentTarget).closest('#add-exp-form');
-            this.options._selectors.inputs.forEach((id) => {
-                let $id = $(id);
-                let value = $id.val();
-                if (!this._isValid(value)) {
-                    canSubmit = false;
-                    this._addError($id)
-                }
-            });
-
-            if (canSubmit) {
-                $form.submit();
-            }
-        },
         /**
          *
          * @param value
@@ -111,7 +107,9 @@ const swal = require('sweetalert2');
          * @private
          */
         _addError:function(element){
-            element.closest('.form-group').addClass('has-error');
+            element
+                .closest('.form-group')
+                .addClass('has-error');
         },
 
         /**
@@ -121,8 +119,43 @@ const swal = require('sweetalert2');
         _cleanErrors:function(){
             this.options._selectors.inputs.forEach((id) => {
                 let $id = $(id);
-                $id.closest('.form-group').removeClass('has-error');
+                $id
+                    .closest('.form-group')
+                    .removeClass('has-error');
             });
+        },
+
+        _resetForm: function() {
+            this.$modalWrapper
+                .find('form')[0]
+                .reset();
+        },
+
+        handleIncRegisterDelete: function(e) {
+            e.preventDefault();
+            console.log(e.target);
+
+        },
+
+        handleCreateNewIncomingRegister: function(e) {
+            e.preventDefault();
+            this._cleanErrors()
+            const $target = e.target;
+            const $form = $target.closest('form');
+            let valid = true;
+
+            this.options._selectors.inputs.forEach((element) => {
+                if ($(element).val().length === 0) {
+                    this._addError($(element));
+                    valid=false;
+                }
+            });
+
+            if (valid) {
+                $($target).prop('disabled', true);
+                $($target).find('.fa-spin').toggleClass('hidden');
+                $form.submit();
+            }
         },
 
         /**
@@ -217,8 +250,8 @@ const swal = require('sweetalert2');
 
 
 let RegistersTableWrapper = $('#register-table');
-//let ModalWrapper = $('#modal-add-explotation');
+let ModalWrapper = $('#modal-add-inc-register');
 
 if (RegistersTableWrapper.length > 0) {
-    let GM = new GMRegisters(RegistersTableWrapper);
+    new GMRegisters(RegistersTableWrapper, ModalWrapper);
 }

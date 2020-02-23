@@ -28,7 +28,7 @@ export default class RaceValidator {
                 return $id === input.name;
             });
 
-            if ($element.val() < match[0].min || $element.val() > match[0].max) {
+            if ($element.val().length < match[0].min || $element.val().length > match[0].max) {
                 this.errors.push(
                     {
                         name: match[0].name,

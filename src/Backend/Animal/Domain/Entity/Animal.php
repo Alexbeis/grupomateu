@@ -7,9 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\PersistentCollection;
 use Mateu\Backend\Animal\Domain\BirthdayMonthCalculator;
+use Mateu\Backend\Animal\Domain\CrotalMotherNum;
+use Mateu\Backend\Animal\Domain\CrotalNum;
 use Mateu\Backend\Annex\Domain\Entity\Annex;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\History\Domain\Entity\History;
+use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
+use Mateu\Backend\Race\Domain\Entity\Race;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -80,12 +86,12 @@ class Animal
     private $explotation;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\History\Domain\Entity\History", mappedBy="animal")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\History\Domain\Entity\History", mappedBy="animal", cascade={"remove"})
      */
     private $history;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Movement\Domain\Entity\Movement", mappedBy="animal", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\Movement\Domain\Entity\Movement", mappedBy="animal", fetch="EXTRA_LAZY", cascade={"remove"})
      */
     private $movements;
 
@@ -96,10 +102,17 @@ class Animal
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", inversedBy="animals")
-     * @JoinColumn(name="register_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", inversedBy="animals")
+     * @JoinColumn(name="incoming_register_id", referencedColumnName="id")
      */
-    private $register;
+    private $incomingRegister;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", inversedBy="animals")
+     * @JoinColumn(name="outgoing_register_id", referencedColumnName="id")
+     */
+    private $outgoingRegister;
+
 
     /**
      * @ORM\OneToOne(targetEntity="Mateu\Backend\Annex\Domain\Entity\Annex", mappedBy="animal")
@@ -111,6 +124,25 @@ class Animal
     {
         $this->history = new ArrayCollection();
         $this->movements = new ArrayCollection();
+    }
+
+    public static function fromAutoAdding(
+        CrotalNum $crotalNum,
+        CrotalMotherNum $crotalMother,
+        DateTime $birthDate,
+        Explotation $explotation,
+        Race $race,
+        string $genre
+    ) {
+        return (new self())
+            ->setBirthDate($birthDate)
+            ->setCrotal($crotalNum->value())
+            ->setInternalNum( substr($crotalNum->value(), -4))
+            ->setCrotalMother($crotalMother->value())
+            ->setExplotation($explotation)
+            ->setRace($race)
+            ->setIsIll(false)
+            ->setGenre($genre);
     }
 
     public function getId(): ?int
@@ -254,6 +286,7 @@ class Animal
     public function setHistory($history): self
     {
         $this->history = $history;
+
         return $this;
     }
     public function __toString()
@@ -334,26 +367,6 @@ class Animal
     }
 
     /**
-     * @param mixed $register
-     *
-     * @return Animal
-     */
-    public function setRegister($register)
-    {
-        $this->register = $register;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRegister()
-    {
-        return $this->register;
-    }
-
-    /**
      * @return mixed
      */
     public function getAnnex():?Annex
@@ -395,7 +408,7 @@ class Animal
     /**
      * @return ArrayCollection|null
      */
-    public function getMovements()
+    public function getMovements(): ?PersistentCollection
     {
         return $this->movements;
     }
@@ -403,10 +416,50 @@ class Animal
     /**
      * @param ArrayCollection $movements
      *
-     * @return ArrayCollection|null
+     * @return Animal
      */
-    public function setMovements($movements): ?ArrayCollection
+    public function setMovements($movements)
     {
         $this->movements = $movements;
+        return $this;
+    }
+
+    /**
+     * @return null|IncomingRegister
+     */
+    public function getIncomingRegister():?IncomingRegister
+    {
+        return $this->incomingRegister;
+    }
+
+    /**
+     * @param IncomingRegister $incomingRegister
+     *
+     * @return Animal
+     */
+    public function setIncomingRegister(IncomingRegister $incomingRegister): self
+    {
+        $this->incomingRegister = $incomingRegister;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOutgoingRegister()
+    {
+        return $this->outgoingRegister;
+    }
+
+    /**
+     * @param mixed $outgoingRegister
+     *
+     * @return Animal
+     */
+    public function setOutgoingRegister($outgoingRegister): self
+    {
+        $this->outgoingRegister = $outgoingRegister;
+
+        return $this;
     }
 }

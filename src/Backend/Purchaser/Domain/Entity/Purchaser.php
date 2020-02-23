@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\Purchaser\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -28,7 +29,6 @@ class Purchaser
      * @ORM\Column(type="string", length=50)
      */
     private $companyName;
-
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -85,6 +85,15 @@ class Purchaser
      */
     private $website;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", mappedBy="purchaser")
+     */
+    private $outgoingRegisters;
+
+    public function __construct()
+    {
+        $this->outgoingRegisters = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -96,10 +105,14 @@ class Purchaser
 
     /**
      * @param mixed $companyName
+     *
+     * @return Purchaser
      */
-    public function setCompanyName($companyName): void
+    public function setCompanyName($companyName): self
     {
         $this->companyName = $companyName;
+
+        return $this;
     }
 
     /**
@@ -112,10 +125,13 @@ class Purchaser
 
     /**
      * @param mixed $contactName
+     *
+     * @return Purchaser
      */
-    public function setContactName($contactName): void
+    public function setContactName($contactName): self
     {
         $this->contactName = $contactName;
+        return $this;
     }
 
     /**
@@ -128,10 +144,13 @@ class Purchaser
 
     /**
      * @param mixed $email
+     *
+     * @return Purchaser
      */
-    public function setEmail($email): void
+    public function setEmail($email): self
     {
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -144,10 +163,13 @@ class Purchaser
 
     /**
      * @param mixed $address
+     *
+     * @return Purchaser
      */
-    public function setAddress($address): void
+    public function setAddress($address): self
     {
         $this->address = $address;
+        return $this;
     }
 
     /**
@@ -160,10 +182,13 @@ class Purchaser
 
     /**
      * @param mixed $city
+     *
+     * @return Purchaser
      */
-    public function setCity($city): void
+    public function setCity($city): self
     {
         $this->city = $city;
+        return $this;
     }
 
     /**
@@ -176,10 +201,13 @@ class Purchaser
 
     /**
      * @param mixed $region
+     *
+     * @return Purchaser
      */
-    public function setRegion($region): void
+    public function setRegion($region): self
     {
         $this->region = $region;
+        return $this;
     }
 
     /**
@@ -192,10 +220,13 @@ class Purchaser
 
     /**
      * @param mixed $postalCode
+     *
+     * @return Purchaser
      */
-    public function setPostalCode($postalCode): void
+    public function setPostalCode($postalCode): self
     {
         $this->postalCode = $postalCode;
+        return $this;
     }
 
     /**
@@ -208,10 +239,13 @@ class Purchaser
 
     /**
      * @param mixed $country
+     *
+     * @return Purchaser
      */
-    public function setCountry($country): void
+    public function setCountry($country): self
     {
         $this->country = $country;
+        return $this;
     }
 
     /**
@@ -224,10 +258,13 @@ class Purchaser
 
     /**
      * @param mixed $phone
+     *
+     * @return Purchaser
      */
-    public function setPhone($phone): void
+    public function setPhone($phone): self
     {
         $this->phone = $phone;
+        return $this;
     }
 
     /**
@@ -240,10 +277,13 @@ class Purchaser
 
     /**
      * @param mixed $mobilePhone
+     *
+     * @return Purchaser
      */
-    public function setMobilePhone($mobilePhone): void
+    public function setMobilePhone($mobilePhone): self
     {
         $this->mobilePhone = $mobilePhone;
+        return $this;
     }
 
     /**
@@ -256,10 +296,13 @@ class Purchaser
 
     /**
      * @param mixed $fax
+     *
+     * @return Purchaser
      */
-    public function setFax($fax): void
+    public function setFax($fax): self
     {
         $this->fax = $fax;
+        return $this;
     }
 
     /**
@@ -272,10 +315,33 @@ class Purchaser
 
     /**
      * @param mixed $website
+     *
+     * @return Purchaser
      */
-    public function setWebsite($website): void
+    public function setWebsite($website): self
     {
         $this->website = $website;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOutgoingRegisters()
+    {
+        return $this->outgoingRegisters;
+    }
+
+    /**
+     * @param mixed $outgoingRegisters
+     *
+     * @return Purchaser
+     */
+    public function setOutgoingRegisters($outgoingRegisters): self
+    {
+        $this->outgoingRegisters = $outgoingRegisters;
+
+        return $this;
     }
 
 }

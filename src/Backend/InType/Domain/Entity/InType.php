@@ -5,6 +5,7 @@ namespace Mateu\Backend\InType\Domain\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Mateu\Backend\InType\Domain\InTypeCode;
 
 /**
  * Class InType
@@ -27,7 +28,7 @@ class InType
     private $uuid;
 
     /**
-     * @ORM\Column(type="string", length=10, unique=true)
+     * @ORM\Column(type="inTypeCode", length=50, unique=true)
      */
     private $code;
 
@@ -37,12 +38,12 @@ class InType
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Register\Domain\Entity\Register", mappedBy="inType")
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="inType")
      */
-    private $register;
+    private $incomingRegisters;
 
 
-    public function __construct($uuid, $code, $name)
+    public function __construct($uuid, InTypeCode $code, string $name)
     {
         $this->code = $code;
         $this->name = $name;
@@ -58,7 +59,7 @@ class InType
     /**
      * @return mixed
      */
-    public function getCode()
+    public function getCode(): InTypeCode
     {
         return $this->code;
     }

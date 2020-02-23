@@ -3,6 +3,8 @@
 namespace Mateu\Backend\Explotation\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -39,6 +41,11 @@ class Explotation
      * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal" , mappedBy="explotation")
      */
     private $animal;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", mappedBy="explotation")
+     */
+    private $incomingRegisters;
 
     /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\User\Domain\Entity\User")
@@ -180,4 +187,19 @@ class Explotation
         return $this;
     }
 
+    /**
+     * Get Ill Animals from current Explotation
+     * @return Collection|null
+     */
+    public function getIllAnimals():?Collection
+    {
+        //TODO: Get criteria from repository
+        $criteria = Criteria::create()
+            ->andWhere(
+                Criteria::expr()->eq('is_ill', true)
+            )
+            ->orderBy(['updatedAt' => 'DESC']);
+
+        return $this->animal->matching($criteria);
+    }
 }

@@ -4,12 +4,14 @@ namespace Mateu\Backend\Explotation\Infraestructure\Controller;
 
 use Mateu\Backend\Explotation\Application\Find\ExplotationFinder;
 use Mateu\Backend\Explotation\Application\GetAll\GetExplotationsQuery;
+use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Backend\Group\Application\GetAll\GetAllGroupsQuery;
 use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,6 +36,7 @@ class ShowEditExplotationController extends BaseController implements Controller
      * @param ExplotationFinder $explotationFinder
      *
      * @return Response
+     * @throws ExplotationNotFound
      */
     public function __invoke($id, ExplotationFinder $explotationFinder)
     {
@@ -46,8 +49,7 @@ class ShowEditExplotationController extends BaseController implements Controller
 
             $explotationEnvelope = $this->ask(new GetExplotationsQuery());
             $explotationHandledStamp = $explotationEnvelope->last(HandledStamp::class);
-
-        } catch (\Throwable $e) {
+        } catch (HandlerFailedException $e) {
 
             $this->get('session')->getFlashBag()->set('danger', sprintf($e->getMessage()));
             return new RedirectResponse($this->router->generate('index_explotations'));

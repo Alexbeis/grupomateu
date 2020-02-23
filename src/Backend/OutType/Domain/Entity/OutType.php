@@ -35,6 +35,11 @@ class OutType
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", mappedBy="outType")
+     */
+    private $outgoingRegisters;
+
     public function __construct($uuid, $code, $name)
     {
         $this->uuid = $uuid;

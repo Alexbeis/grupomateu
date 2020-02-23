@@ -1,0 +1,78 @@
+<form role="form" id="add-inc-register-form" method="post" action="{{ path('register_save') }}">
+    <input type='hidden' name='_method' value='PUT'>
+    <input type="hidden" name="inc_reg_uuid" value="{{ incomingRegister.uuid }}">
+    <input type="hidden" name="inc_reg_id" value="{{ incomingRegister.id }}">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label for="inc_reg_intype">Explotación</label>
+                    <select id="single" class="js-inc_expl form-control" name="inc_reg_expl">
+                        <option value=""></option>
+                        {% for explotation in explotations %}
+                            <option value="{{explotation.id}}"
+                                    {% if incomingRegister.explotation.id == explotation.id %} selected {% endif %}
+                            >{{ explotation.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <span class="help-block hidden"></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label for="inc_reg_procedence">Procedencia</label>
+                <select class="form-control" id="inc_reg_procedence" name="inc_reg_procedence">
+                    <option value=""></option>
+                    {% for code ,country in countries %}
+                        <option value="{{code}}"
+                                {% if country == incomingRegister.procedence %} selected {% endif %}
+                        >{{ country }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label for="inc_reg_intype">Tipo</label>
+                    <select id="inc_reg_intype" class="js-inc_intype form-control" name="inc_reg_intype">
+                        <option value=""></option>
+                        {% for type in inTypes %}
+                            <option value="{{type.id}}"
+                                    {% if incomingRegister.inType.id == type.id %} selected {% endif %}
+                            >{{ type.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <span class="help-block hidden"></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label for="inc_reg_supplier">Proveedor</label>
+                <select class="form-control" id="inc_reg_supplier" name="inc_reg_supplier">
+                    <option value=""></option>
+                    {% for supplier in suppliers %}
+                        <option value="{{ supplier.id }}"
+                                {% if incomingRegister.supplier.id == supplier.id %} selected {% endif %}
+                        >{{ supplier.companyName}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="pull-right">
+            <button type="button" class="btn btn-default pull-left">Cerrar</button>
+            <button
+                    type="submit"
+                    class="btn btn-primary js-add-incregister">
+                Guardar
+                <span class="js-spinner">
+                    <i class="fa fa-spinner fa-spin hidden"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</form>

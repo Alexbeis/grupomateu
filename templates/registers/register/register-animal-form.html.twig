@@ -1,0 +1,17 @@
+{% block body %}
+<form action="{{ path('incoming_register_auto_add') }}" method="POST">
+    <input type="hidden" name="inc_reg_id" value="{{ incomingRegister.id }}">
+    <input type="hidden" name="inc_reg_uuid" value="{{ incomingRegister.uuid }}">
+    <div class="form-group">
+        <label for="scanner">Escanee:</label>
+        <input name="entrance_path" type="text" class="form-control" id="scanner">
+    </div>
+    <button type="submit" class="btn btn-default pull-right js-add-animal">
+        Añadir
+        <span class="js-spinner">
+            <i class="fa fa-spinner fa-spin hidden"></i>
+        </span>
+    </button>
+</form>
+
+{% endblock %}
