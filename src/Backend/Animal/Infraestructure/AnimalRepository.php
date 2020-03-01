@@ -5,6 +5,7 @@ namespace Mateu\Backend\Animal\Infraestructure;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
+use Mateu\Backend\Animal\Domain\CrotalNum;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 
 
@@ -21,9 +22,9 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
         parent::__construct($registry, Animal::class);
     }
 
-    public function existsByCrotalNum($crotalNum)
+    public function existsByCrotalNum(CrotalNum $crotalNum)
     {
-        return null !== $this->findOneByCrotal($crotalNum);
+        return null !== $this->findOneByCrotal($crotalNum->value());
 
     }
 

@@ -8,5 +8,6 @@ interface AnimalRepositoryInterface
 {
     public function save(Animal $animal);
     public function getTotal();
+    public function existsByCrotalNum(CrotalNum $crotalNum);
 
 }
