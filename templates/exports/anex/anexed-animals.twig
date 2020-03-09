@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <title>Listado Anexos</title>
+</head>
+<body>
+<div class="container main-container">
+    {% block body %}
+        <h2>Listado de Anexos</h2>
+        <div class="container">
+            <p>
+                Impresión generada por: {{ app.user.email }}
+            </p>
+            <p>
+                Fecha: {{ "now"|date("m/d/Y") }}
+            </p>
+        </div>
+        <table>
+            <tr>
+                <th>Crotal</th>
+                <th>Numero Interno</th>
+                <th>Fecha Nacimiento</th>
+                <th>Explotación</th>
+            </tr>
+            {% for anex in anexed %}
+                <tr>
+                    <th>{{ anex.animal.crotal  }}</th>
+                    <th>{{ anex.animal.internalNum }}</th>
+                    <th>{{ anex.animal.birthDate|date('d-m-y') }}</th>
+                    <th>{{ anex.animal.explotation.name }}</th>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% endblock %}
+</div>
+{% block javascripts %}
+    <script src="{{pdf_url}}build/manifest.json"></script>
+
+{% endblock %}
+</body>
+</html>

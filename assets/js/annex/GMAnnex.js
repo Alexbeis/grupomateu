@@ -8,8 +8,9 @@ import AjaxCall from "../shared/AjaxCall";
     window.GMAnnex = function($annexWrapper) {
 
         this.$wrapper = $annexWrapper;
-
+        this.$pdfButton = $('.js-export-pdf');
         this.ajaxCall = new AjaxCall();
+        this.exportPdf = new ExportPdf();
 
         this.$wrapper.on(
             'click',
@@ -17,8 +18,13 @@ import AjaxCall from "../shared/AjaxCall";
             this.handleAnnexDelete.bind(this)
         );
 
+        this.$pdfButton.on(
+            'click',
+            this.getAnnexedAndHandleExportPdf.bind(this)
+        );
+
         this.loadDatatable();
-        this.table = null;
+        this.loadEvents();
     };
 
     $.extend(window.GMAnnex.prototype, {
@@ -42,8 +48,20 @@ import AjaxCall from "../shared/AjaxCall";
          */
         loadDatatable() {
             this.$wrapper.dataTable({
+                language: {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+                },
+                columnDefs: [{
+                    targets: 0,
+                    searchable: false,
+                    orderable: false,
+                    className: 'dt-body-center',
+                    render: function (data, type, full, meta){
+                        return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+                    }
+                }],
                 pageLength: 10,
-                responsive: true,
+                responsive: true
             });
         },
 
@@ -51,9 +69,54 @@ import AjaxCall from "../shared/AjaxCall";
          * Load modal events
          */
         loadEvents() {
-            //$('#modal-add-explotation').on('hidden.bs.modal',  () => {
-            //    this._cleanErrors();
-            //})
+            let that = this;
+            $('#select-all').on('click', function(){
+                // Get all rows with search applied
+                let rows = that.$wrapper.DataTable().rows({ 'search': 'applied' }).nodes();
+                // Check/uncheck checkboxes for all rows in the table
+                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+            });
+        },
+        /**
+         *
+         * @param e
+         */
+        getAnnexedAndHandleExportPdf(e) {
+            e.preventDefault();
+            let url = $(e.target).attr('href');
+
+            this.exportPdf
+                .handleExportPdf(
+                    this._extractAnexedIds(),
+                    url
+                );
+        },
+
+        /**
+         *
+         * @returns {Array}
+         * @private
+         */
+        _extractAnexedIds() {
+
+            let elementsChecked = [];
+            this.$wrapper.DataTable().$('input[type="checkbox"]').each((i, element) => {
+
+                if(!$.contains(document, this)){
+                    if (!element.checked){
+                        return;
+                    }
+                    elementsChecked.push(
+                        $(element)
+                            .closest('tr')
+                            .attr('id')
+                            .split('_')[1]
+                    );
+                }
+
+            });
+
+            return elementsChecked;
         },
 
         handleAnnexDelete(e) {

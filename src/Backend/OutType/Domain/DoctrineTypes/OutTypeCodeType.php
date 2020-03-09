@@ -8,6 +8,8 @@ use Mateu\Backend\OutType\Domain\OutTypeCode;
 
 final class OutTypeCodeType extends Type
 {
+    const OUTTYPECODE = 'outTypeCode';
+
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return $value->value();
@@ -28,7 +30,7 @@ final class OutTypeCodeType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return 'outTypeCode';
+        return "VARCHAR(50)";
     }
 
     /**

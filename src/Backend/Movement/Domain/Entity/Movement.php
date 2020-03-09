@@ -14,9 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Movement
 {
-    const IN = [];
-    const OUT = [];
-
     use TimestampableEntity;
 
     /**

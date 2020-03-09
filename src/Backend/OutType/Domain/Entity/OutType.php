@@ -4,6 +4,7 @@ namespace Mateu\Backend\OutType\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Mateu\Backend\OutType\Domain\OutTypeCode;
 
 /**
  * Class OutType
@@ -26,7 +27,7 @@ class OutType
     private $uuid;
 
     /**
-     * @ORM\Column(type="string", length=10, unique=true, nullable=true)
+     * @ORM\Column(type="outTypeCode", length=50, unique=true)
      */
     private $code;
 
@@ -40,7 +41,7 @@ class OutType
      */
     private $outgoingRegisters;
 
-    public function __construct($uuid, $code, $name)
+    public function __construct($uuid, OutTypeCode $code, $name)
     {
         $this->uuid = $uuid;
         $this->code = $code;
