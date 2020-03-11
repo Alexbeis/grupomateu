@@ -36,7 +36,7 @@ import './animals/GMAnimals.js';
 import './animals/GMAnimal.js';
 import './animals/GMHistory.js';
 import './registers/GMRegisters.js';
-import './annex/ExportPdf.js';
+import './annex/Export.js';
 import './annex/GMAnnex.js';
 import './incoming-register/IncomingRegister.js';
 

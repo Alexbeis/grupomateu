@@ -9,8 +9,10 @@ use Mateu\Infraestructure\Controller\BaseController;
 use Mateu\Infraestructure\Controller\ControllerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class IncomingRegistersController
@@ -31,12 +33,13 @@ class ExportAnexedController extends BaseController implements ControllerInterfa
      *)
      * @param Request $request
      * @param Pdf $snappy
+     * @param SerializerInterface $serializer
      * @param $_format
      *
-     * @return PdfResponse
+     * @return PdfResponse|Response
      * @throws \Exception
      */
-    public function __invoke(Request $request ,Pdf $snappy, $_format)
+    public function __invoke(Request $request ,Pdf $snappy, SerializerInterface $serializer, $_format)
     {
         $contentIds = $request->get('id');
 
@@ -48,17 +51,43 @@ class ExportAnexedController extends BaseController implements ControllerInterfa
 
         $timestamp = (new \DateTime('now'))->format('dmyyhms');
 
-        return new PdfResponse(
-            $snappy->getOutputFromHtml(
-                $this->renderView(
-                    'exports/anex/anexed-animals.twig',
-                    [
-                        'anexed' => $handled->getResult()
-                    ]
+        if ($_format == 'pdf') {
+
+            return new PdfResponse(
+                $snappy->getOutputFromHtml(
+                    $this->renderView(
+                        'exports/anex/anexed-animals.twig',
+                        [
+                            'anexed' => $handled->getResult()
+                        ]
+                    )
+                ),
+                sprintf('anexados_%s.pdf', $timestamp)
+            );
+        } else {
+           $result = $handled->getResult()->map(function ($anex) {
+               $animal = $anex->getAnimal();
+               return [
+                   'crotal' =>$animal->getCrotal(),
+                   'Numero Interno' => $animal->getInternalNum(),
+                   'Nacimiento' => $animal->getBirthDate()->format('d-m-Y'),
+                   'Explotación' => $animal->getExplotation()->getName()
+               ];
+           })->toArray();
+
+            $response = new Response(
+                $serializer->serialize(
+                    $result,
+                    'csv'
                 )
-            ),
-            sprintf('anexados_%s.pdf', $timestamp)
-        );
+            );
+            $response->headers->set('Content-Type', 'text/csv');
+            $response->headers->set(
+                'Content-Disposition',
+                'attachment; filename="'. sprintf(sprintf('anexados_%s.csv', $timestamp)).'"');
+
+            return $response;
+        }
     }
 
 }

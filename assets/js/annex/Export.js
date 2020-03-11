@@ -2,17 +2,17 @@
 
 (function(window, $) {
 
-    window.ExportPdf = function() {
+    window.Export = function() {
         console.log('export pdf constructor');
     };
 
-    $.extend(window.ExportPdf.prototype, {
+    $.extend(window.Export.prototype, {
         options:{
             pdf: '.js-export-pdf'
         },
 
 
-        handleExportPdf(anexedIds, url) {
+        handleExport(anexedIds, url) {
             if (anexedIds.length === 0) {
                 return;
             }

@@ -9,8 +9,9 @@ import AjaxCall from "../shared/AjaxCall";
 
         this.$wrapper = $annexWrapper;
         this.$pdfButton = $('.js-export-pdf');
+        this.$csvButton = $('.js-export-csv');
         this.ajaxCall = new AjaxCall();
-        this.exportPdf = new ExportPdf();
+        this.export = new Export();
 
         this.$wrapper.on(
             'click',
@@ -21,6 +22,11 @@ import AjaxCall from "../shared/AjaxCall";
         this.$pdfButton.on(
             'click',
             this.getAnnexedAndHandleExportPdf.bind(this)
+        );
+
+        this.$csvButton.on(
+            'click',
+            this.getAnnexedAndHandleExportCsv.bind(this)
         );
 
         this.loadDatatable();
@@ -85,8 +91,19 @@ import AjaxCall from "../shared/AjaxCall";
             e.preventDefault();
             let url = $(e.target).attr('href');
 
-            this.exportPdf
-                .handleExportPdf(
+            this.export
+                .handleExport(
+                    this._extractAnexedIds(),
+                    url
+                );
+        },
+
+        getAnnexedAndHandleExportCsv(e) {
+            e.preventDefault();
+            let url = $(e.target).attr('href');
+
+            this.export
+                .handleExport(
                     this._extractAnexedIds(),
                     url
                 );
