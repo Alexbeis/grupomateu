@@ -5,6 +5,7 @@ namespace Mateu\Backend\Group\Domain\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\PersistentCollection;
 use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 
 /**
@@ -76,7 +77,7 @@ class Group
     /**
      * @return ArrayCollection|null
      */
-    public function getExplotations(): ?ArrayCollection
+    public function getExplotations(): ?PersistentCollection
     {
         return $this->explotations;
     }
