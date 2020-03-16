@@ -1,6 +1,7 @@
 'use strict';
+const swal = require('sweetalert2');
 
-(function(window, $) {
+(function(window, $, swal) {
 
     window.Export = function() {
         console.log('export pdf constructor');
@@ -14,6 +15,7 @@
 
         handleExport(anexedIds, url) {
             if (anexedIds.length === 0) {
+                this._fireAlert();
                 return;
             }
 
@@ -22,7 +24,11 @@
             }).join('&');
 
             window.location.href = url + '?' + qs;
+        },
+
+        _fireAlert() {
+            swal.fire({type:'warning', title:'Debes seleccionar al menos un anexo'});
         }
     });
 
-})(window, jQuery);
+})(window, jQuery, swal);

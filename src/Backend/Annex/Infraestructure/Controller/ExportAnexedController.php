@@ -84,7 +84,7 @@ class ExportAnexedController extends BaseController implements ControllerInterfa
             $response->headers->set('Content-Type', 'text/csv');
             $response->headers->set(
                 'Content-Disposition',
-                'attachment; filename="'. sprintf(sprintf('anexados_%s.csv', $timestamp)).'"');
+                'attachment; filename="'. sprintf('anexados_%s.csv', $timestamp).'"');
 
             return $response;
         }

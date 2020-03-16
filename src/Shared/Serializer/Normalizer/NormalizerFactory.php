@@ -9,7 +9,6 @@ class NormalizerFactory
 {
     public static function create()
     {
-
         $objectNormalizer = new ObjectNormalizer(null, null, null, null, null, null, []);
         return  [
             new DateTimeNormalizer(),
