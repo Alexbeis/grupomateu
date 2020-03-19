@@ -10,9 +10,20 @@
             <li class="active">Crotal</li>
         </ol>
     </section>
+    {% set isSupressed = animal.supression %}
+    {% if isSupressed %}
+        {% set difference = date('now').diff(isSupressed.supresionDate) %}
+        {% set daysLeft = difference.days %}
+        {% set isUnderPeriod = daysLeft <= isSupressed.period %}
+    {% endif %}
+
     <section class="content">
         <div id="animal-tabs" class="nav-tabs-custom ">
-           {% include 'animals/animal/tabs/animal-nav-tabs.html.twig' %}
+
+            {% include 'animals/animal/supression/supression-callout.html.twig' %}
+
+            {% include 'animals/animal/tabs/animal-nav-tabs.html.twig' %}
+
             <div class="tab-content">
                 <div class="tab-pane active" id="sheet">
                     {% include 'animals/animal/tabs/animal-info-tab.html.twig' %}
@@ -29,6 +40,8 @@
             </div>
             <!-- /.tab-content -->
         </div>
+        {# # MODAL # #}
+        {% include 'animals/animal/modals/supression.html.twig' %}
     </section>
 
 {% endblock %}

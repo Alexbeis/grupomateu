@@ -1,0 +1,16 @@
+{% if isSupressed and isUnderPeriod %}
+    <div class="callout callout-warning">
+        <h4>Este animal está con supresión</h4>
+        <ul>
+            <li>Producto: {{ isSupressed.product }}</li>
+            <li>Fecha Inicio: {{ isSupressed.supresionDate|date('d-m-Y') }}</li>
+            <li>Periodo: {{ isSupressed.period }} dias</li>
+        </ul>
+    </div>
+{% elseif isSupressed and not isUnderPeriod %}
+    <div class="callout callout-success">
+        <h4>Este animal ha finalizado la supresión</h4>
+        <p>Producto: {{ isSupressed.product }} hasta {{ isSupressed.supresionDate|date('d-m-Y') }} en un periodo de
+            {{ isSupressed.period }}</p>
+    </div>
+{% endif %}
