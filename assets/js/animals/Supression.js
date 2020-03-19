@@ -25,7 +25,7 @@
             /**
              * jQuery needed :(
              */
-            $('#modal-supression').on('hidden.bs.modal', cleanErrors);
+            $('#modal-supression').on('hidden.bs.modal', ()=> {cleanErrors(); cleanInputs();});
         };
 
         const handleGenerateSupression = (e) => {
@@ -49,11 +49,14 @@
             elementModal.querySelectorAll('.required').forEach((el) => {
                if (el.value.length === 0) {
                    el.parentElement.classList.add('has-error');
-                   showOrHideSpinner(e.target);
-                   setElementAsEnabled(e.target);
                    isValid = false;
                }
             });
+
+            if (!isValid) {
+                showOrHideSpinner(e.target);
+                setElementAsEnabled(e.target);
+            }
 
             if (form && isValid) {
                 form.submit();
@@ -63,7 +66,7 @@
         const showOrHideSpinner = function (el) {
 
             let $spinner = el.querySelector('.js-spinner');
-            console.log($spinner);
+
             $spinner.childNodes.forEach((element) => {
                 if (element.tagName === 'I') {
                     element
@@ -79,6 +82,12 @@
 
         const setElementAsEnabled = function ($element) {
             $element.classList.remove('disabled');
+        };
+
+        const cleanInputs = function () {
+            elementModal.querySelectorAll('.required').forEach((el) => {
+                el.value = '';
+            });
         };
 
         const cleanErrors = function () {
