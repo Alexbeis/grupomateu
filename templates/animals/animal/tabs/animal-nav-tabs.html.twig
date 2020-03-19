@@ -7,7 +7,28 @@
             Acciones <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+            {% if not isSupressed %}
+                <li role="presentation">
+                    <a role="menuitem"
+                       tabindex="-1"
+                       href=""
+                       data-toggle="modal"
+                       data-target="#modal-supression"
+                    >
+                        Añadir Supresión
+                    </a>
+                </li>
+            {% else %}
+                <li role="presentation">
+                    <a role="menuitem"
+                       tabindex="-1"
+                       href="{{ path('animal_supression_delete', {'animalId': animal.id}) }}"
+                       class="js-remove-supression"
+                    >
+                        Quitar Supresión
+                    </a>
+                </li>
+            {% endif %}
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
             <li role="presentation" class="divider"></li>

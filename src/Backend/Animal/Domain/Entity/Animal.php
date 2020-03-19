@@ -119,6 +119,12 @@ class Animal
      */
     private $annex;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Mateu\Backend\Animal\Domain\Entity\Supression")
+     * @JoinColumn(name="supression_id", referencedColumnName="id")
+     */
+    private $supression;
+
 
     public function __construct()
     {
@@ -460,6 +466,25 @@ class Animal
     {
         $this->outgoingRegister = $outgoingRegister;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSupression():?Supression
+    {
+        return $this->supression;
+    }
+
+    /**
+     * @param mixed $supression
+     *
+     * @return Animal
+     */
+    public function setSupression($supression): self
+    {
+        $this->supression = $supression;
         return $this;
     }
 }
