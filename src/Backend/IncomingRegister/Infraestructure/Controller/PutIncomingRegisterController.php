@@ -43,7 +43,10 @@ class PutIncomingRegisterController extends BaseController implements Controller
                     $data['inc_reg_expl'],
                     $data['inc_reg_procedence'],
                     $data['inc_reg_intype'],
-                    $data['inc_reg_supplier']
+                    $data['inc_reg_supplier'],
+                    $data['inc_reg_guide_num'],
+                    $data['inc_reg_guide_date'],
+                    $data['inc_reg_expl_origin']
                 )
             );
         } catch (HandlerFailedException $e) {

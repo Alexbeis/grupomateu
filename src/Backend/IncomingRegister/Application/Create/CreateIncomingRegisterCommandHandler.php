@@ -25,7 +25,10 @@ class CreateIncomingRegisterCommandHandler implements MessageHandlerInterface
                 $incomingRegisterCommand->getInTypeId(),
                 $incomingRegisterCommand->getProcedende(),
                 $incomingRegisterCommand->getExplotationId(),
-                $incomingRegisterCommand->getSupplierId()
+                $incomingRegisterCommand->getSupplierId(),
+                $incomingRegisterCommand->getGuideNum(),
+                $incomingRegisterCommand->getGuideDate(),
+                $incomingRegisterCommand->getOrigin()
             );
     }
 }

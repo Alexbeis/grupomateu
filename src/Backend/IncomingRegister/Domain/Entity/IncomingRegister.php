@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\IncomingRegister\Domain\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -41,6 +42,21 @@ class IncomingRegister
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $procedence;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $guideNum;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $guideDate;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $originExplotation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Supplier\Domain\Entity\Supplier", inversedBy="incomingRegisters")
@@ -86,6 +102,9 @@ class IncomingRegister
         Explotation $explotation,
         string $procedence,
         Supplier $supplier,
+        string $guideNum,
+        DateTime $guideDate,
+        string $origin,
         User $user
     ) {
         return (new self())
@@ -94,6 +113,9 @@ class IncomingRegister
             ->setSupplier($supplier)
             ->setInType($inType)
             ->setProcedence($procedence)
+            ->setGuideNum($guideNum)
+            ->setGuideDate($guideDate)
+            ->setOriginExplotation($origin)
             ->setCreatedBy($user)
             ->setAnimalsCount(0);
     }
@@ -273,6 +295,63 @@ class IncomingRegister
     public function getExplotation()
     {
         return $this->explotation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGuideNum()
+    {
+        return $this->guideNum;
+    }
+
+    /**
+     * @param $guideNum
+     *
+     * @return IncomingRegister
+     */
+    public function setGuideNum($guideNum): self
+    {
+        $this->guideNum = $guideNum;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGuideDate()
+    {
+        return $this->guideDate;
+    }
+
+    /**
+     * @param mixed $guideDate
+     *
+     * @return IncomingRegister
+     */
+    public function setGuideDate($guideDate): self
+    {
+        $this->guideDate = $guideDate;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOriginExplotation()
+    {
+        return $this->originExplotation;
+    }
+
+    /**
+     * @param mixed $originExplotation
+     *
+     * @return IncomingRegister
+     */
+    public function setOriginExplotation($originExplotation): self
+    {
+        $this->originExplotation = $originExplotation;
+        return $this;
     }
 
     /**
