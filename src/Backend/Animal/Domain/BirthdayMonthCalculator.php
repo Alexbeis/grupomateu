@@ -19,6 +19,6 @@ class BirthdayMonthCalculator
         $now = new DateTime();
         $diff = date_diff($date, $now);
 
-        return $diff->m + $diff->y * 12;
+        return sprintf('%d m y %d d',$diff->m + $diff->y * 12, $diff->d);
     }
 }
