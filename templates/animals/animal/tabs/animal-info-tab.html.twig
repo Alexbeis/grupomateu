@@ -50,6 +50,16 @@
                                value="{{ animal.weightOut }}">
                         <span class="help-block hidden"></span>
                     </div>
+
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_genre">Género</label>
+                        <select name="ani_genre" class="form-control" id="ani_genre">
+                            <option value="male" {% if animal.genre == 'Male' %} selected {% endif %}>Macho</option>
+                            <option value="female" {% if animal.genre == 'Female' %} selected {% endif %} >Hembra</option>
+                        </select>
+                        <span class="help-block hidden"></span>
+                    </div>
+
                     <div class="form-group col-xs-12 col-md-4">
                         <label for="ani_birthdate">Fecha Nacimiento</label>
                         <input type="date"
@@ -61,11 +71,19 @@
                         <span class="help-block hidden"></span>
                     </div>
                     <div class="form-group col-xs-12 col-md-4">
-                        <label for="ani_genre">Género</label>
-                        <select name="ani_genre" class="form-control" id="ani_genre">
-                            <option value="male" {% if animal.genre == 'Male' %} selected {% endif %}>Macho</option>
-                            <option value="female" {% if animal.genre == 'Female' %} selected {% endif %} >Hembra</option>
-                        </select>
+                        <label for="ani_birthdate">Edad en Meses</label>
+                        <input type="text"
+                               class="form-control"
+                               id="ani_birthdate"
+                               value="{{ animal.birthDate|calculateMonths }}" disabled>
+                        <span class="help-block hidden"></span>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="ani_birthdate">Edad en Días</label>
+                        <input type="number"
+                               class="form-control"
+                               id="ani_birthdate"
+                               value="{{ animal.birthDate|calculateDays }}" disabled>
                         <span class="help-block hidden"></span>
                     </div>
 
