@@ -19,9 +19,10 @@
     <thead>
     <tr>
         <th>Crotal</th>
-        <th>Número interno</th>
-        <th>Edad</th>
+        <th>#Interno</th>
+        <th>Nacimiento</th>
         <th>Edad(meses)</th>
+        <th>Edad(dias)</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -32,6 +33,7 @@
             <td>{{ animal.internalnum }}</td>
             <td>{{ animal.birthdate|date('d-m-y') }}</td>
             <td>{{ animal.birthdate|calculateMonths }} </td>
+            <td>{{ animal.birthdate|calculateDays }} </td>
             <td>
                 {% set isAnnexed = animal.annex %}
 
@@ -57,9 +59,10 @@
     <tfoot>
     <tr>
         <th>Crotal</th>
-        <th>Número interno</th>
-        <th>Edad</th>
+        <th>#Interno</th>
+        <th>Nacimiento</th>
         <th>Edad(meses)</th>
+        <th>Edad(dias)</th>
         <th>Acciones</th>
     </tr>
     </tfoot>
