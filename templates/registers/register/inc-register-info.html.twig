@@ -62,6 +62,29 @@
                 </select>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label for="inc_reg_guide_num">Número de guia</label>
+                    <input type="text" class="form-control" name="inc_reg_guide_num" value="{{ incomingRegister.guideNum }}">
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label for="inc_reg_guide_date">Fecha guia</label>
+                    <input type="date" class="form-control" name="inc_reg_guide_date" value="{{ incomingRegister.guideDate|date('Y-m-d') }}">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label for="inc_reg_expl_origin">Explotacion origen</label>
+                    <input type="text" class="form-control" name="inc_reg_expl_origin" value="{{ incomingRegister.originExplotation }}">
+                </div>
+            </div>
+        </div>
         <div class="pull-right">
             <button type="button" class="btn btn-default pull-left">Cerrar</button>
             <button

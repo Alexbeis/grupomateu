@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\IncomingRegister\Application\Save;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Explotation\Domain\ExplotationNotFound;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
@@ -56,8 +57,16 @@ final class IncomingRegisterInfoSaver
         $this->inTypeRepository = $inTypeRepository;
     }
 
-    public function execute(int $id, int $explotationId, string $procedenceCode, int $inTypeId, int $supplierId)
-    {
+    public function execute(
+        int $id,
+        int $explotationId,
+        string $procedenceCode,
+        int $inTypeId,
+        int $supplierId,
+        $guideNum,
+        $guideDate,
+        $origin
+    ) {
         if (!$incomingRegister = $this->incomingRegisterRepository->findOneById($id)) {
             throw new IncomingRegisterNotFound('Registro no encontrado');
         }
@@ -87,7 +96,10 @@ final class IncomingRegisterInfoSaver
             ->setExplotation($explotation)
             ->setProcedence($country)
             ->setInType($inType)
-            ->setSupplier($supplier);
+            ->setSupplier($supplier)
+            ->setGuideNum($guideNum)
+            ->setGuideDate(new DateTime($guideDate))
+            ->setOriginExplotation($origin);
 
         $this->entityManager->flush();
     }

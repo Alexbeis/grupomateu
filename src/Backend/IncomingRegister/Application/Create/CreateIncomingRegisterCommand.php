@@ -9,15 +9,29 @@ class CreateIncomingRegisterCommand
     private $procedende;
     private $explotationId;
     private $supplierId;
+    private $guideNum;
+    private $guideDate;
+    private $origin;
 
-    public function __construct($uuid, $inTypeId, $procedende, $explotationId, $supplierId)
-    {
+    public function __construct(
+        $uuid,
+        $inTypeId,
+        $procedende,
+        $explotationId,
+        $supplierId,
+        $guideNum,
+        $guideDate,
+        $origin
+    ) {
 
         $this->uuid = $uuid;
         $this->inTypeId = $inTypeId;
         $this->procedende = $procedende;
         $this->explotationId = $explotationId;
         $this->supplierId = $supplierId;
+        $this->guideNum = $guideNum;
+        $this->guideDate = $guideDate;
+        $this->origin = $origin;
     }
 
     /**
@@ -58,5 +72,29 @@ class CreateIncomingRegisterCommand
     public function getSupplierId()
     {
         return $this->supplierId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGuideNum()
+    {
+        return $this->guideNum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGuideDate()
+    {
+        return $this->guideDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
     }
 }

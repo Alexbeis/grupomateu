@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\IncomingRegister\Application\Create;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Mateu\Backend\Explotation\Application\Find\ExplotationFinder;
 use Mateu\Backend\Explotation\Domain\ExplotationRepositoryInterface;
@@ -69,7 +70,7 @@ final class IncomingRegisterCreator
         $this->security = $security;
     }
 
-    public function create($uuid, $inTypeId, $procedenceId, $exploId, $supplierId)
+    public function create($uuid, $inTypeId, $procedenceId, $exploId, $supplierId, $guideNum, $guideDate, $origin)
     {
         // Validate
         if (!$intype = $this->inTypeRepository->findOneBy(['id' => $inTypeId])) {
@@ -89,7 +90,17 @@ final class IncomingRegisterCreator
         $user = $this->security->getUser();
 
         // Instantiate
-        $incomingRegister = IncomingRegister::fromPhaseOne($uuid, $intype, $explotation, $procedence, $supplier, $user);
+        $incomingRegister = IncomingRegister::fromPhaseOne(
+            $uuid,
+            $intype,
+            $explotation,
+            $procedence,
+            $supplier,
+            $guideNum,
+            new DateTime($guideDate),
+            $origin,
+            $user
+        );
 
         $this->incomingRegisterRepository->save($incomingRegister);
 
