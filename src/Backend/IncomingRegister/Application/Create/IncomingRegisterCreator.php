@@ -88,11 +88,10 @@ final class IncomingRegisterCreator
         $supplier = $this->supplierRepository->findOneBy(['id' => $supplierId]);
 
         $user = $this->security->getUser();
-        dump($guideNum, $guideDate, $origin);
+        
         $guideNum = !empty($guideNum) ? $guideNum : null;
         $guideDate = !empty($guideDate) ? new DateTime($guideDate) : null;
         $origin = !empty($origin) ? $origin : null;
-        dump($guideNum, $guideDate, $origin);
 
         // Instantiate
         $incomingRegister = IncomingRegister::fromPhaseOne(
