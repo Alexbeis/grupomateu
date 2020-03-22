@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -38,6 +39,7 @@ class IncomingRegister
      * @ORM\Column(type="string", length=40, nullable=false, unique=true)
      */
     private $uuid;
+
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -65,7 +67,11 @@ class IncomingRegister
     private $supplier;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="incomingRegister", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(
+     *     targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal",
+     *     inversedBy="incomingRegisters",
+     *     cascade={"persist"})
+     * @JoinTable(name="incoming_registers_animals")
      */
     private $animals;
 
@@ -102,9 +108,9 @@ class IncomingRegister
         Explotation $explotation,
         string $procedence,
         Supplier $supplier,
-        string $guideNum,
-        DateTime $guideDate,
-        string $origin,
+        $guideNum,
+        $guideDate,
+        $origin,
         User $user
     ) {
         return (new self())
@@ -165,10 +171,8 @@ class IncomingRegister
      */
     public function addAnimal(Animal $animal) :void
     {
-        if (!$this->animals->contains($animal)) {
-            $this->animals->add($animal);
-            $animal->setIncomingRegister($this);
-        }
+        $this->animals->add($animal);
+        $animal->addIncomingRegister($this);
     }
 
     /**

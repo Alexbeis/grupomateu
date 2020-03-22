@@ -102,10 +102,13 @@ class Animal
     private $race;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister", inversedBy="animals")
-     * @JoinColumn(name="incoming_register_id", referencedColumnName="id")
+     * @ORM\ManyToMany(
+     *     targetEntity="Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister",
+     *      mappedBy="animals"
+     * )
+     *
      */
-    private $incomingRegister;
+    private $incomingRegisters;
 
     /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", inversedBy="animals")
@@ -128,6 +131,7 @@ class Animal
 
     public function __construct()
     {
+        $this->incomingRegisters = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->movements = new ArrayCollection();
     }
@@ -433,20 +437,25 @@ class Animal
     /**
      * @return null|IncomingRegister
      */
-    public function getIncomingRegister():?IncomingRegister
+    public function getIncomingRegisters():?ArrayCollection
     {
-        return $this->incomingRegister;
+        return $this->incomingRegisters;
     }
 
     /**
-     * @param IncomingRegister $incomingRegister
+     * @param ArrayCollection$incomingRegisters
      *
      * @return Animal
      */
-    public function setIncomingRegister(IncomingRegister $incomingRegister): self
+    public function setIncomingRegisters(ArrayCollection $incomingRegisters): self
     {
-        $this->incomingRegister = $incomingRegister;
+        $this->incomingRegisters = $incomingRegisters;
         return $this;
+    }
+
+    public function addIncomingRegister(IncomingRegister $incomingRegister)
+    {
+        $this->incomingRegisters->add($incomingRegister);
     }
 
     /**

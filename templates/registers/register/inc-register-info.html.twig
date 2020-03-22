@@ -74,7 +74,7 @@
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     <label for="inc_reg_guide_date">Fecha guia</label>
-                    <input type="date" class="form-control" name="inc_reg_guide_date" value="{{ incomingRegister.guideDate|date('Y-m-d') }}">
+                    <input type="date" class="form-control" name="inc_reg_guide_date" value="{{ incomingRegister.guideDate ? incomingRegister.guideDate|date('Y-m-d') }}">
                 </div>
             </div>
 
