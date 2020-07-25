@@ -7,7 +7,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "doctrine/annotations": "^1.6",
+        "doctrine/annotations": "^1.7",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "h4cc/wkhtmltoimage-i386": "0.12.4",
         "knplabs/knp-snappy-bundle": "^1.7",

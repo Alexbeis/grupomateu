@@ -71,8 +71,19 @@
         loadEvents: function() {
 
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href") // activated tab
+
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
             });
+
+            $('.tab-link-js').on('click', function (e){
+                window.location.hash = e.target.hash;
+            });
+
+            const url = document.location.toString();
+            if (url.match('#')) {
+                $('.nav-tabs-custom a[href="#' + url.split('#')[1] + '"]').tab('show');
+            }
         },
 
         /**
