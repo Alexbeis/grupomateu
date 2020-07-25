@@ -18,7 +18,10 @@ class CreateAnnexController extends BaseController implements ControllerInterfac
 {
     /**
      * @param Request $request
-     * @Route("/annex/create", name="annex_create", methods={"POST"}, options = { "expose" = true })
+     * @Route({
+     *     "en":"/annex/create",
+     *     "es":"/marcado/crear"
+     * }, name="annex_create", methods={"POST"}, options = { "expose" = true })
      *
      * @return JsonResponse
      */
@@ -32,7 +35,7 @@ class CreateAnnexController extends BaseController implements ControllerInterfac
                 )
             );
 
-            return $this->createSuccessResponse('Animal anexado.');
+            return $this->createSuccessResponse('Animal Marcado.');
 
         } catch (HandlerFailedException $e) {
             return $this->createFailResponse($e->getMessage());

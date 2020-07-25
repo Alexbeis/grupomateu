@@ -5,8 +5,6 @@
             <th><input type="checkbox" name="select_all" value="1" id="select-all" class="select-all"></th>
             <th>Crotal</th>
             <th>Número interno</th>
-            <th>Edad</th>
-            <th>Edad(meses)</th>
             <th>Explotación</th>
             <th>Acciones</th>
         </tr>
@@ -17,8 +15,6 @@
                 <td></td>
                 <td>{{ annex.animal.crotal }}</td>
                 <td>{{ annex.animal.internalnum }}</td>
-                <td>{{ annex.animal.birthdate|date('d-m-y') }}</td>
-                <td>{{ annex.animal.birthdate|calculateMonths }} </td>
                 <td>{{ annex.animal.explotation.name }} </td>
                 <td>
                     <div class="btn-group">
@@ -27,15 +23,6 @@
                            data-id="{{ annex.animal.id }}"
                         >
                             Borrar
-                            <span class="js-spinner">
-                            &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
-                        </span>
-                        </a>
-                        <a href="{{ path('annex_delete') }}"
-                           class="btn btn-default js-remove-annex"
-                           data-id="{{ annex.animal.id }}"
-                        >
-                            Salida
                             <span class="js-spinner">
                             &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
                         </span>
@@ -50,8 +37,6 @@
             <th></th>
             <th>Crotal</th>
             <th>Número interno</th>
-            <th>Edad</th>
-            <th>Edad(meses)</th>
             <th>Explotación</th>
             <th>Acciones</th>
         </tr>

@@ -18,7 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetAnnexesController extends BaseController implements ControllerInterface
 {
     /**
-     * @Route("/annexes", name="index_annexes")
+     * @Route(
+     *     {
+     *      "en" : "/annexes",
+     *      "es" : "/marcados"
+     *     },
+     *     name="index_annexes")
      * @return Response
      */
     public function __invoke()
