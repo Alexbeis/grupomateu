@@ -23,7 +23,10 @@ class ExportAnexedController extends BaseController implements ControllerInterfa
 {
     /**
      * @Route(
-     *     "/export/anexed/.{_format}",
+     *     {
+     *      "en": "/export/anexed/.{_format}",
+     *      "es": "/exportar/marcado/.{_format}"
+     * },
      *     name="export_annexed",
      *     format="pdf",
      *     methods={"GET"},

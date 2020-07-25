@@ -88,7 +88,7 @@ final class IncomingRegisterCreator
         $supplier = $this->supplierRepository->findOneBy(['id' => $supplierId]);
 
         $user = $this->security->getUser();
-        
+
         $guideNum = !empty($guideNum) ? $guideNum : null;
         $guideDate = !empty($guideDate) ? new DateTime($guideDate) : null;
         $origin = !empty($origin) ? $origin : null;
