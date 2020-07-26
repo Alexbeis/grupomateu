@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">
-    {% block stylesheets %}{% endblock %}
+
     <style>
         table {
             font-family: arial, sans-serif;
@@ -27,7 +27,7 @@
 <body>
 <div class="container main-container">
     {% block body %}
-        <h2>Listado de Anexos</h2>
+        <h2>Hoja de Identificación Individual</h2>
         <div class="container">
             <p>
                 Impresión generada por: {{ app.user.email }}
@@ -35,9 +35,21 @@
             <p>
                 Fecha: {{ "now"|date("m/d/Y") }}
             </p>
+            <p>
+                Nombre, apellidos y Dni: "Propietario de la explotación" <span style="background-color: yellow">48373837Q</span>
+            </p>
+            <p>
+                {# TODO: Code should be passed as a variable#}
+                {% set first = anexed|first  %}
+                Código de la Explotación: <span style="background-color: red" >{{ first.animal.explotation.code }} </span>
+            </p>
+
+            <p>DECLARA que los {{ anexed|length }} animales amparados con la G.O.S.P. serie y número ..................
+            corresponden a los crotales, certificados de traslado y origen siguientes: </p>
         </div>
         <table>
             <tr>
+                <th></th>
                 <th>Crotal</th>
                 <th>Numero Interno</th>
                 <th>Fecha Nacimiento</th>
@@ -45,6 +57,7 @@
             </tr>
             {% for anex in anexed %}
                 <tr>
+                    <th>{{ loop.index }}</th>
                     <th>{{ anex.animal.crotal  }}</th>
                     <th>{{ anex.animal.internalNum }}</th>
                     <th>{{ anex.animal.birthDate|date('d-m-y') }}</th>
@@ -52,6 +65,17 @@
                 </tr>
             {% endfor %}
         </table>
+
+        <div class="divider" style="margin-top: 20px;">
+            <div class="row">
+                <div style="text-align: left;" >
+                    Benabarre, a ......... de ........... de ...........
+                </div>
+                <div style="text-align: right;">
+                    Firma del titular o representante
+                </div>
+            </div>
+        </div>
 
     {% endblock %}
 </div>

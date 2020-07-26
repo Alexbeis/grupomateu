@@ -59,13 +59,13 @@ class ExportAnexedController extends BaseController implements ControllerInterfa
             return new PdfResponse(
                 $snappy->getOutputFromHtml(
                     $this->renderView(
-                        'exports/anex/anexed-animals.twig',
+                        'exports/annex/annexed-animals.twig',
                         [
                             'anexed' => $handled->getResult()
                         ]
                     )
                 ),
-                sprintf('anexados_%s.pdf', $timestamp)
+                sprintf('crotales_marcados_%s.pdf', $timestamp)
             );
         } else {
            $result = $handled->getResult()->map(function ($anex) {
@@ -87,7 +87,7 @@ class ExportAnexedController extends BaseController implements ControllerInterfa
             $response->headers->set('Content-Type', 'text/csv');
             $response->headers->set(
                 'Content-Disposition',
-                'attachment; filename="'. sprintf('anexados_%s.csv', $timestamp).'"');
+                'attachment; filename="'. sprintf('crotales_marcados_%s.csv', $timestamp).'"');
 
             return $response;
         }
