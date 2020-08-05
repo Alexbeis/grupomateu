@@ -1,8 +1,15 @@
 <?php
 
-namespace Mateu\Dashboard;
+namespace Mateu\AnimalRegisters\Infraestructure;
 
-class InMemoryAnimalsRegisterInterfaceTest
+use Mateu\AnimalRegisters\Domain\AnimalRegistersInterfaceTest;
+use Mateu\Backend\AnimalRegisters\Domain\AnimalRegistersInterface;
+use Mateu\Backend\AnimalRegisters\Infraestructure\InMemoryAnimalRegistersRepository;
+
+class InMemoryAnimalsRegisterInterfaceTest extends AnimalRegistersInterfaceTest
 {
-
+    function getRepository(): AnimalRegistersInterface
+    {
+        return new InMemoryAnimalRegistersRepository();
+    }
 }
