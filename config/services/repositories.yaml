@@ -4,3 +4,4 @@ services:
   Mateu\Backend\Animal\Domain\AnimalRepositoryInterface: '@Mateu\Backend\Animal\Infraestructure\AnimalRepository'
   Mateu\Backend\Supplier\Domain\SupplierRepositoryInterface: '@Mateu\Backend\Supplier\Infraestructure\SupplierRepository'
   Mateu\Backend\Purchaser\Domain\PurchaserRepositoryInterface: '@Mateu\Backend\Purchaser\Infraestructure\PurchaserRepository'
+  Mateu\Backend\AnimalRegisters\Domain\AnimalRegistersInterface: '@Mateu\Backend\AnimalRegisters\Infraestructure\DoctrineAnimalRegistersRepository'
