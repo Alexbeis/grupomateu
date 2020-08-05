@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
+use Mateu\Backend\AnimalRegisters\Domain\Entity\AnimalRegisters;
 use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 
@@ -60,10 +61,10 @@ class IncomingRegisterFixtures extends Fixture implements FixtureInterface, Depe
             );
 
             $race = $this->getReference(RacesFixtures::RACES[rand(0, count(RacesFixtures::RACES) - 1)]['code']);
-
+            $registerUuid = Uuid::random()->getValue();
             $register = (new IncomingRegister())
                 ->setProcedence($procedence)
-                ->setUuid((Uuid::random())->getValue())
+                ->setUuid($registerUuid)
                 ->setInType($inType)
                 ->setSupplier($supplier)
                 ->setExplotation($explotation)
@@ -94,6 +95,12 @@ class IncomingRegisterFixtures extends Fixture implements FixtureInterface, Depe
 
                 $register->addAnimal($animal);
                 $register->setAnimalsCount($register->getAnimalsCount() + 1);
+
+                $animalRegisters = (new AnimalRegisters())
+                    ->setCrotal($crot)
+                    ->setIncomingRegisterUuid($registerUuid);
+
+                $manager->persist($animalRegisters);
             }
 
             $manager->persist($register);
