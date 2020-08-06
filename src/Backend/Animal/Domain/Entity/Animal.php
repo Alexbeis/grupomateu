@@ -111,10 +111,10 @@ class Animal
     private $incomingRegisters;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", inversedBy="animals")
-     * @JoinColumn(name="outgoing_register_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister",
+     *     mappedBy="animals")
      */
-    private $outgoingRegister;
+    private $outgoingRegisters;
 
 
     /**
@@ -132,6 +132,7 @@ class Animal
     public function __construct()
     {
         $this->incomingRegisters = new ArrayCollection();
+        $this->outgoingRegisters = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->movements = new ArrayCollection();
     }
@@ -459,22 +460,21 @@ class Animal
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|null
      */
-    public function getOutgoingRegister()
+    public function getOutgoingRegisters(): ?ArrayCollection
     {
-        return $this->outgoingRegister;
+        return $this->outgoingRegisters;
     }
 
     /**
-     * @param mixed $outgoingRegister
+     * @param ArrayCollection $outgoingRegisters
      *
      * @return Animal
      */
-    public function setOutgoingRegister($outgoingRegister): self
+    public function setOutgoingRegisters(ArrayCollection $outgoingRegisters): self
     {
-        $this->outgoingRegister = $outgoingRegister;
-
+        $this->outgoingRegisters = $outgoingRegisters;
         return $this;
     }
 

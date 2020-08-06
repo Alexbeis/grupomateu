@@ -4,6 +4,7 @@ namespace Mateu\Backend\OutgoingRegister\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,7 +39,11 @@ class OutgoingRegister
     private $purchaser;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal", mappedBy="outgoingRegister", cascade={"persist"})
+     * @ORM\ManyToMany(
+     *     targetEntity="Mateu\Backend\Animal\Domain\Entity\Animal",
+     *     inversedBy="outgoingRegisters",
+     *     cascade={"persist"})
+     * @JoinTable(name="outgoing_registers_animals")
      */
     private $animals;
 

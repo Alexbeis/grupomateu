@@ -5,15 +5,16 @@ namespace Mateu\Infraestructure\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Twig\Environment;
 
 class SecurityController
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $twig;
 
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
