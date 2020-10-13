@@ -4,7 +4,7 @@ namespace Mateu\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Mateu\Backend\OutType\Domain\Entity\OutType;
 use Mateu\Backend\OutType\Domain\OutTypeCode;
 use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;

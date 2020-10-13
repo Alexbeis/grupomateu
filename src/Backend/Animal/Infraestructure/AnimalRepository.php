@@ -3,18 +3,11 @@
 namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
 use Mateu\Backend\Animal\Domain\CrotalNum;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 
-
-/**
- * @method Animal|null find($id, $lockMode = null, $lockVersion = null)
- * @method Animal|null findOneBy(array $criteria, array $orderBy = null)
- * @method Animal[]    findAll()
- * @method Animal[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class AnimalRepository extends ServiceEntityRepository implements AnimalRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)

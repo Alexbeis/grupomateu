@@ -3,13 +3,13 @@
 namespace Mateu\Backend\Annex\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Mateu\Backend\Annex\Domain\AnnexRepositoryInterface;
 use Mateu\Backend\Annex\Domain\Entity\Annex;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class AnnexRepository extends ServiceEntityRepository implements AnnexRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Annex::class);
     }
@@ -26,6 +26,24 @@ class AnnexRepository extends ServiceEntityRepository implements AnnexRepository
         $total = $qb->getQuery()->getSingleScalarResult();
 
         return $total;
+    }
+
+    public function getAnnexGroupedByExplotation()
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb
+            ->select('annex', 'e.code', 'e.name')
+            ->join('annex.animal','a')
+            ->join('a.explotation', 'e')
+            ->orderBy('e.code')
+            ->getQuery();
+
+        $result = [];
+        foreach ($query->getResult() as $item) {
+            $result[$item['code']][] = $item[0] ;
+        }
+
+        return $result;
     }
 
     public function exists(string $crotal)
