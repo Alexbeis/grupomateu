@@ -16,6 +16,6 @@ class GetAllAnnexesQueryHandler implements MessageHandlerInterface
 
     public function __invoke(GetAllAnnexesQuery $allAnnexesQuery)
     {
-        return $this->annexRepository->findAll();
+        return $this->annexRepository->getAnnexGroupedByExplotation();
     }
 }

@@ -11,3 +11,10 @@ tr.shown td.details-control {
     text-align:center;
     color:red;
 }
+
+.selected{
+    background-color: darkgrey;
+}
+.pointable{
+    cursor: pointer;
+}
