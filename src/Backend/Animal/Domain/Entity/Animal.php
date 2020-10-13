@@ -74,6 +74,11 @@ class Animal
     private $genre;
 
     /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $state;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": false})
      */
     private $is_ill;
@@ -153,7 +158,8 @@ class Animal
             ->setExplotation($explotation)
             ->setRace($race)
             ->setIsIll(false)
-            ->setGenre($genre);
+            ->setGenre($genre)
+            ->setState('in');
     }
 
     public function getId(): ?int
@@ -494,6 +500,25 @@ class Animal
     public function setSupression($supression): self
     {
         $this->supression = $supression;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState():?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     *
+     * @return Animal
+     */
+    public function setState(string $state): self
+    {
+        $this->state = $state;
         return $this;
     }
 }
