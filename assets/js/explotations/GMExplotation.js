@@ -149,18 +149,24 @@ const swal = require('sweetalert2');
           e.preventDefault();
           let $target = $(e.currentTarget);
           let id = $target.data('id');
-          let url = $target.attr('href');
-          const $spinner = $target.find('.js-spinner > i');
-          $spinner.removeClass('hidden');
+          let url = $target.data('href');
+          let button = $target.clone();
+          let $spinner =  $('<span class="js-spinner">&nbsp;<i class="fa fa-spinner fa-spin"></i></span>');
+          $target.find('span').replaceWith($spinner);
+          $target.addClass('disabled');
           this.ajaxCall
               .send(url, 'POST', {id: id})
               .then((data) => {
                   this._processResponse(data, $target);
-                  $spinner.addClass('hidden');
+                  $target.replaceWith(
+                      button
+                          .removeClass('btn-default')
+                          .addClass('btn-warning disabled')
+                  );
               })
               .catch((err) => {
-                  $spinner.addClass('hidden');
-            });
+                  $target.replaceWith(button);
+              });
 
         },
 
@@ -244,8 +250,7 @@ const swal = require('sweetalert2');
                 this._fireAlert({type:'success', title:data.message});
                 $target
                     .addClass('btn-warning disabled')
-                    .removeClass('btn-default')
-                    .text('Anexado');
+                    .removeClass('btn-default');
 
             } else {
                 this._fireAlert({type:'error', title:data.message});

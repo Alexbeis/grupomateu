@@ -10,80 +10,12 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                    </div>
-                    <!-- /.box-header -->
-                    <!-- form start -->
-                    <form role="form" action="{{ path('save_explotation') }}" method="POST" id="expl_save_form">
-                        <div class="box-body">
-                            <div class="form-group col-xs-6">
-                                <label for="exp_name">Nombre</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="exp_name"
-                                       placeholder="ex. Trillo"
-                                       name="exp_name"
-                                        value="{{ explotation.name }}">
-                                <span class="help-block hidden"></span>
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="exp_code">Código</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="exp_code"
-                                       placeholder="ej: EXP_XXXXXX"
-                                       name="exp_code"
-                                        value="{{ explotation.code }}">
-                                <span class="help-block hidden"></span>
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="exp_loca">Localización</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="exp_loca"
-                                       placeholder="ej: 787298374923843"
-                                       name="exp_loca"
-                                       value="{{ explotation.localization }}">
-                                <span class="help-block hidden"></span>
-                            </div>
-                            <div class="form-group col-xs-6">
-                                <label for="exp_group">Grupo</label>
-                                <span class="help-block hidden"></span>
-                                <select class="form-control" id="exp_group" name="exp_group">
-                                    {% for group in groups %}
-                                        <option value="{{ group.id}}"
-                                                {% if explotation.group.id == group.id %} selected {% endif %}>
-                                            {{group.name}}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
+            {{ include('explotations/explotation/info.html.twig') }}
+            {{ include('explotations/explotation/owner.html.twig') }}
 
-                        <div class="box-footer">
-                            <input type="hidden"
-                                   value="{{ explotation.id }}"
-                                   name="exp_id"
-                                    >
-                            <button type="submit"
-                                    class="btn btn-primary pull-right js-save-explotation">
-                                Submit
-                                <span class="js-spinner">
-                                    &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
-                                </span>
-                            </button>
-                            <a href="{{ path('index_explotations') }}" class="">
-                                <span><i class="fa fa-arrow-left fa-2x"></i></span>
-                            </a>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.box -->
-            </div>
+
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="box box-warning">
                     <div class="box-header with-border">

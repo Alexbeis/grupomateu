@@ -57,6 +57,11 @@ class Explotation
      */
     private $group;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Owner", inversedBy="explotations" ,cascade={"persist"})
+     */
+    private $owner;
+
 
     public function __construct()
     {
@@ -188,6 +193,25 @@ class Explotation
     }
 
     /**
+     * @return null|Owner
+     */
+    public function getOwner():?Owner
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param Owner $owner
+     *
+     * @return Explotation
+     */
+    public function setOwner(Owner $owner):self
+    {
+        $this->owner = $owner;
+        return $this;
+    }
+
+    /**
      * Get Ill Animals from current Explotation
      * @return Collection|null
      */
@@ -202,4 +226,6 @@ class Explotation
 
         return $this->animal->matching($criteria);
     }
+
+
 }
