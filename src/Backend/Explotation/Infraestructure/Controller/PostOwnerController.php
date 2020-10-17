@@ -31,14 +31,7 @@ class PostOwnerController extends BaseController implements ControllerInterface
         $content = $request->request->all();
         $ownerCreator($content);
 
-        return new RedirectResponse(
-            $this->router->generate(
-                'edit_explotation',
-                [
-                    'id' => $content['exp_id']
-                ]
-            )
-        );
+        return $this->createSuccessResponse('Propietario Guardado');
     }
 
 }

@@ -52,11 +52,11 @@ class BaseController extends AbstractController
         return $this->createJsonResponse(false, $message);
     }
 
-    private function createJsonResponse($sucess, $message, $params = null)
+    private function createJsonResponse($success, $message, $params = null)
     {
         return new JsonResponse(
             [
-                'success' => $sucess,
+                'success' => $success,
                 'message' => $message,
                 'params' => $params
             ]

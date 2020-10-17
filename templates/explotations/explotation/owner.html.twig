@@ -11,31 +11,31 @@
                 <div class="form-group col-xs-6">
                     <label for="owner_name">Nombre</label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control editable"
                            id="owner_name"
                            placeholder="ex. Trillo"
                            name="owner_name"
-                           value="{{ explotation.owner.name|default('') }}">
+                           value="{{ explotation.owner.name|default('') }}" disabled>
                     <span class="help-block hidden"></span>
                 </div>
                 <div class="form-group col-xs-6">
                     <label for="owner_code">Código</label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control editable"
                            id="owner_code"
                            placeholder="ej: EXP_XXXXXX"
                            name="owner_code"
-                           value="{{ explotation.owner.code|default('')  }}">
+                           value="{{ explotation.owner.code|default('')  }}" disabled>
                     <span class="help-block hidden"></span>
                 </div>
-                <div class="form-group col-xs-6">
+                <div class="form-group col-xs-12">
                     <label for="owner_nif">Nif</label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control editable"
                            id="owner_nif"
                            placeholder="ej: 787298374923843"
                            name="owner_nif"
-                           value="{{ explotation.owner.nif|default('')  }}">
+                           value="{{ explotation.owner.nif|default('')  }}" disabled>
                     <span class="help-block hidden"></span>
                 </div>
             </div>
@@ -47,11 +47,16 @@
                        name="exp_id"
                 >
                 <button type="submit"
-                        class="btn btn-primary pull-right js-save-explotation">
+                        class="btn btn-primary pull-right js-save-owner">
                     Guardar
                     <span class="js-spinner">
                         &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
                     </span>
+                </button>
+                <button type="button"
+                        data-type="owner"
+                        class="btn btn-primary pull-right js-edit-owner-exp">
+                    Editar
                 </button>
             </div>
         </form>

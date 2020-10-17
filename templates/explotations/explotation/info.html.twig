@@ -9,37 +9,37 @@
                 <div class="form-group col-xs-6">
                     <label for="exp_name">Nombre</label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control editable"
                            id="exp_name"
                            placeholder="ex. Trillo"
                            name="exp_name"
-                           value="{{ explotation.name }}">
+                           value="{{ explotation.name }}" disabled>
                     <span class="help-block hidden"></span>
                 </div>
                 <div class="form-group col-xs-6">
                     <label for="exp_code">Código</label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control editable"
                            id="exp_code"
                            placeholder="ej: EXP_XXXXXX"
                            name="exp_code"
-                           value="{{ explotation.code }}">
+                           value="{{ explotation.code }}" disabled>
                     <span class="help-block hidden"></span>
                 </div>
                 <div class="form-group col-xs-6">
                     <label for="exp_loca">Localización</label>
                     <input type="text"
-                           class="form-control"
+                           class="form-control editable"
                            id="exp_loca"
                            placeholder="ej: 787298374923843"
                            name="exp_loca"
-                           value="{{ explotation.localization }}">
+                           value="{{ explotation.localization }}" disabled>
                     <span class="help-block hidden"></span>
                 </div>
                 <div class="form-group col-xs-6">
                     <label for="exp_group">Grupo</label>
                     <span class="help-block hidden"></span>
-                    <select class="form-control" id="exp_group" name="exp_group">
+                    <select class="form-control editable" id="exp_group" name="exp_group" disabled>
                         {% for group in groups %}
                             <option value="{{ group.id}}"
                                     {% if explotation.group.id == group.id %} selected {% endif %}>
@@ -62,6 +62,11 @@
                     <span class="js-spinner">
                                             &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
                                         </span>
+                </button>
+                <button type="button"
+                        data-type="info"
+                        class="btn btn-primary pull-right js-edit-info-exp">
+                    Editar
                 </button>
                 <a href="{{ path('index_explotations') }}" class="">
                     <span><i class="fa fa-arrow-left fa-2x"></i></span>

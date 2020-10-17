@@ -21,7 +21,7 @@ class Owner
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10, unique=true)
+     * @ORM\Column(type="string", length=20, unique=true)
      */
     private $code;
 
