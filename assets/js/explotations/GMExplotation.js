@@ -1,6 +1,8 @@
 'use strict';
 
 import AjaxCall from "../shared/AjaxCall";
+import EditState from "./EditState";
+import Spinner from "../shared/Spinner";
 
 require ('../shared/datatable_extension_custom_filter');
 
@@ -12,7 +14,7 @@ const swal = require('sweetalert2');
 
     window.GMExplotation = function($wrapperForm,$ownerWrapperForm ,$wrapperTable) {
 
-        this.isEditing = {'owner':false, 'info':false};
+        this.state = new EditState();
         this.$wrapperForm = $wrapperForm;
         this.$wrapperTable = $wrapperTable;
         this.$wrapperOwner = $ownerWrapperForm;
@@ -150,6 +152,7 @@ const swal = require('sweetalert2');
         },
 
         handleEdit(e) {
+
             let target = $(e.target);
             let form = target.closest('form');
             let editableElements = form.find('.editable');
@@ -158,8 +161,8 @@ const swal = require('sweetalert2');
 
         handleOwnerSave(e){
             e.preventDefault();
-            console.log(this.isEditing);
-            if (!this.isEditing.owner) return;
+
+            if (!this.state.canEditFor('owner')) return;
 
             var self = this;
             this._cleanOwnerErrors();
@@ -176,9 +179,13 @@ const swal = require('sweetalert2');
             });
 
             if (canSubmit) {
-                //this._showSpinner();
+                let $target = $(e.target);
                 let url = this.$wrapperOwner.attr('action');
                 let data = this.$wrapperOwner.serialize();
+
+                const spinner = new Spinner($target);
+                spinner.show();
+
                 let editableElements = this.$wrapperOwner.find('.editable');
                 this.ajaxCall.send(url, 'POST' ,data)
                     .then(function (data) {
@@ -188,12 +195,12 @@ const swal = require('sweetalert2');
                             self._fireAlert({type:'error', title:data.message});
                         }
                         self.toggleEdition(editableElements, 'owner');
-                        //self._hideSpinner();
+                        spinner.backToInit();
 
                     }).catch(function (err) {
-                    console.log(err);
                     self.toggleEdition(editableElements, 'owner');
-                    //self._hideSpinner();
+
+                    spinner.backToInit();
                 })
             }
         },
@@ -204,7 +211,7 @@ const swal = require('sweetalert2');
          */
         handleExplotationInfoSave: function(e) {
             e.preventDefault();
-            if (!this.isEditing.info) return;
+            if (!this.state.canEditFor('info')) return;
 
             var self = this;
 
@@ -220,9 +227,11 @@ const swal = require('sweetalert2');
             });
 
             if (canSubmit) {
-                this._showSpinner();
-                var url = this.$wrapperForm.attr('action');
-                var data = this.$wrapperForm.serialize();
+                let $target = $(e.target);
+                let url = this.$wrapperForm.attr('action');
+                let data = this.$wrapperForm.serialize();
+                const spinner = new Spinner($target);
+                spinner.show();
                 let editableElements = this.$wrapperForm.find('.editable');
                 this.ajaxCall.send(url, 'POST' ,data)
                     .then(function (data) {
@@ -232,12 +241,12 @@ const swal = require('sweetalert2');
                             self._fireAlert({type:'error', title:data.message});
                         }
                         self.toggleEdition(editableElements, 'info');
-                        self._hideSpinner();
+
+                        spinner.backToInit();
 
                 }).catch(function (err) {
-                    console.log(err);
                     self.toggleEdition(editableElements, 'info');
-                    self._hideSpinner();
+                    spinner.backToInit();
                 })
             }
         },
@@ -253,22 +262,27 @@ const swal = require('sweetalert2');
           let $target = $(e.currentTarget);
           let id = $target.data('id');
           let url = $target.data('href');
-          let button = $target.clone();
-          let $spinner =  $('<span class="js-spinner">&nbsp;<i class="fa fa-spinner fa-spin"></i></span>');
-          $target.find('span').replaceWith($spinner);
-          $target.addClass('disabled');
+
+          const spinner = new Spinner($target);
+          spinner.show();
+
           this.ajaxCall
               .send(url, 'POST', {id: id})
               .then((data) => {
-                  this._processResponse(data, $target);
-                  $target.replaceWith(
-                      button
-                          .removeClass('btn-default')
-                          .addClass('btn-warning disabled')
-                  );
+                  if (this._processResponse(data, $target)) {
+                      spinner.hideWithSuccess((function() {
+                          this.target.replaceWith(
+                              this.clonedTarget
+                                  .removeClass('btn-default')
+                                  .addClass('btn-warning disabled')
+                          );
+                      }).bind(spinner));
+                  } else {
+                      spinner.backToInit();
+                  }
               })
               .catch((err) => {
-                  $target.replaceWith(button);
+                  spinner.backToInit();
               });
 
         },
@@ -340,26 +354,6 @@ const swal = require('sweetalert2');
             swal.fire($.extend(defOptions, options));
         },
 
-        /**
-         *
-         * @private
-         */
-        _showSpinner:function () {
-            let $button = this.$wrapperForm.find(this.options._selectors.save);
-            $button.find('.js-spinner > i').removeClass('hidden');
-            $button.attr('disabled', true);
-        },
-
-        /**
-         *
-         * @private
-         */
-        _hideSpinner: function () {
-            let $button = this.$wrapperForm.find(this.options._selectors.save);
-            $button.find('.js-spinner > i').addClass('hidden');
-            $button.attr('disabled', false);
-        },
-
         _processResponse(data, $target) {
             if (data.success) {
                 this._fireAlert({type:'success', title:data.message});
@@ -367,8 +361,12 @@ const swal = require('sweetalert2');
                     .addClass('btn-warning disabled')
                     .removeClass('btn-default');
 
+                return true;
+
             } else {
                 this._fireAlert({type:'error', title:data.message});
+
+                return false;
             }
         },
 
@@ -377,10 +375,10 @@ const swal = require('sweetalert2');
             editableElements.each(function(index) {
                 if ($(this).prop('disabled')) {
                     $(this).prop('disabled', false);
-                    that.isEditing[type] = true;
+                    that.state.setStateFor(type, true);
                 } else {
                     $(this).prop('disabled', true);
-                    that.isEditing[type] = false;
+                    that.state.setStateFor(type, false);
                 }
             });
         }
