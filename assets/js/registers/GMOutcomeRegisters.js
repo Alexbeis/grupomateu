@@ -1,5 +1,8 @@
 'use strict';
 
+import PreTableCreator from "./PreTableCreator";
+import AjaxCall from "../shared/AjaxCall";
+
 const swal = require('sweetalert2');
 
 (function(window, $, swal) {
@@ -7,11 +10,14 @@ const swal = require('sweetalert2');
     window.GMOutcomeRegisters = function($wrapper) {
 
         this.$wrapper = $wrapper;
+        this.ajaxCall = new AjaxCall();
+        this.infoTableCreator = new PreTableCreator('#info-annex-table');
 
         this.loadDatatable();
 
         this.loadEvents();
 
+        this.fetchAnnexInfo();
     };
 
     $.extend(window.GMOutcomeRegisters.prototype, {
@@ -74,77 +80,24 @@ const swal = require('sweetalert2');
          * Load modal events
          */
         loadEvents: function() {
-            /*this.$modalWrapper.on('hidden.bs.modal',  () => {
-                this._resetForm();
-                this._cleanErrors();
-            }) */
+            $('.js-reload-outregister').on('click', this.handleReload.bind(this));
         },
 
-        /**
-         *
-         * @param value
-         * @returns {boolean}
-         * @private
-         */
-        _isValid: function(value) {
-            return value.length > 3;
+        fetchAnnexInfo: function () {
+            $('.overlay').toggleClass('hidden');
+            this.ajaxCall.send("/admin/marcados/por-explotacion", 'GET', )
+                .then((response)=> {
+                    if (response.success && response.params.length > 0) {
+                        this.infoTableCreator.resetTable();
+                        this.infoTableCreator.createSuccessTable(response.params);
+                        $('.overlay').toggleClass('hidden');
+                    }
+            })
         },
 
-        /**
-         *
-         * @param element
-         * @private
-         */
-        _addError:function(element){
-            element
-                .closest('.form-group')
-                .addClass('has-error');
-        },
-
-        /**
-         *
-         * @private
-         */
-        _cleanErrors:function(){
-            this.options._selectors.inputs.forEach((id) => {
-                let $id = $(id);
-                $id
-                    .closest('.form-group')
-                    .removeClass('has-error');
-            });
-        },
-
-        _resetForm: function() {
-            this.$modalWrapper
-                .find('form')[0]
-                .reset();
-        },
-
-        handleIncRegisterDelete: function(e) {
+        handleReload: function(e) {
             e.preventDefault();
-            console.log(e.target);
-
-        },
-
-        handleCreateNewIncomingRegister: function(e) {
-            e.preventDefault();
-            this._cleanErrors()
-            const $target = e.target;
-            const $form = $target.closest('form');
-            let valid = true;
-
-            this.options._selectors.inputs.forEach((element) => {
-                if ($(element).val().length === 0) {
-                    this._addError($(element));
-                    valid=false;
-                }
-            });
-
-            if (valid) {
-                $($target).prop('disabled', true);
-                $($target).find('.fa-spin').toggleClass('hidden');
-                $form.submit();
-            }
+            this.fetchAnnexInfo();
         },
 
         /**
@@ -211,20 +164,6 @@ const swal = require('sweetalert2');
 
         /**
          *
-         * @param url
-         * @returns promise
-         */
-        _ajaxDelete: function (url) {
-            return $.ajax(
-                {
-                    url: url,
-                    method:'DELETE',
-                }
-            );
-        },
-
-        /**
-         *
          * @param options
          * @private
          */
@@ -236,7 +175,6 @@ const swal = require('sweetalert2');
 
 
 })(window, jQuery, swal);
-
 
 let RegistersTableWrapper = $('#out-register-table');
 

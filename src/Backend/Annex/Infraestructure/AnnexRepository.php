@@ -46,6 +46,19 @@ class AnnexRepository extends ServiceEntityRepository implements AnnexRepository
         return $result;
     }
 
+    public function getGroupedByExplotation()
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('e.code', 'e.name','COUNT(annex.id) as count')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->groupBy('e.id')
+            ->getQuery();
+
+        return $query->getResult();
+
+    }
+
     public function exists(string $crotal)
     {
         return null !== $this->findByAnimalCrotal($crotal);
