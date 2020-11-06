@@ -1,0 +1,24 @@
+framework:
+    workflows:
+        animal_registers:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'state'
+            supports:
+                - Mateu\Backend\Animal\Domain\Entity\Animal
+            initial_marking: in
+            places:
+                - in
+                - out
+            transitions:
+                to_income:
+                    from: out
+                    to:   in
+                to_outgoing:
+                    from: in
+                    to:   out
+
+

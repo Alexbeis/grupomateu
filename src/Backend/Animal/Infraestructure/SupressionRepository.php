@@ -3,7 +3,7 @@
 namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Mateu\Backend\Animal\Domain\Entity\Supression;
 
 class SupressionRepository extends ServiceEntityRepository

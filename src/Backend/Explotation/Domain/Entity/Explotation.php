@@ -23,7 +23,7 @@ class Explotation
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10, unique=true)
+     * @ORM\Column(type="string", length=20, unique=true)
      */
     private $code;
 
@@ -48,6 +48,11 @@ class Explotation
     private $incomingRegisters;
 
     /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", mappedBy="explotation")
+     */
+    private $outgoingRegisters;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\User\Domain\Entity\User")
      */
     private $createdBy;
@@ -56,6 +61,11 @@ class Explotation
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Group\Domain\Entity\Group", inversedBy="explotations")
      */
     private $group;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Owner", inversedBy="explotations" ,cascade={"persist"})
+     */
+    private $owner;
 
 
     public function __construct()
@@ -188,6 +198,25 @@ class Explotation
     }
 
     /**
+     * @return null|Owner
+     */
+    public function getOwner():?Owner
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param Owner $owner
+     *
+     * @return Explotation
+     */
+    public function setOwner(Owner $owner):self
+    {
+        $this->owner = $owner;
+        return $this;
+    }
+
+    /**
      * Get Ill Animals from current Explotation
      * @return Collection|null
      */
@@ -202,4 +231,6 @@ class Explotation
 
         return $this->animal->matching($criteria);
     }
+
+
 }

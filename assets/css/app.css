@@ -11,3 +11,14 @@ tr.shown td.details-control {
     text-align:center;
     color:red;
 }
+
+.selected{
+    background-color: darkgrey;
+}
+.pointable{
+    cursor: pointer;
+}
+
+.swal2-popup {
+    font-size: 1.4rem !important;
+}

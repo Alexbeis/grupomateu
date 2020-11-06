@@ -90,7 +90,7 @@
                     <div class="form-group col-xs-12 col-md-4">
                         <label for="ani_exp">Explotación</label>
                         <select name="ani_exp" class="form-control" id="ani_exp" disabled>
-                            <option value="male">{{ animal.explotation.name }}</option>
+                            <option value="male">{{ animal.explotation.name|default('NO_EXPLO') }}</option>
                         </select>
                         <span class="help-block hidden"></span>
                     </div>

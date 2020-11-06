@@ -3,18 +3,11 @@
 namespace Mateu\Backend\Animal\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Mateu\Backend\Animal\Domain\AnimalRepositoryInterface;
 use Mateu\Backend\Animal\Domain\CrotalNum;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
 
-
-/**
- * @method Animal|null find($id, $lockMode = null, $lockVersion = null)
- * @method Animal|null findOneBy(array $criteria, array $orderBy = null)
- * @method Animal[]    findAll()
- * @method Animal[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class AnimalRepository extends ServiceEntityRepository implements AnimalRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -36,9 +29,7 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
     public function getTotal()
     {
         $qb = $this->createQueryBuilder('animal');
-        $qb
-            ->select('count(animal.id)')
-            ->andWhere('animal.outgoingRegister IS NULL');
+        $qb->select('count(animal.id)');
         $total = $qb->getQuery()->getSingleScalarResult();
 
         return $total;
@@ -49,7 +40,6 @@ class AnimalRepository extends ServiceEntityRepository implements AnimalReposito
         $qb = $this->createQueryBuilder('animal');
         $qb->select('exp.name', 'exp.code', 'count(animal.id) as total')
             ->join('animal.explotation', 'exp')
-            ->andWhere('animal.outgoingRegister IS NULL')
             ->groupBy('exp.id')
             ->orderBy('count(animal.id)','DESC');
 

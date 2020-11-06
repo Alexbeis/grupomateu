@@ -40,8 +40,8 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li>
-                <a href="{{ path('index_register') }}"><i class="fa fa-circle-o"></i>Ver</a>
+            <li {% if route == 'index_outregisters' %} class="active"{% endif %}>
+                <a href="{{ path('index_outregisters') }}"><i class="fa fa-circle-o"></i>Ver</a>
             </li>
             <li class=""><a href="index.html"><i class="fa fa-circle-o"></i>Manuales</a></li>
         </ul>

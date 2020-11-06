@@ -37,6 +37,8 @@ import './animals/GMAnimal.js';
 import './animals/Supression.js';
 import './animals/GMHistory.js';
 import './registers/GMRegisters.js';
+import './registers/GMOutRegister.js';
+import './registers/GMOutcomeRegisters.js';
 import './annex/Export.js';
 import './annex/GMAnnex.js';
 import './incoming-register/IncomingRegister.js';

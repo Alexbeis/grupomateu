@@ -74,6 +74,11 @@ class Animal
     private $genre;
 
     /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $state;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": false})
      */
     private $is_ill;
@@ -81,7 +86,7 @@ class Animal
     /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation" , inversedBy="animal")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $explotation;
 
@@ -111,10 +116,10 @@ class Animal
     private $incomingRegisters;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", inversedBy="animals")
-     * @JoinColumn(name="outgoing_register_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister",
+     *     mappedBy="animals")
      */
-    private $outgoingRegister;
+    private $outgoingRegisters;
 
 
     /**
@@ -132,6 +137,7 @@ class Animal
     public function __construct()
     {
         $this->incomingRegisters = new ArrayCollection();
+        $this->outgoingRegisters = new ArrayCollection();
         $this->history = new ArrayCollection();
         $this->movements = new ArrayCollection();
     }
@@ -152,7 +158,8 @@ class Animal
             ->setExplotation($explotation)
             ->setRace($race)
             ->setIsIll(false)
-            ->setGenre($genre);
+            ->setGenre($genre)
+            ->setState('in');
     }
 
     public function getId(): ?int
@@ -459,22 +466,21 @@ class Animal
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|null
      */
-    public function getOutgoingRegister()
+    public function getOutgoingRegisters(): ?ArrayCollection
     {
-        return $this->outgoingRegister;
+        return $this->outgoingRegisters;
     }
 
     /**
-     * @param mixed $outgoingRegister
+     * @param ArrayCollection $outgoingRegisters
      *
      * @return Animal
      */
-    public function setOutgoingRegister($outgoingRegister): self
+    public function setOutgoingRegisters(ArrayCollection $outgoingRegisters): self
     {
-        $this->outgoingRegister = $outgoingRegister;
-
+        $this->outgoingRegisters = $outgoingRegisters;
         return $this;
     }
 
@@ -494,6 +500,25 @@ class Animal
     public function setSupression($supression): self
     {
         $this->supression = $supression;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState():?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     *
+     * @return Animal
+     */
+    public function setState(string $state): self
+    {
+        $this->state = $state;
         return $this;
     }
 }

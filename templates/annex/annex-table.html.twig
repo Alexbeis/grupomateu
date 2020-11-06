@@ -1,8 +1,8 @@
 <div class="table-responsive">
-    <table id="annex-table" class="table table-striped table-bordered" style="width:100%">
+    <table id="{{ code }}" class="annex-table table table-bordered" style="width:100%">
         <thead>
         <tr>
-            <th><input type="checkbox" name="select_all" value="1" id="select-all" class="select-all"></th>
+            <th><input type="checkbox" name="select_all" value="1" class="select-all" ></th>
             <th>Crotal</th>
             <th>Número interno</th>
             <th>Explotación</th>
@@ -10,12 +10,16 @@
         </tr>
         </thead>
         <tbody>
+
         {% for annex in annexes %}
-            <tr id="row_{{ annex.id }}">
+            {% set expCode = code %}
+            {% set expName = annex.animal.explotation.name %}
+
+            <tr id="row_{{ annex.id }}" class="pointable">
                 <td></td>
                 <td>{{ annex.animal.crotal }}</td>
                 <td>{{ annex.animal.internalnum }}</td>
-                <td>{{ annex.animal.explotation.name }} </td>
+                <td data-code="{{ expCode }}">{{ expName}}({{ expCode }}) </td>
                 <td>
                     <div class="btn-group">
                         <a href="{{ path('annex_delete') }}"

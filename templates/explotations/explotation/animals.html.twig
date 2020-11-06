@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class="form-group">
                 <label for="scanner">Min Edad (meses):</label>
                 <input type="number" class="form-control" id="min_old">
             </div>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class="form-group">
                 <label for="scanner">Max Edad (meses):</label>
                 <input type="number" class="form-control" id="max_old">
@@ -14,56 +14,63 @@
         </div>
     </div>
 </div>
-
-<table id="exp-animal-table" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-    <tr>
-        <th>Crotal</th>
-        <th>#Interno</th>
-        <th>Nacimiento</th>
-        <th>Edad(meses)</th>
-        <th>Edad(dias)</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for animal in explotation.animal %}
+<div class="table-responsive">
+    <table id="exp-animal-table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
         <tr>
-            <td>{{ animal.crotal }}</td>
-            <td>{{ animal.internalnum }}</td>
-            <td>{{ animal.birthdate|date('d-m-y') }}</td>
-            <td>{{ animal.birthdate|calculateMonths }} </td>
-            <td>{{ animal.birthdate|calculateDays }} </td>
-            <td>
-                {% set isAnnexed = animal.annex %}
-
-                <div class="btn-group">
-                    <a href="{{ path('annex_create') }}"
-                       class="btn
-                        {{ isAnnexed ? 'btn-warning disabled': 'btn-default' }}
-                        js-annex-animal"
-                       data-id="{{ animal.id }}"
-                    >
-                        {{ isAnnexed ? 'Marcado': 'Marcar' }}
-                        <span class="js-spinner">
-                            &nbsp;<i class="fa fa-spinner fa-spin hidden"></i>
-                        </span>
-                    </a>
-                    <a class="btn btn-default" href="{{ path('edit_animal', {'id':animal.id}) }}#ficha">Ver/editar</a>
-
-                </div>
-            </td>
+            <th>Crotal</th>
+            <th>#Interno</th>
+            <th>Nacimiento</th>
+            <th>Edad(meses)</th>
+            <th>Edad(dias)</th>
+            <th>Acciones</th>
         </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <th>Crotal</th>
-        <th>#Interno</th>
-        <th>Nacimiento</th>
-        <th>Edad(meses)</th>
-        <th>Edad(dias)</th>
-        <th>Acciones</th>
-    </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+        {% for animal in explotation.animal %}
+            <tr>
+                <td>{{ animal.crotal }}</td>
+                <td>{{ animal.internalnum }}</td>
+                <td>{{ animal.birthdate|date('d-m-y') }}</td>
+                <td>{{ animal.birthdate|calculateMonths }} </td>
+                <td>{{ animal.birthdate|calculateDays }} </td>
+                <td>
+                    {% set isAnnexed = animal.annex %}
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button"
+                                class="btn {{ isAnnexed ? 'btn-warning disabled': 'btn-default' }} js-annex-animal"
+                                data-href="{{ path('annex_create') }}"
+                                data-id="{{ animal.id }}"
+                                >
+                                <span class="glyphicon glyphicon-tag"
+                                      data-toggle="tooltip"
+                                      data-placement="left"
+                                      title="{{ isAnnexed ? 'Crotal Marcado': 'Marcar Crotal' }}">
+                                </span>
+
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            <a href="{{ path('edit_animal', {'id':animal.id}) }}#ficha">
+                                <span class="glyphicon glyphicon-edit"
+                                      data-toggle="tooltip"
+                                      data-placement="right"
+                                      title="Ver/Editar Crotal"></span>
+                            </a>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Crotal</th>
+            <th>#Interno</th>
+            <th>Nacimiento</th>
+            <th>Edad(meses)</th>
+            <th>Edad(dias)</th>
+            <th>Acciones</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>

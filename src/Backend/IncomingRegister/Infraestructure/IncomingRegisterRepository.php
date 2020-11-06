@@ -3,9 +3,9 @@
 namespace Mateu\Backend\IncomingRegister\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\Persistence\ManagerRegistry;
 use Mateu\Backend\IncomingRegister\Domain\Entity\IncomingRegister;
 use Mateu\Backend\IncomingRegister\Domain\IncomingRegisterRepositoryInterface;
 

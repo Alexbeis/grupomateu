@@ -1,8 +1,10 @@
 <?php
+
 namespace Mateu\Tests\Dashboard;
 
+use PHPUnit\Framework\TestCase;
 
-class DashboardTest extends \PHPUnit_Framework_TestCase
+class DashboardTest extends TestCase
 {
     public function testItWorks()
     {

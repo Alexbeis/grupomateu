@@ -54,35 +54,47 @@ import AjaxCall from "../shared/AjaxCall";
          */
         loadDatatable() {
             this.$wrapper.dataTable({
-                language: {
-                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-                },
-                columnDefs: [{
-                    targets: 0,
-                    searchable: false,
-                    orderable: false,
-                    className: 'dt-body-center',
-                    render: function (data, type, full, meta){
-                        return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
-                    }
-                }],
-                pageLength: 10,
-                responsive: true
-            });
+                   language: {
+                       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+                   },
+                   columnDefs: [
+                       {
+                           targets: 0,
+                           searchable: false,
+                           orderable: false,
+                           className: 'dt-body-center'
+
+                       }
+                   ],
+                   pageLength: 10,
+                   responsive: true
+               });
         },
 
         /**
          * Load modal events
          */
         loadEvents() {
-            let that = this;
-            $('#select-all').on('click', function(){
-                // Get all rows with search applied
-                let rows = that.$wrapper.DataTable().rows({ 'search': 'applied' }).nodes();
-                // Check/uncheck checkboxes for all rows in the table
-                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
+            $('.select-all').on('click', function(e){
+
+                let table = $(e.target).closest('table');
+                let rows = table.DataTable().rows().nodes();
+
+                rows.each((row, i)=>{
+                    $(row).toggleClass('selected');
+                });
             });
+
+            $('.annex-table').on('click', 'tbody tr', function (e) {
+                //Avoid mark table header and table footer.
+                 if (!(this).closest('tfoot') && !(this).closest('thead')) {
+                     $(this).toggleClass('selected');
+                 }
+            });
+
         },
+
         /**
          *
          * @param e
@@ -90,21 +102,24 @@ import AjaxCall from "../shared/AjaxCall";
         getAnnexedAndHandleExportPdf(e) {
             e.preventDefault();
             let url = $(e.target).attr('href');
+            let tableId = $(e.target).data('exp');
 
             this.export
                 .handleExport(
-                    this._extractAnexedIds(),
+                    this._extractAnexedIds(tableId),
                     url
                 );
         },
 
         getAnnexedAndHandleExportCsv(e) {
             e.preventDefault();
-            let url = $(e.target).attr('href');
+            const target =  $(e.target);
+            const url = target.attr('href');
+            const tableId = target.data('exp');
 
             this.export
                 .handleExport(
-                    this._extractAnexedIds(),
+                    this._extractAnexedIds(tableId),
                     url
                 );
         },
@@ -114,23 +129,16 @@ import AjaxCall from "../shared/AjaxCall";
          * @returns {Array}
          * @private
          */
-        _extractAnexedIds() {
+        _extractAnexedIds(tableId) {
 
             let elementsChecked = [];
-            this.$wrapper.DataTable().$('input[type="checkbox"]').each((i, element) => {
-
-                if(!$.contains(document, this)){
-                    if (!element.checked){
-                        return;
-                    }
-                    elementsChecked.push(
-                        $(element)
-                            .closest('tr')
-                            .attr('id')
-                            .split('_')[1]
-                    );
-                }
-
+            $('#' + tableId).DataTable().$('.selected').each((i, element) => {
+                elementsChecked.push(
+                    $(element)
+                        .closest('tr')
+                        .attr('id')
+                        .split('_')[1]
+                );
             });
 
             return elementsChecked;
@@ -138,6 +146,7 @@ import AjaxCall from "../shared/AjaxCall";
 
         handleAnnexDelete(e) {
             e.preventDefault();
+            e.stopPropagation();
             let $target = $(e.currentTarget);
             this._showAlert($target);
         },
@@ -258,8 +267,8 @@ import AjaxCall from "../shared/AjaxCall";
 
 })(window, jQuery, swal);
 
-let AnnexTableWrapper = $('#annex-table');
+let AnnexTableWrappers = $('.annex-table');
 
-if (AnnexTableWrapper.length > 0) {
-    new GMAnnex(AnnexTableWrapper);
+if (AnnexTableWrappers.length > 0) {
+    new GMAnnex(AnnexTableWrappers);
 }

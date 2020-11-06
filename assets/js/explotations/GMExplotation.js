@@ -1,6 +1,8 @@
 'use strict';
 
 import AjaxCall from "../shared/AjaxCall";
+import EditState from "./EditState";
+import Spinner from "../shared/Spinner";
 
 require ('../shared/datatable_extension_custom_filter');
 
@@ -10,10 +12,14 @@ const swal = require('sweetalert2');
 
 (function(window, $, swal) {
 
-    window.GMExplotation = function($wrapperForm, $wrapperTable) {
+    window.GMExplotation = function($wrapperForm,$ownerWrapperForm ,$wrapperTable) {
 
+        this.state = new EditState({'info':false, 'owner':false});
         this.$wrapperForm = $wrapperForm;
         this.$wrapperTable = $wrapperTable;
+        this.$wrapperOwner = $ownerWrapperForm;
+        this.editInfoButton = $(this.options._selectors.infoEdit);
+        this.editOwnerButton = $(this.options._selectors.ownerEdit);
         this.$moveAnimalButton = $('.js-move-animal');
         this.mover = new GMMover($('#modal-movements'));
 
@@ -22,7 +28,7 @@ const swal = require('sweetalert2');
         this.$wrapperForm.on(
             'click',
             this.options._selectors.save,
-            this.handleExplotationSave.bind(this)
+            this.handleExplotationInfoSave.bind(this)
         );
 
         this.$wrapperTable.on(
@@ -31,9 +37,23 @@ const swal = require('sweetalert2');
             this.handleAnnexAnimal.bind(this)
         );
 
+        this.$wrapperOwner.on(
+            'click',
+            this.options._selectors.saveOwner,
+            this.handleOwnerSave.bind(this)
+        );
+
         this.$moveAnimalButton.on(
             'click',
             this.handleMoveAnimal.bind(this)
+        );
+
+        this.editInfoButton.on('click',
+           this.handleEdit.bind(this)
+        );
+
+        this.editOwnerButton.on('click',
+            this.handleEdit.bind(this)
         );
 
         this.loadDatatable();
@@ -46,31 +66,62 @@ const swal = require('sweetalert2');
             _selectors: {
                 form: '#expl_save_form',
                 save: '.js-save-explotation',
+                saveOwner: '.js-save-owner',
                 annex: '.js-annex-animal',
-                inputs:[
-                    {
-                        input:'#exp_name',
-                        mandatory: true,
-                        max: 50,
-                        min:3,
-                        error: 'Este campo ha de tener valores entre 3 y 10 caracteres '
-                    },
-                    {
-                        input:'#exp_code',
-                        mandatory: true,
-                        max:10,
-                        min:3,
-                        error: 'Este campo ha de tener valores entre 3 y 10 caracteres '
-                    },
-                    {
-                        input:'#exp_loca',
-                        mandatory: false,
-                        max: 50,
-                        min:0,
-                        error: 'Este campo ha de tener valores entre 3 y 10 caracteres '
-                    },
+                infoEdit:'.js-edit-info-exp',
+                ownerEdit:'.js-edit-owner-exp',
+                info:{
+                    inputs:[
+                        {
+                            input:'#exp_name',
+                            mandatory: true,
+                            max: 50,
+                            min:3,
+                            error: 'Este campo ha de tener valores entre 3 y 10 caracteres '
+                        },
+                        {
+                            input:'#exp_code',
+                            mandatory: true,
+                            max:20,
+                            min:3,
+                            error: 'Este campo ha de tener valores entre 3 y 20 caracteres '
+                        },
+                        {
+                            input:'#exp_loca',
+                            mandatory: false,
+                            max: 50,
+                            min:0,
+                            error: 'Este campo ha de tener valores entre 3 y 50 caracteres '
+                        },
 
-                ]
+                    ]
+                },
+                owner:{
+                    inputs:[
+                        {
+                            input:'#owner_name',
+                            mandatory: true,
+                            max: 50,
+                            min:3,
+                            error: 'Este campo ha de tener valores entre 3 y 10 caracteres '
+                        },
+                        {
+                            input:'#owner_code',
+                            mandatory: true,
+                            max:20,
+                            min:3,
+                            error: 'Este campo ha de tener valores entre 3 y 20 caracteres '
+                        },
+                        {
+                            input:'#owner_nif',
+                            mandatory: true,
+                            max: 30,
+                            min:1,
+                            error: 'Este campo ha de tener valores entre 1 y 30 caracteres '
+                        },
+
+                    ]
+                }
             }
         },
         errors: {},
@@ -100,18 +151,73 @@ const swal = require('sweetalert2');
             });
         },
 
+        handleEdit(e) {
+
+            let target = $(e.target);
+            let form = target.closest('form');
+            let editableElements = form.find('.editable');
+            this.toggleEdition(editableElements, target.data('type'));
+        },
+
+        handleOwnerSave(e){
+            e.preventDefault();
+
+            if (!this.state.canEditFor('owner')) return;
+
+            var self = this;
+            this._cleanOwnerErrors();
+
+            let canSubmit = true;
+            this.options._selectors.owner.inputs.forEach((obj) => {
+                let $id = $(obj.input);
+                let value = $id.val();
+
+                if (!this._isValid(value, obj.max, obj.min)) {
+                    canSubmit = false;
+                    this._addError($id, obj.error)
+                }
+            });
+
+            if (canSubmit) {
+                let $target = $(e.target);
+                let url = this.$wrapperOwner.attr('action');
+                let data = this.$wrapperOwner.serialize();
+
+                const spinner = new Spinner($target);
+                spinner.show();
+
+                let editableElements = this.$wrapperOwner.find('.editable');
+                this.ajaxCall.send(url, 'POST' ,data)
+                    .then(function (data) {
+                        if(data.success) {
+                            self._fireAlert({type:'success', title:data.message});
+                        } else {
+                            self._fireAlert({type:'error', title:data.message});
+                        }
+                        self.toggleEdition(editableElements, 'owner');
+                        spinner.backToInit();
+
+                    }).catch(function (err) {
+                    self.toggleEdition(editableElements, 'owner');
+
+                    spinner.backToInit();
+                })
+            }
+        },
+
         /**
          * Handle Save Explotation
          * @param e
          */
-        handleExplotationSave: function(e) {
+        handleExplotationInfoSave: function(e) {
             e.preventDefault();
+            if (!this.state.canEditFor('info')) return;
 
             var self = this;
 
-            this._cleanErrors();
+            this._cleanInfoErrors();
             let canSubmit = true;
-            this.options._selectors.inputs.forEach((obj) => {
+            this.options._selectors.info.inputs.forEach((obj) => {
                 let $id = $(obj.input);
                 let value = $id.val();
                 if (!this._isValid(value, obj.max, obj.min)) {
@@ -121,21 +227,26 @@ const swal = require('sweetalert2');
             });
 
             if (canSubmit) {
-                this._showSpinner();
-                var url = this.$wrapperForm.attr('action');
-                var data = this.$wrapperForm.serialize();
+                let $target = $(e.target);
+                let url = this.$wrapperForm.attr('action');
+                let data = this.$wrapperForm.serialize();
+                const spinner = new Spinner($target);
+                spinner.show();
+                let editableElements = this.$wrapperForm.find('.editable');
                 this.ajaxCall.send(url, 'POST' ,data)
                     .then(function (data) {
                         if(data.success) {
-                           self._fireAlert({type:'success', title:data.message});
+                            self._fireAlert({type:'success', title:data.message});
                         } else {
                             self._fireAlert({type:'error', title:data.message});
                         }
-                        self._hideSpinner();
+                        self.toggleEdition(editableElements, 'info');
+
+                        spinner.backToInit();
 
                 }).catch(function (err) {
-                    console.log(err);
-                    self._hideSpinner();
+                    self.toggleEdition(editableElements, 'info');
+                    spinner.backToInit();
                 })
             }
         },
@@ -147,20 +258,32 @@ const swal = require('sweetalert2');
 
         handleAnnexAnimal: function(e) {
           e.preventDefault();
+
           let $target = $(e.currentTarget);
           let id = $target.data('id');
-          let url = $target.attr('href');
-          const $spinner = $target.find('.js-spinner > i');
-          $spinner.removeClass('hidden');
+          let url = $target.data('href');
+
+          const spinner = new Spinner($target);
+          spinner.show();
+
           this.ajaxCall
               .send(url, 'POST', {id: id})
               .then((data) => {
-                  this._processResponse(data, $target);
-                  $spinner.addClass('hidden');
+                  if (this._processResponse(data, $target)) {
+                      spinner.hideWithSuccess((function() {
+                          this.target.replaceWith(
+                              this.clonedTarget
+                                  .removeClass('btn-default')
+                                  .addClass('btn-warning disabled')
+                          );
+                      }).bind(spinner));
+                  } else {
+                      spinner.backToInit();
+                  }
               })
               .catch((err) => {
-                  $spinner.addClass('hidden');
-            });
+                  spinner.backToInit();
+              });
 
         },
 
@@ -197,8 +320,20 @@ const swal = require('sweetalert2');
          *
          * @private
          */
-        _cleanErrors:function(){
-            this.options._selectors.inputs.forEach((obj) => {
+        _cleanInfoErrors:function(){
+            this.options._selectors.info.inputs.forEach((obj) => {
+                let $id = $(obj.input);
+                $id.closest('.form-group').removeClass('has-error');
+                $id.next('.help-block').html('').addClass('hidden');
+            });
+        },
+
+        /**
+         *
+         * @private
+         */
+        _cleanOwnerErrors:function(){
+            this.options._selectors.owner.inputs.forEach((obj) => {
                 let $id = $(obj.input);
                 $id.closest('.form-group').removeClass('has-error');
                 $id.next('.help-block').html('').addClass('hidden');
@@ -219,37 +354,33 @@ const swal = require('sweetalert2');
             swal.fire($.extend(defOptions, options));
         },
 
-        /**
-         *
-         * @private
-         */
-        _showSpinner:function () {
-            let $button = this.$wrapperForm.find(this.options._selectors.save);
-            $button.find('.js-spinner > i').removeClass('hidden');
-            $button.attr('disabled', true);
-        },
-
-        /**
-         *
-         * @private
-         */
-        _hideSpinner: function () {
-            let $button = this.$wrapperForm.find(this.options._selectors.save);
-            $button.find('.js-spinner > i').addClass('hidden');
-            $button.attr('disabled', false);
-        },
-
         _processResponse(data, $target) {
             if (data.success) {
                 this._fireAlert({type:'success', title:data.message});
                 $target
                     .addClass('btn-warning disabled')
-                    .removeClass('btn-default')
-                    .text('Anexado');
+                    .removeClass('btn-default');
+
+                return true;
 
             } else {
                 this._fireAlert({type:'error', title:data.message});
+
+                return false;
             }
+        },
+
+        toggleEdition(editableElements, type) {
+            let that = this;
+            editableElements.each(function(index) {
+                if ($(this).prop('disabled')) {
+                    $(this).prop('disabled', false);
+                    that.state.setStateFor(type, true);
+                } else {
+                    $(this).prop('disabled', true);
+                    that.state.setStateFor(type, false);
+                }
+            });
         }
     });
 
@@ -257,8 +388,9 @@ const swal = require('sweetalert2');
 })(window, jQuery, swal);
 
 let ExplotationWrapperForm = $('#expl_save_form');
+let OwnerWrapperForm = $('#owner_save_form ');
 let ExplotationAnimalTable = $('#exp-animal-table');
 
 if (ExplotationWrapperForm.length > 0) {
-    new GMExplotation(ExplotationWrapperForm, ExplotationAnimalTable);
+    new GMExplotation(ExplotationWrapperForm, OwnerWrapperForm ,ExplotationAnimalTable);
 }

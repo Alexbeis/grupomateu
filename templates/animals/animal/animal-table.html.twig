@@ -20,7 +20,7 @@
                 <td>{{ animal.birthdate|date('d-m-y') }}</td>
                 <td>{{ animal.birthdate|calculateMonths }}</td>
                 <td>{{ animal.birthdate|calculateDays }}</td>
-                <td>{{ animal.explotation.name }}</td>
+                <td>{{ animal.explotation.name|default('NO_EXPLO') }}</td>
                 <td>
                     <div
                         class="label label-{{ animal.isill ? 'danger' : 'success' }}">

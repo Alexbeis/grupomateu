@@ -3,13 +3,13 @@
 namespace Mateu\Backend\Annex\Infraestructure;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Mateu\Backend\Annex\Domain\AnnexRepositoryInterface;
 use Mateu\Backend\Annex\Domain\Entity\Annex;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class AnnexRepository extends ServiceEntityRepository implements AnnexRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Annex::class);
     }
@@ -26,6 +26,68 @@ class AnnexRepository extends ServiceEntityRepository implements AnnexRepository
         $total = $qb->getQuery()->getSingleScalarResult();
 
         return $total;
+    }
+
+    public function getAnnexGroupedByExplotation()
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb
+            ->select('annex', 'e.code', 'e.name')
+            ->join('annex.animal','a')
+            ->join('a.explotation', 'e')
+            ->orderBy('e.code')
+            ->getQuery();
+
+        $result = [];
+        foreach ($query->getResult() as $item) {
+            $result[$item['code']][] = $item[0] ;
+        }
+
+        return $result;
+    }
+
+    public function getGroupedByExplotation()
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('e.code', 'e.name','COUNT(annex.id) as count')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->groupBy('e.id')
+            ->getQuery();
+
+        return $query->getResult();
+
+    }
+
+    public function existsSupressedByExplotation($expCode)
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('annex', 'a')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->leftJoin('a.supression', 's')
+            ->andWhere('e.code = :expcode')
+            ->andWhere('s.id IS NOT null')
+            ->setParameter('expcode', $expCode)
+            ->getQuery();
+
+
+        return $query->getResult();
+
+    }
+
+    public function getAnnexedAnimalsByExplotationCode($expCode)
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('annex', 'a')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->andWhere('e.code = :expcode')
+            ->setParameter('expcode', $expCode)
+            ->getQuery();
+
+
+        return $query->getResult();
     }
 
     public function exists(string $crotal)
