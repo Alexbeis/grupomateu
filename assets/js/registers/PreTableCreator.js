@@ -12,7 +12,6 @@ PreTableCreator.prototype.createSuccessTable  = function(data) {
     }
 
     this.element.appendChild(tbody);
-
 };
 
 PreTableCreator.prototype.createRow = function(tbody, rowData, i){
@@ -36,6 +35,7 @@ PreTableCreator.prototype.createCells = function(element, row, index) {
         switch (key) {
             case 'name':
                 td.appendChild(document.createTextNode(`${element[key]} (${element['code']})`));
+                row.setAttribute('id', element['code']);
                 row.appendChild(td);
                 break;
             case 'count':
@@ -49,10 +49,14 @@ PreTableCreator.prototype.createCells = function(element, row, index) {
     }
 
     let tdButton = document.createElement('td');
-    let button = document.createElement('button');
-    button.classList.add('btn', 'btn-warning', 'btn-xs');
-    button.appendChild(document.createTextNode('Generar'));
-    tdButton.appendChild(button);
+    let buttonValidate = document.createElement('button');
+    buttonValidate.classList.add('btn', 'btn-warning', 'btn-xs', 'js-validate');
+    buttonValidate.appendChild(document.createTextNode('Validar'));
+    let buttonGenerate = document.createElement('button');
+    buttonGenerate.classList.add('btn', 'btn-warning', 'btn-xs', 'js-generate');
+    buttonGenerate.appendChild(document.createTextNode('Generar'));
+    tdButton.appendChild(buttonValidate);
+    tdButton.appendChild(buttonGenerate);
 
     row.appendChild(tdButton);
 

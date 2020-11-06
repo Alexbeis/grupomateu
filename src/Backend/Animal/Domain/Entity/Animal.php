@@ -86,7 +86,7 @@ class Animal
     /**
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation" , inversedBy="animal")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $explotation;
 

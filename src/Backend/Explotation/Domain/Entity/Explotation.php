@@ -48,6 +48,11 @@ class Explotation
     private $incomingRegisters;
 
     /**
+     * @ORM\OneToMany(targetEntity="Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister", mappedBy="explotation")
+     */
+    private $outgoingRegisters;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\User\Domain\Entity\User")
      */
     private $createdBy;

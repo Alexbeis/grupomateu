@@ -14,7 +14,7 @@ const swal = require('sweetalert2');
 
     window.GMExplotation = function($wrapperForm,$ownerWrapperForm ,$wrapperTable) {
 
-        this.state = new EditState();
+        this.state = new EditState({'info':false, 'owner':false});
         this.$wrapperForm = $wrapperForm;
         this.$wrapperTable = $wrapperTable;
         this.$wrapperOwner = $ownerWrapperForm;

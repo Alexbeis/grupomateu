@@ -28,11 +28,18 @@ const swal = require('sweetalert2');
                 new: '.js-create-incregister',
                 inputs:['#inc_reg_explotation', '#inc_reg_procedence', '#inc_reg_intype', '#inc_reg_supplier']
             },
+            alert: {
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                target:'.modal-content',
+            },
             text:{
-                title: "Estás seguro?",
-                advice: "You won't be able to revert this!",
+                validationTitle: "Validar Salida para: %s ? ",
+                generationTitle: "Generar Salida para: %s ? ",
+                validationAdvice: "Vas a validar una salida de crotales",
+                generationAdvice: "Vas a Generar una salida de crotales",
                 warning: "warning",
-                deleted: "Deleted!",
                 error: "Error!"
             }
         },
@@ -65,13 +72,13 @@ const swal = require('sweetalert2');
                 responsive: true,
                 columnDefs: [
                     { data: 'type',responsivePriority: 1, targets: 0 },
-                    { data: 'destination', responsivePriority: 2, targets: 1 },
-                    { data: 'transport', responsivePriority: 2, targets: 2 },
-                    { data: 'animalsCount', responsivePriority: 3, targets: 3 },
-                    { data: 'outDate', responsivePriority: 3, targets: 4 },
-                    { data: 'createdAt', responsivePriority: -1, targets: 5 },
-                    { data: 'createdBy', responsivePriority: -1, targets: 6, orderable: false},
-                    { data: 'actions', responsivePriority: -1, targets: 7 , orderable : false},
+                    { data: 'destination', targets: 1 },
+                    { data: 'transport', targets: 2 },
+                    { data: 'animalsCount', targets: 3 },
+                    { data: 'outDate', responsivePriority: 5, targets: 4 },
+                    { data: 'createdAt', targets: 5 },
+                    { data: 'createdBy', targets: 6, orderable: false},
+                    { data: 'actions', responsivePriority: 3, targets: 7 , orderable : false},
                 ]
             });
         },
@@ -81,11 +88,13 @@ const swal = require('sweetalert2');
          */
         loadEvents: function() {
             $('.js-reload-outregister').on('click', this.handleReload.bind(this));
+            $(document).on('click', '.js-validate' ,this.handleValidation.bind(this));
+            $(document).on('click', '.js-generate' ,this.handleGeneration.bind(this));
         },
 
         fetchAnnexInfo: function () {
             $('.overlay').toggleClass('hidden');
-            this.ajaxCall.send("/admin/marcados/por-explotacion", 'GET', )
+            this.ajaxCall.send("/admin/marcados/por-explotacion", 'GET' )
                 .then((response)=> {
                     if (response.success && response.params.length > 0) {
                         this.infoTableCreator.resetTable();
@@ -94,6 +103,122 @@ const swal = require('sweetalert2');
                     }
             })
         },
+        handleGeneration:function(e) {
+            e.preventDefault();
+            const clickedRow = $(e.target).closest('tr');
+            const expCode = clickedRow.attr('id');
+
+            const options = $.extend(this.options.alert, {
+                title:this.options.text.generationTitle.replace('%s', expCode),
+                type: this.options.text.warning,
+                onOpen:() => {
+                    const content = swal.getContent();
+                    const resultElement = content.querySelector('#validation-results');
+                    if (resultElement) {
+                        resultElement.innerHTML = '';
+                    }
+                }
+            });
+
+            this.showAlert(expCode, options, (expCode) => {
+                $('.overlay').toggleClass('hidden');
+                this.ajaxCall.send(
+                    '/admin/outgoing-registers/create/',
+                    'POST',
+                    {expCode}
+                    )
+                    .then(response => {
+                        if (response.success) {
+                            clickedRow.fadeOut(1000, ()=>{
+                                $(this).remove();
+                            });
+
+                            window.location.href= `/admin/registro-salida/${response.params.uuid}`;
+                            $('.overlay').toggleClass('hidden');
+
+
+                        } else {
+                            console.log('There was an error:');
+                            $('.overlay').toggleClass('hidden');
+
+                        }
+                    });
+            });
+        },
+
+        handleValidation: function(e) {
+            e.preventDefault();
+            const clickedRow = $(e.target).closest('tr');
+            const expCode = clickedRow.attr('id');
+
+            const options = $.extend(this.options.alert, {
+                title:this.options.text.validationTitle.replace('%s', expCode),
+                type: this.options.text.warning,
+                onOpen:() => {
+                    const content = swal.getContent();
+                    const resultElement = content.querySelector('#validation-results');
+                    if (resultElement) {
+                        resultElement.innerHTML = '';
+                    }
+                }
+            });
+
+            this.showAlert(expCode, options,(expcode) => {
+                $('.overlay').toggleClass('hidden');
+                this.ajaxCall
+                    .send(
+                        '/admin/outgoing-registers/validate/',
+                      'GET',
+                        {expcode}
+                        )
+                    .then(response => {
+                        if (response.success) {
+
+                            const options = $.extend(this.options.alert, {
+                                title:'<strong>Crotales Validados</strong>',
+                                html: '<div id="validation-results"></div>',
+                                text: this.options.text.validationAdvice,
+                                type: response.params.length ? this.options.text.warning : 'success',
+                                width:'600px',
+                                onOpen: () => {
+                                    const content = swal.getContent();
+                                    const resultElement = content.querySelector('#validation-results');
+                                    if(response.params.length){
+                                        response.params.forEach(element => {
+                                            let div = document.createElement('div');
+                                            div.innerHTML= `<strong>${element}</strong>`;
+
+                                            resultElement.appendChild(div);
+                                        });
+                                    } else {
+                                        let div = document.createElement('div');
+                                        div.innerHTML= `<strong>Preparados para salir!</strong>`;
+                                        resultElement.appendChild(div);
+                                    }
+                                },
+                                onClose:() => {
+                                    const content = swal.getContent();
+                                    const resultElement = content.querySelector('#validation-results');
+                                    if (resultElement) {
+                                        resultElement.innerHTML = '';
+                                    }
+                                }
+                            });
+
+                            this.showAlert(expCode, options)
+
+                        } else {
+                          console.log('There was an error:');
+                        }
+
+                        $('.overlay').toggleClass('hidden');
+
+                }).catch(err => {
+                  $('.overlay').toggleClass('hidden');
+                });
+          });
+
+        },
 
         handleReload: function(e) {
             e.preventDefault();
@@ -101,63 +226,17 @@ const swal = require('sweetalert2');
         },
 
         /**
-         * Delete on the clicked Row from the DOM
-         * @param target
-         * @private
-         */
-        _deleteRow: function (target) {
-            let $elementRow = target.closest('tr');
-            $elementRow.find('.js-spinner > i').removeClass('hidden');
-            $elementRow.fadeOut('normal', function() {
-                $(this).remove();
-            });
-        },
-
-        /**
          * Show Sweet Alert. Makes ajax request
-         * @param target
+         * @param expCode
+         * @param options
+         * @param callback
          */
-        showAlert: function (target) {
-            let $target = $(target);
-            const url = $target.attr('href');
-            const self = this;
+        showAlert: function (expCode, options, callback) {
 
-            swal.fire({
-                title: self.options.text.title,
-                text: self.options.text.advice,
-                type: self.options.text.warning,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Bórrala'
-            }).then((result) => {
-                if (result.value) {
-                    self._ajaxDelete(url)
-                        .then(function (data) {
-                            if (data.success) {
-                                self._fireAlert({
-                                    title: self.options.text.deleted,
-                                    text: data.message,
-                                    type:'success',
-                                    allowOutsideClick:false,
-                                    onClose:() => {
-                                        self._deleteRow($target);
-                                    }
-                                })
-                            } else {
-                                self._fireAlert({
-                                    title: self.options.text.error,
-                                    text: data.message,
-                                    type: 'error',
-                                    allowOutsideClick:false,
-                                });
+            swal.fire(options).then((result) => {
 
-
-                            }
-                        }).catch(function(err){
-                        console.log(err);
-                    })
-
+                if (result.value && typeof callback === 'function') {
+                    callback(expCode);
                 }
             })
         },

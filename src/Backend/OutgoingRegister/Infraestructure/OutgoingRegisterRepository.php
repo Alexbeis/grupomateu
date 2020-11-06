@@ -63,9 +63,11 @@ class OutgoingRegisterRepository extends ServiceEntityRepository implements Outg
              * @var OutgoingRegister $element
              */
             return [
-                'type' =>$element->getOutType()->getName(),
+                'type' => $element->getOutType() ?$element->getOutType()->getName() : "TBD",
                 'destination' => $element->getDestination(),
+                'transport' => '',
                 'animalsCount' => $element->getAnimalsCount(),
+                'outDate' => $element->getOutDate(),
                 'createdAt' => $element->getCreatedAt()->format('d-m-y'),
                 'createdBy' => $element->getCreatedBy()->getUsername(),
                 'uuid' => $element->getUuid()

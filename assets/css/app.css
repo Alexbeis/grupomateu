@@ -18,3 +18,7 @@ tr.shown td.details-control {
 .pointable{
     cursor: pointer;
 }
+
+.swal2-popup {
+    font-size: 1.4rem !important;
+}

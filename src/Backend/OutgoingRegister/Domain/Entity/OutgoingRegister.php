@@ -6,9 +6,11 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Mateu\Backend\Animal\Domain\Entity\Animal;
+use Mateu\Backend\Explotation\Domain\Entity\Explotation;
 use Mateu\Backend\User\Domain\Entity\User;
 
 /**
@@ -46,6 +48,12 @@ class OutgoingRegister
     private $meanWeight;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Mateu\Backend\Explotation\Domain\Entity\Explotation", inversedBy="outgoingRegisters",
+     * )
+     */
+    private $explotation;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Purchaser\Domain\Entity\Purchaser", inversedBy="outgoingRegisters")
      * @JoinColumn(name="purchaser_id", referencedColumnName="id")
      */
@@ -79,7 +87,7 @@ class OutgoingRegister
     private $created_by;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 0})
+     * @ORM\Column(type="integer", options={"default" : 0}, nullable=true)
      */
     private $animalsCount;
 
@@ -223,7 +231,7 @@ class OutgoingRegister
     /**
      * @return null|ArrayCollection
      */
-    public function getAnimals(): ?ArrayCollection
+    public function getAnimals(): ?PersistentCollection
     {
         return $this->animals;
     }
@@ -255,7 +263,7 @@ class OutgoingRegister
     /**
      * @return null | DateTime
      */
-    public function getOutDate():DateTime
+    public function getOutDate():? DateTime
     {
         return $this->outDate;
     }
@@ -263,7 +271,7 @@ class OutgoingRegister
     /**
      * @return mixed
      */
-    public function getOutGuide()
+    public function getOutGuide() :?string
     {
         return $this->outGuide;
     }
@@ -316,5 +324,15 @@ class OutgoingRegister
         $this->transporter = $transporter;
         return $this;
     }
+
+    /**
+     * @return null|Explotation
+     */
+    public function getExplotation():? Explotation
+    {
+        return $this->explotation;
+    }
+
+
 
 }

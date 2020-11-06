@@ -40,7 +40,7 @@ class GetPaginatedController extends BaseController implements ControllerInterfa
 
         foreach ($result['data'] as &$r) {
             $r['actions'] = $this->renderView(
-                'registers/actions/dropdown-button.html.twig',
+                'outregisters/actions/dropdown-button.html.twig',
                 [
                     'uuid' => $r['uuid']
                 ]

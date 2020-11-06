@@ -1,8 +1,5 @@
-const EditState = function () {
-     this.state = {
-        'info':false,
-        'owner':false
-    }
+const EditState = function (stateObjOptions) {
+     this.state = stateObjOptions;
 };
 
 EditState.prototype.canEditFor = function (type) {

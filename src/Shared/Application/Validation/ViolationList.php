@@ -37,6 +37,6 @@ class ViolationList
             function(Violation $violation){
                 return (string) $violation;
             }
-        , $this->violations);
+        , $this->violations->toArray());
     }
 }

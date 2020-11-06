@@ -59,6 +59,37 @@ class AnnexRepository extends ServiceEntityRepository implements AnnexRepository
 
     }
 
+    public function existsSupressedByExplotation($expCode)
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('annex', 'a')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->leftJoin('a.supression', 's')
+            ->andWhere('e.code = :expcode')
+            ->andWhere('s.id IS NOT null')
+            ->setParameter('expcode', $expCode)
+            ->getQuery();
+
+
+        return $query->getResult();
+
+    }
+
+    public function getAnnexedAnimalsByExplotationCode($expCode)
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('annex', 'a')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->andWhere('e.code = :expcode')
+            ->setParameter('expcode', $expCode)
+            ->getQuery();
+
+
+        return $query->getResult();
+    }
+
     public function exists(string $crotal)
     {
         return null !== $this->findByAnimalCrotal($crotal);
