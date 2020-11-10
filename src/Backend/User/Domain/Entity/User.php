@@ -68,10 +68,13 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param mixed $email
+     *
+     * @return User
      */
-    public function setEmail($email): void
+    public function setEmail($email): self
     {
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -84,18 +87,24 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param mixed $fullName
+     *
+     * @return User
      */
-    public function setFullName($fullName): void
+    public function setFullName($fullName): self
     {
         $this->fullName = $fullName;
+        return $this;
     }
 
     /**
      * @param mixed $username
+     *
+     * @return User
      */
-    public function setUsername($username): void
+    public function setUsername($username): self
     {
         $this->username = $username;
+        return $this;
     }
 
 
@@ -106,10 +115,13 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param array $roles
+     *
+     * @return User
      */
-    public function setRoles(array $roles): void
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+        return $this;
     }
 
     public function getRoles()
@@ -128,10 +140,13 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param mixed $password
+     *
+     * @return User
      */
-    public function setPassword($password): void
+    public function setPassword($password): self
     {
         $this->password = $password;
+        return $this;
     }
 
     public function eraseCredentials()

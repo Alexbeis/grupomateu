@@ -12,8 +12,8 @@ class RaceCode
             throw new InvalidArgumentException('Must be string');
         }
 
-        if (strlen($code) < 3 || strlen($code) > 15) {
-            throw new InvalidArgumentException('Code must be between 3 and 15 chars');
+        if (strlen($code) < 2 || strlen($code) > 15) {
+            throw new InvalidArgumentException('Code must be between 2 and 15 chars');
         }
 
         $this->code = $code;

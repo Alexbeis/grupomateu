@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class CreateRaceConsoleCommand extends Command implements ConsoleCommandInterface
 {
-    protected static $defaultName = 'mateu:create-race';
+    protected static $defaultName = 'mateu:create:race';
 
     private $messageBus;
 
