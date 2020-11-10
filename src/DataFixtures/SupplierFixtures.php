@@ -4,7 +4,7 @@ namespace Mateu\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Mateu\Backend\Supplier\Domain\Entity\Supplier;
 
 class SupplierFixtures extends Fixture implements FixtureInterface
