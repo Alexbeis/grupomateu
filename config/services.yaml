@@ -58,6 +58,10 @@ services:
         exclude:
             - '%kernel.project_dir%/src/DataFixtures/BaseFixture.php'
 
+    Mateu\Migrations\:
+        resource: '%kernel.project_dir%/src/Domain/Migrations'
+
+
     #Mateu\EventListener\ExceptionListener:
     #    tags:
     #        - { name: kernel.event_listener, event: kernel.exception }

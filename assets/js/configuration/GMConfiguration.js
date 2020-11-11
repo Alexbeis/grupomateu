@@ -58,6 +58,7 @@ import ValidatorFactory from './ValidatorFactory';
         init: function() {
             // Load External pluggins TODO: Fix styles on select 2
             console.log('Loading options...');
+            this.$tableWrapper.dataTable({});
         },
 
         /**
@@ -76,6 +77,7 @@ import ValidatorFactory from './ValidatorFactory';
                 self.ajaxCall.send(instance.getLoadUrl(), 'GET')
                     .then( (data) => {
                         self.$tableWrapper.replaceWith(data);
+                        self.$tableWrapper.DataTable().draw();
                     }).catch((err) => {
                         console.log(err);
                 })
@@ -129,7 +131,7 @@ import ValidatorFactory from './ValidatorFactory';
             e.preventDefault();
             let $target = $(e.currentTarget);
             let url = $target.attr('href');
-
+            let self=this;
             this.ajaxCall.send(url,'POST')
                 .then((data) => {
                     if(data.success) {
@@ -137,7 +139,9 @@ import ValidatorFactory from './ValidatorFactory';
                             let $elementRow = $target.closest('tr');
                             $elementRow.fadeOut('normal', function() {
                                 $(this).remove();
+                                self.$tableWrapper.DataTable().draw();
                                 });
+
                             }});
                     } else {
                         this._fireAlert({type:'error', title:data.message});

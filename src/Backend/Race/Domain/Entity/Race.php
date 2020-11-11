@@ -27,7 +27,7 @@ class Race
     private $uuid;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=15, nullable=true, unique=true)
      */
     private $code;
 
