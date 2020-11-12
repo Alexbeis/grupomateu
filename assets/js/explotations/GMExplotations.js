@@ -1,6 +1,7 @@
 'use strict';
 
 import AjaxCall from "../shared/AjaxCall";
+import Spinner from "../shared/Spinner";
 
 const swal = require('sweetalert2');
 
@@ -83,7 +84,8 @@ const swal = require('sweetalert2');
          */
         handleExplotationAdd: function(e) {
             e.preventDefault();
-
+            let spinner = new Spinner($(e.target));
+            spinner.show();
             this._cleanErrors();
             let canSubmit = true;
             let $form = $(e.currentTarget).closest('#add-exp-form');
@@ -98,6 +100,8 @@ const swal = require('sweetalert2');
 
             if (canSubmit) {
                 $form.submit();
+            } else {
+                spinner.backToInit();
             }
         },
         /**
@@ -172,6 +176,7 @@ const swal = require('sweetalert2');
                                 allowOutsideClick:false,
                                 onClose:() => {
                                     self._deleteRow($target);
+                                    self.$wrapper.DataTable().draw();
                                 }
                             })
                         } else {

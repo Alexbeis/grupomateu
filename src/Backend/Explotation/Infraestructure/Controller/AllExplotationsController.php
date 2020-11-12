@@ -19,9 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class AllExplotationsController extends BaseController implements ControllerInterface
 {
     /**
-     * @Route("/explotations" ,name="index_explotations")
-     * @param ContainerInterface $container
-     *
+     * @Route({
+     *     "en" : "/explotations",
+     *     "es" : "/explotaciones"
+     *     },
+     *     name="index_explotations")
      * @return Response
      */
     public function __invoke()

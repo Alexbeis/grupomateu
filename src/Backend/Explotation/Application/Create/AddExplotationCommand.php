@@ -32,11 +32,11 @@ class AddExplotationCommand
      *
      * @param String $code
      * @param String $name
-     * @param int $group_id
+     * @param int|null $group_id
      * @param null $localization
      * @param User $createdBy
      */
-    public function __construct(String $code, String $name, int $group_id, $localization, User $createdBy)
+    public function __construct(String $code, String $name, ?int $group_id, ?String $localization, User $createdBy)
     {
         $this->code = $code;
         $this->name = $name;
@@ -80,7 +80,7 @@ class AddExplotationCommand
     /**
      * @return int
      */
-    public function getGroupId(): int
+    public function getGroupId(): ?int
     {
         return $this->group_id;
     }

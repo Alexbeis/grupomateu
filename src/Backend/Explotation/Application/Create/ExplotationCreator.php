@@ -44,7 +44,7 @@ class ExplotationCreator implements LoggerAwareInterface
             throw new ExplotationCodeAlreadyUsed(sprintf('Este código ya existe: %s', $code->getCode()));
         }
 
-        $group = $this->groupRepository->find($groupId);
+        $group = $this->groupRepository->findOneBy(['id' => $groupId]);
 
         $explotation = new Explotation();
         $explotation

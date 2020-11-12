@@ -50,17 +50,11 @@ services:
     Mateu\Application\Security\:
         resource: '../src/Application/Security'
 
-    Mateu\Domain\:
-        resource: '../src/Domain/*'
 
     Mateu\DataFixtures\:
         resource: '%kernel.project_dir%/src/DataFixtures/*'
         exclude:
             - '%kernel.project_dir%/src/DataFixtures/BaseFixture.php'
-
-    Mateu\Migrations\:
-        resource: '%kernel.project_dir%/src/Domain/Migrations'
-
 
     #Mateu\EventListener\ExceptionListener:
     #    tags:

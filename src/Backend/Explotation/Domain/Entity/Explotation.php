@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Mateu\Backend\Group\Domain\Entity\Group;
 
 /**
  * @ORM\Entity(repositoryClass="Mateu\Backend\Explotation\Infraestructure\ExplotationRepository")
@@ -180,7 +181,7 @@ class Explotation
     /**
      * @return mixed
      */
-    public function getGroup()
+    public function getGroup():?Group
     {
         return $this->group;
     }

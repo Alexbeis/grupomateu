@@ -29,6 +29,7 @@
                         </div>
                         <label for="exp_group">Grupo</label>
                         <select class="form-control" id="exp_group" name="exp_group">
+                            <option value=""> </option>
                             {% for group in groups %}
                                 <option value="{{ group.id}}">
                                     {{group.name}}
@@ -39,8 +40,13 @@
                         <!-- /.box-body -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary js-add-explotation">Guardar</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-primary js-add-explotation">
+                        <span class="js-spinner"></span>
+                        Guardar
+                    </button>
                 </div>
             </div> <!-- /.modal-content -->
         </form>

@@ -30,7 +30,7 @@ class AddExplotationController extends BaseController implements ControllerInter
                 new AddExplotationCommand(
                     $request->get('exp_code'),
                     $request->get('exp_name'),
-                    $request->get('exp_group'),
+                    $request->get('exp_group')?:null,
                     null,
                     $this->getUser())
             );

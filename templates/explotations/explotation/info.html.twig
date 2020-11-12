@@ -40,9 +40,10 @@
                     <label for="exp_group">Grupo</label>
                     <span class="help-block hidden"></span>
                     <select class="form-control editable" id="exp_group" name="exp_group" disabled>
+                        <option value=""></option>
                         {% for group in groups %}
                             <option value="{{ group.id}}"
-                                    {% if explotation.group.id == group.id %} selected {% endif %}>
+                                    {% if explotation.group is not null and explotation.group.id == group.id %} selected {% endif %}>
                                 {{group.name}}
                             </option>
                         {% endfor %}
@@ -58,6 +59,7 @@
                 >
                 <button type="submit"
                         class="btn btn-primary pull-right js-save-explotation">
+                    <span class="js-spinner"></span>
                     Guardar
                 </button>
                 <button type="button"

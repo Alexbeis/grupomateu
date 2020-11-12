@@ -1,6 +1,6 @@
 doctrine_migrations:
     migrations_paths:
-        'Mateu\Migrations': '%kernel.project_dir%/src/Domain/Migrations'
+        'Mateu\Migrations': '%kernel.project_dir%/src/Migrations'
 
     storage:
         table_storage:
