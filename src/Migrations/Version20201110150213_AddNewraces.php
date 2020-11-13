@@ -11,7 +11,7 @@ use Mateu\Shared\Domain\ValueObject\Uuid\Uuid;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201110150213 extends AbstractMigration
+final class Version20201110150213_AddNewraces extends AbstractMigration
 {
     public function getDescription() : string
     {
