@@ -41,8 +41,6 @@ class ExplotationRepository extends ServiceEntityRepository implements Explotati
         $qb = $this->createQueryBuilder('explotation');
         $query =
             $qb
-                ->join('Mateu\Backend\Animal\Domain\Entity\Animal', 'animal')
-                ->join('Mateu\Backend\Group\Domain\Entity\Group', 'group')
                 ->where('explotation.id = :id')
                 ->setParameters(['id' => $id])
                 ->getQuery();
