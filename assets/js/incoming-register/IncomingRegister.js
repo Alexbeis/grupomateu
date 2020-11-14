@@ -100,7 +100,7 @@ const swal = require('sweetalert2');
                 showOrHideSpinner($target);
                 if (data.success) {
                     deleteRow($target);
-                    swal.fire({type:'success', title:'Crotal eliminado con éxito', timer:3000});
+                    swal.fire({type:'success', title:'Crotal Desvinculado con éxito', timer:3000});
                 }
 
             }).catch((err) => {

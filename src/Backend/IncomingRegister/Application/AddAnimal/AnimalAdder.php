@@ -92,7 +92,7 @@ final class AnimalAdder
         /**
          * Check for a valid Animal Race
          */
-        if (!$race = $this->raceRepository->findOneByCode($raceCode)) {
+        if (!$race = $this->raceRepository->findOneByCode($sex == 01 ? 'M'.$raceCode : 'H'.$raceCode)) {
             $context->addViolation(
                 new Violation('Código Raza: %s no encontrada', $raceCode)
             );
@@ -114,6 +114,13 @@ final class AnimalAdder
             );
         }
 
+        if (!$context->getViolations()->violations()->isEmpty()) {
+            throw new Exception(
+                (new ViolationsFormatter(
+                    $context->getViolations())
+                )->toString());
+        }
+
         /**
          * Animal can be on the system or can be first time on the system.
          */
@@ -124,7 +131,7 @@ final class AnimalAdder
                 $birthDate,
                 $incomingRegister->getExplotation(),
                 $race,
-                $sex == 2 ? 'female':'male'
+                $sex == 02 ? 'female':'male'
             );
         }
 
