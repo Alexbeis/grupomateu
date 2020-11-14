@@ -2,11 +2,13 @@
 
 namespace Mateu\Backend\IncomingRegister\Domain;
 
+use InvalidArgumentException;
+
 /**
  * Extracts all info given on an string from scanner
  *
  * Example:
- * "FR6505523676/2205201421142/FR6505523675"
+ * "FR6505523676/22052014021142/FR6505523675"
  * Extracts:
  *  - crotal:FR6505523676
  *  - mixed:
@@ -27,6 +29,9 @@ class InfoExtractor
 
     public function __construct(CodeFromScanner $codeFromScanner)
     {
+        if (empty($codeFromScanner->value())) {
+            throw new InvalidArgumentException();
+        }
         $this->codeFromScanner = $codeFromScanner;
     }
 
@@ -34,19 +39,17 @@ class InfoExtractor
     {
         list($crotalRaw, $mixed, $crotalRawMother) = $this->getFirstStep();
 
-        preg_match('/([0-9-a-zA-Z]{8})([0-9-a-zA-Z]{1})([0-9-a-zA-Z]{4})/', $mixed, $output);
+        preg_match('/([0-9-a-zA-Z]{8})([0-9-a-zA-Z]{2})([0-9-a-zA-Z]{4})/', $mixed, $output);
 
         if (!$output) {
-            throw new \InvalidArgumentException(sprintf('Error extrayendo %s', $this->codeFromScanner->value()));
+            throw new InvalidArgumentException(sprintf('Error extrayendo %s', $this->codeFromScanner->value()));
         }
 
         $stringDate = $output[1];
         $sex = $output[2];
         $raceCode = $output[3];
 
-        $day = substr($stringDate,0, 2);
-        $month = substr($stringDate,2, 2);
-        $year = substr($stringDate,4, 4);
+        list($day, $month, $year) = TimeIntervalExtractor::fromString($stringDate);
 
         $birthDate = (new \DateTime())
             ->setDate($year, $month, $day);
@@ -56,6 +59,7 @@ class InfoExtractor
 
     private function getFirstStep()
     {
+        var_dump(explode(self::SEPARATOR, $this->codeFromScanner->value()));
         return explode(self::SEPARATOR, $this->codeFromScanner->value());
     }
 }

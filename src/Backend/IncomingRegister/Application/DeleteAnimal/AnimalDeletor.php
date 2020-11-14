@@ -42,6 +42,15 @@ final class AnimalDeletor
         $this->eventBus = $eventBus;
     }
 
+    /**
+     * Here we are removing the relation from register and animal. Animal itself shouldn't be removed from DB
+     * We are also leaving the animal without explotation.
+     * @param GenericId $incRegisterId
+     * @param GenericId $animalId
+     *
+     * @throws AnimalNotFound
+     * @throws IncomingRegisterNotFound
+     */
     public function delete(GenericId $incRegisterId,  GenericId $animalId)
     {
         /**
@@ -57,9 +66,9 @@ final class AnimalDeletor
         if (!$animal = $this->animalRepository->findOneById($animalId->value())) {
             throw new AnimalNotFound();
         }
+        $animal->setExplotation(null);
         $incomingRegister->removeAnimal($animal);
 
-        $this->entityManager->remove($animal);
         $this->entityManager->flush();
 
         $this->eventBus->dispatch(
