@@ -2,6 +2,7 @@
 
 namespace Mateu\Backend\Group\Application\Create;
 
+use Assert\Assert;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class CreateGroupCommandHandler implements MessageHandlerInterface
@@ -18,7 +19,14 @@ class CreateGroupCommandHandler implements MessageHandlerInterface
 
     public function __invoke(CreateGroupCommand $command)
     {
-        $this->creator->create($command->getCode(), $command->getName());
-    }
+        $code = $command->getCode();
+        $name = $command->getName();
 
+        Assert::lazy()
+            ->that($code, 'código')->string()->betweenLength(2, 10)
+            ->that($name, 'Nombre')->string()->betweenLength(2, 50)
+            ->verifyNow();
+
+        $this->creator->create($code, $name);
+    }
 }

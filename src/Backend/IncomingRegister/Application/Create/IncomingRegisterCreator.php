@@ -78,7 +78,7 @@ final class IncomingRegisterCreator
         }
 
         if (!array_key_exists($procedenceId, $this->countries->getList())) {
-            throw new \Exception('fail procedence');
+            throw new \Exception('Procedencia no encontrada');
         } else {
             $procedence = $this->countries->getList()[$procedenceId];
         }

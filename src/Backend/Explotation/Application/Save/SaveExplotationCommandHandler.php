@@ -2,7 +2,7 @@
 
 namespace Mateu\Backend\Explotation\Application\Save;
 
-use Mateu\Backend\Explotation\Domain\ExplotationCode;
+use Assert\Assert;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class SaveExplotationCommandHandler implements MessageHandlerInterface
@@ -19,14 +19,20 @@ class SaveExplotationCommandHandler implements MessageHandlerInterface
 
     public function __invoke(SaveExplotationCommand $command)
     {
-        $id = $command->getId();
-        $code = new ExplotationCode($command->getCode());
+        $id = (int)$command->getId();
+        $code = $command->getCode();
         $name = $command->getName();
         $localization = $command->getLocalization();
-        $group = $command->getGroup();
+        $group = (int)$command->getGroup();
 
-        $this->explotationSaver->save($id, $code->getCode(), $name, $localization, $group);
+        Assert::lazy()
+            ->that($id, 'id')->integer()
+            ->that($code, 'Code')->string()->betweenLength(2, 50)
+            ->that($name, 'Nombre')->string()->betweenLength(2, 50)
+            ->that($localization, 'Localización')->string()->betweenLength(0,50)
+            ->that($group)->integer()
+            ->verifyNow();
+
+        $this->explotationSaver->save($id, $code, $name, $localization, $group);
     }
-
-
 }

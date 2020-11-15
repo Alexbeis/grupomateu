@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-pdo": "*",
+        "beberlei/assert": "^3.2",
         "doctrine/annotations": "^1.7",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "h4cc/wkhtmltoimage-i386": "0.12.4",

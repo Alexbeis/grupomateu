@@ -2,7 +2,7 @@
 
 namespace Mateu\Backend\Explotation\Domain;
 
-use InvalidArgumentException;
+use Assert\Assert;
 
 class ExplotationCode
 {
@@ -14,13 +14,10 @@ class ExplotationCode
 
     public function __construct($code)
     {
-        if (!is_string($code)) {
-            throw new InvalidArgumentException('Must be string');
-        }
-
-        if (strlen($code) == 0 || strlen($code) > 10) {
-           throw new InvalidArgumentException('Code must be 10 or less chars');
-        }
+        Assert::that($code, 'Código Explotación: Obligatorio, entre 2 y 10 caracteres')
+            ->notEmpty()
+            ->string()
+            ->betweenLength(2,10);
 
         $this->code = $code;
     }
