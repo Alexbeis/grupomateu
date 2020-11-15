@@ -17,11 +17,15 @@ doctrine:
 
         url: '%env(resolve:DATABASE_URL)%'
         types:
-            outTypeCode: 'Mateu\Backend\OutType\Domain\DoctrineTypes\OutTypeCodeType'
-            inTypeCode: 'Mateu\Backend\InType\Domain\DoctrineTypes\InTypeCodeType'
+            outTypeCode:
+                class: 'Mateu\Backend\OutType\Domain\DoctrineTypes\OutTypeCodeType'
+                commented: false
+            inTypeCode:
+                class: 'Mateu\Backend\InType\Domain\DoctrineTypes\InTypeCodeType'
+                commented: false
     orm:
         auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
             App:
