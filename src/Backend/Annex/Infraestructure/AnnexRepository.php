@@ -90,6 +90,33 @@ class AnnexRepository extends ServiceEntityRepository implements AnnexRepository
         return $query->getResult();
     }
 
+    public function deleteAnnexedByExplotationCode($code)
+    {
+        $qb = $this->createQueryBuilder('annex');
+        $query = $qb->select('annex')
+            ->join('annex.animal', 'a')
+            ->join('a.explotation', 'e')
+            ->andWhere('e.code = :expcode')
+            ->setParameter(':expcode', $code)
+            ->getQuery();
+
+        $arrayIds = array_map(
+            function($element) {
+                return $element['id'];
+            }, $query->getArrayResult()
+        );
+
+        $queryDelete = $this->createQueryBuilder('annex')
+            ->where('annex.id in (:ids)')
+            ->setParameter('ids', $arrayIds)
+            ->delete()
+            ->getQuery();
+
+
+        return $queryDelete->execute();
+
+    }
+
     public function exists(string $crotal)
     {
         return null !== $this->findByAnimalCrotal($crotal);

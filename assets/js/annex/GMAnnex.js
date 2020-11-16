@@ -10,6 +10,7 @@ import AjaxCall from "../shared/AjaxCall";
         this.$wrapper = $annexWrapper;
         this.$pdfButton = $('.js-export-pdf');
         this.$csvButton = $('.js-export-csv');
+        this.$bulkButton = $('.js-bulk-unmark');
         this.ajaxCall = new AjaxCall();
         this.export = new Export();
 
@@ -27,6 +28,11 @@ import AjaxCall from "../shared/AjaxCall";
         this.$csvButton.on(
             'click',
             this.getAnnexedAndHandleExportCsv.bind(this)
+        );
+
+        this.$bulkButton.on(
+            'click',
+            this.bulkAnnexRemoveByExplotation.bind(this)
         );
 
         this.loadDatatable();
@@ -91,6 +97,54 @@ import AjaxCall from "../shared/AjaxCall";
                  if (!(this).closest('tfoot') && !(this).closest('thead')) {
                      $(this).toggleClass('selected');
                  }
+            });
+
+        },
+
+        bulkAnnexRemoveByExplotation(e) {
+            e.preventDefault();
+            let $target = $(e.target);
+            let url = $target.attr('href');
+            let expCode = $target.data('exp');
+
+            swal.fire({
+                title: this.options.text.title,
+                text: this.options.text.advice,
+                type: this.options.text.warning,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Desvincular Todos'
+            }).then((result) => {
+                if (result.value) {
+                    this.ajaxCall
+                        .send(
+                            url,
+                            'DELETE',
+                            {'exp_code': expCode}
+                            )
+                        .then((response)=> {
+                           if (response.success) {
+                               swal.fire(
+                                   'Ok!',
+                                   response.message,
+                                   'success'
+                               );
+
+                               $target.closest('.section-box').fadeOut('slow',() => {
+                                   $(this).remove();
+                               })
+                           } else {
+                               swal.fire(
+                                   'Error',
+                                   response.message,
+                                   'warning'
+                               )
+                           }
+                        }).catch(err => {
+
+                    });
+                }
             });
 
         },

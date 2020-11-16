@@ -1,24 +1,30 @@
-<div class="row">
+<div class="row section-box">
     <div class="col-xs-12">
         <div class="box box-warning">
             <div class="box-header with-border">
                 <div class="row">
-                    <div class="col-xs-12 col-md-8">
+                    <div class="col-xs-12 col-md-4">
                         <h3 class="box-title">Marcados de: {{ code }}</h3>
                     </div>
-                    <div class="col-xs-12 col-md-4">
+                    <div class="col-xs-12 col-md-8">
                         <div class="btn-group-horizontal pull-right">
+                            <a href="{{ path('annex_bulk_delete') }}"
+                               data-exp="{{ code }}"
+                               type="button"
+                               class="btn btn-primary js-bulk-unmark">
+                                <span class="glyphicon glyphicon-remove-circle"></span> &nbsp; Desmarcar todos
+                            </a>
                             <a href="{{ path('export_annexed') }}.csv"
                                data-exp="{{ code }}"
                                type="button"
                                class="btn btn-primary js-export-csv">
-                                Exportar csv
+                                <span class="glyphicon glyphicon-download"></span>&nbsp; Csv
                             </a>
                             <a href="{{ path('export_annexed') }}.pdf"
                                type="button"
                                data-exp="{{ code }}"
                                class="btn btn-primary js-export-pdf">
-                                Exportar Pdf
+                                <span class="glyphicon glyphicon-download"></span>&nbsp; Pdf
                             </a>
                         </div>
                     </div>
