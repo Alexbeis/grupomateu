@@ -18,8 +18,8 @@ class ExplotationCode
             throw new InvalidArgumentException('Must be string');
         }
 
-        if (strlen($code) == 0 || strlen($code) > 10) {
-           throw new InvalidArgumentException('Code must be 10 or less chars');
+        if (strlen($code) == 0 || strlen($code) > 20) {
+           throw new InvalidArgumentException('Código debe tener 20 caracteres como máximo');
         }
 
         $this->code = $code;
