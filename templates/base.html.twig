@@ -10,6 +10,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>{% block title %}GM{% endblock %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="https://kit.fontawesome.com/a283c7c74b.js" crossorigin="anonymous"></script>
+
     {% block stylesheets %}
         <!-- Google Font -->
         <link rel="stylesheet"
@@ -53,9 +55,9 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ path('index_dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>C</b>dV</span>
+            <span class="logo-mini"><b>G</b>M</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">Grupo Mateu</span>
         </a>
