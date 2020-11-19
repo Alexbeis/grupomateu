@@ -8,7 +8,7 @@
     #}
     <li class="header">PÁGINA PRINCIPAL</li>
     <li  {% if route == 'index_dashboard' %} class="active"{% endif %}>
-        <a href="{{ path('index_dashboard') }}"><i class="fa fa-book"></i> <span>Dashboard</span></a>
+        <a href="{{ path('index_dashboard') }}"><i class="fas fa-home"></i> <span class="m12">Home</span></a>
     </li>
     {#
     #################################################################################
@@ -18,37 +18,34 @@
     <li class="header">Registros</li>
     <li class="treeview {% if route in ['index_register'] %} active menu-open{% endif %}">
         <a href="#">
-            <i class="fa fa-arrow-right"></i> <span>Entradas</span>
+            <i class="fas fa-arrow-right"></i><span class="m12">Entradas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
             <li  {% if route == 'index_register' %} class="active"{% endif %}>
-                <a href="{{ path('index_register') }}"><i class="fa fa-circle-o"></i>Ver</a>
+                <a href="{{ path('index_register') }}"><i class="fas fa-eye"></i> <span class="m12"></span>Ver</a>
             </li>
-            <li class=""><a href="index.html"><i class="fa fa-circle-o"></i>Manuales</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Automáticas</a></li>
         </ul>
     </li>
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-arrow-left"></i> <span>Salidas</span>
+            <i class="fas fa-arrow-left"></i><span class="m12">Salidas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
             <li {% if route == 'index_outregisters' %} class="active"{% endif %}>
-                <a href="{{ path('index_outregisters') }}"><i class="fa fa-circle-o"></i>Ver</a>
+                <a href="{{ path('index_outregisters') }}"><i class="fas fa-eye"></i><span class="m12">Ver</span></a>
             </li>
-            <li class=""><a href="index.html"><i class="fa fa-circle-o"></i>Manuales</a></li>
         </ul>
     </li>
 
     <li {% if route == 'index_annexes' %} class="active"{% endif %}>
-        <a href="{{ path('index_annexes') }}"><i class="fa fa-book active"></i> <span>Marcados</span></a>
+        <a href="{{ path('index_annexes') }}"><i class="fas fa-tag active"></i><span class="m12">Marcados</span></a>
     </li>
 
     {#
@@ -58,11 +55,11 @@
     #}
     <li class="header">GRANJAS</li>
     <li {% if route == 'index_explotations' %} class="active"{% endif %}>
-        <a href="{{ path('index_explotations') }}"><i class="fa fa-book active"></i> <span>Explotaciones</span></a>
+        <a href="{{ path('index_explotations') }}"><i class="fas fa-warehouse active"></i> <span class="m12">Explotaciones</span></a>
     </li>
 
     <li {% if route == 'index_animals' %} class="active"{% endif %}>
-        <a href="{{ path('index_animals') }}"><i class="fa fa-book active"></i> <span>Animales</span></a>
+        <a href="{{ path('index_animals') }}"><i class="fas fa-paw active"></i> <span class="m12">Animales</span></a>
     </li>
 
     {#
@@ -72,13 +69,13 @@
     #}
     <li class="header">PARTNERS</li>
     <li {% if route == 'index_explotations' %} class=""{% endif %}>
-        <a href="{{ path('index_explotations') }}"><i class="fa fa-book "></i> <span>Compradores</span></a>
+        <a href="{{ path('index_explotations') }}"><i class="fas fa-money "></i> <span class="m12">Compradores</span></a>
     </li>
     <li {% if route == 'index_animals' %} class=""{% endif %}>
-        <a href="{{ path('index_animals') }}"><i class="fa fa-book "></i> <span>Suppliers</span></a>
+        <a href="{{ path('index_animals') }}"><i class="fas fa-briefcase "></i> <span class="m12">Proveedores</span></a>
     </li>
     <li {% if route == 'index_animals' %} class=""{% endif %}>
-        <a href="{{ path('index_animals') }}"><i class="fa fa-truck "></i> <span>Transporters</span></a>
+        <a href="{{ path('index_animals') }}"><i class="fas fa-truck "></i> <span class="m12">Transporters</span></a>
     </li>
 
     {#
@@ -98,18 +95,14 @@
     <li class="header">CONFIGURACIÓN</li>
     <li class="treeview  {% if route in ['index_race'] %} active menu-open{% endif %}">
         <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Configuración</span>
+            <i class="fas fa-dashboard"></i> <span>Configuración</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu ">
-            <li><a href="index.html"><i class="fa fa-circle-o"></i>Entradas</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Salidas</a></li>
-
             <li {% if route == 'index_race' %} class="active"{% endif %}>
                 <a href="{{ path('index_race') }}"><i class="fa fa-circle-o"></i> Razas</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Movimientos</a></li>
         </ul>
     </li>
 
