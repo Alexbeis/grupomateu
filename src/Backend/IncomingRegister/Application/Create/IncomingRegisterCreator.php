@@ -70,7 +70,7 @@ final class IncomingRegisterCreator
         $this->security = $security;
     }
 
-    public function create($uuid, $inTypeId, $procedenceId, $exploId, $supplierId, $guideNum, $guideDate, $origin)
+    public function create($uuid, $inTypeId, $procedenceId, $exploId, $supplierId, $guideNum, $guideDate, $origin, $guideAnimals)
     {
         // Validate
         if (!$intype = $this->inTypeRepository->findOneBy(['id' => $inTypeId])) {
@@ -101,6 +101,7 @@ final class IncomingRegisterCreator
             $procedence,
             $supplier,
             $guideNum,
+            $guideAnimals,
             $guideDate,
             $origin,
             $user

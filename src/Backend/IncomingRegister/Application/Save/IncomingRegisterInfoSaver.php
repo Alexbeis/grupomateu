@@ -64,6 +64,7 @@ final class IncomingRegisterInfoSaver
         int $inTypeId,
         int $supplierId,
         $guideNum,
+        $guideAnimals,
         $guideDate,
         $origin
     ) {
@@ -98,6 +99,7 @@ final class IncomingRegisterInfoSaver
             ->setInType($inType)
             ->setSupplier($supplier)
             ->setGuideNum($guideNum)
+            ->setTotalAnimalsFromGuide($guideAnimals)
             ->setGuideDate(new DateTime($guideDate))
             ->setOriginExplotation($origin);
 

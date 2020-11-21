@@ -25,6 +25,7 @@ class SaveIncomingRegisterCommandHandler implements MessageHandlerInterface
             $saveIncomingRegisterCommand->getInTypeId(),
             $saveIncomingRegisterCommand->getSupplierId(),
             $saveIncomingRegisterCommand->getGuideNum(),
+            $saveIncomingRegisterCommand->getGuideAnimals(),
             $saveIncomingRegisterCommand->getGuideDate(),
             $saveIncomingRegisterCommand->getOrigin()
         );

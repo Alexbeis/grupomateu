@@ -12,6 +12,7 @@ class CreateIncomingRegisterCommand
     private $guideNum;
     private $guideDate;
     private $origin;
+    private $totalGuideAnimals;
 
     public function __construct(
         $uuid,
@@ -21,7 +22,8 @@ class CreateIncomingRegisterCommand
         $supplierId,
         $guideNum,
         $guideDate,
-        $origin
+        $origin,
+        $totalGuideAnimals
     ) {
 
         $this->uuid = $uuid;
@@ -32,6 +34,7 @@ class CreateIncomingRegisterCommand
         $this->guideNum = $guideNum;
         $this->guideDate = $guideDate;
         $this->origin = $origin;
+        $this->totalGuideAnimals = $totalGuideAnimals;
     }
 
     /**
@@ -96,5 +99,13 @@ class CreateIncomingRegisterCommand
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalGuideAnimals()
+    {
+        return $this->totalGuideAnimals;
     }
 }

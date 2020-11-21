@@ -61,6 +61,16 @@ class IncomingRegister
     private $originExplotation;
 
     /**
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $totalAnimalsFromGuide;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $animalsCount;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Mateu\Backend\Supplier\Domain\Entity\Supplier", inversedBy="incomingRegisters")
      * @JoinColumn(name="supplier_id", referencedColumnName="id")
      */
@@ -92,10 +102,6 @@ class IncomingRegister
      */
     private $created_by;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" : 0})
-     */
-    private $animalsCount;
 
     public function __construct()
     {
@@ -109,6 +115,7 @@ class IncomingRegister
         string $procedence,
         Supplier $supplier,
         $guideNum,
+        $guideAnimals,
         $guideDate,
         $origin,
         User $user
@@ -120,6 +127,7 @@ class IncomingRegister
             ->setInType($inType)
             ->setProcedence($procedence)
             ->setGuideNum($guideNum)
+            ->setTotalAnimalsFromGuide($guideAnimals)
             ->setGuideDate($guideDate)
             ->setOriginExplotation($origin)
             ->setCreatedBy($user)
@@ -241,6 +249,26 @@ class IncomingRegister
         $this->created_by = $created_by;
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getTotalAnimalsFromGuide():int
+    {
+        return $this->totalAnimalsFromGuide;
+    }
+
+    /**
+     * @param int $totalAnimalsFromGuide
+     *
+     * @return IncomingRegister
+     */
+    public function setTotalAnimalsFromGuide(int $totalAnimalsFromGuide):self
+    {
+        $this->totalAnimalsFromGuide = $totalAnimalsFromGuide;
+        return $this;
+    }
+
 
     /**
      * @return integer

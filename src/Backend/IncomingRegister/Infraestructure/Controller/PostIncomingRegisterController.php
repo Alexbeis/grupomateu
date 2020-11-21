@@ -48,7 +48,8 @@ class PostIncomingRegisterController extends BaseController implements Controlle
                     $data['inc_reg_supplier'],
                     $data['inc_reg_guide_num'],
                     $data['inc_reg_guide_date'],
-                    $data['inc_reg_expl_origin']
+                    $data['inc_reg_expl_origin'],
+                    $data['inc_reg_guide_total_animals']
                 )
             );
         } catch (HandlerFailedException $e) {
