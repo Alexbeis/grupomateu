@@ -88,14 +88,17 @@
                 <div class="form-group">
                     <label for="inc_reg_guide_num">Cuadre</label>
 
-                    <div style="margin-top: 6px;">
-                    {% set animalsFromGuide = incomingRegister.totalAnimalsFromGuide  %}
-                    {% set animalsCount = incomingRegister.animalsCount  %}
-                    {%  if animalsFromGuide == animalsCount  %}
-                        <span class="label label-success " style="font-size: 2rem">{{ animalsCount}} / {{ animalsFromGuide }} </span>
-                    {% else %}
-                        <span class="label label-warning "  style="font-size: 2rem">{{ animalsCount}} / {{ animalsFromGuide }}</span>
-                    {% endif %}
+                    <div class="mt-6 js-cuadre">
+                        {% set animalsFromGuide = incomingRegister.totalAnimalsFromGuide  %}
+                        {% set animalsCount = incomingRegister.animalsCount  %}
+                            <span class="label
+                             {%  if animalsFromGuide == animalsCount  %}
+                                label-success
+                             {% else %}
+                                 label-warning
+                             {% endif %}
+                            font-2r "><span id="js-fromGuide">{{ animalsCount}}</span> / {{ animalsFromGuide }}
+                            </span>
                     </div>
                 </div>
             </div>

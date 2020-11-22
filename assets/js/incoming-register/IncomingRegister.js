@@ -18,7 +18,6 @@ const swal = require('sweetalert2');
 
         const showOrHideSpinner = function (el) {
             let $spinner = el.querySelector(options.elements.spinner);
-            console.log($spinner);
             $spinner.childNodes.forEach((element) => {
                 if (element.tagName === 'I') {
                     element
@@ -91,21 +90,40 @@ const swal = require('sweetalert2');
             showOrHideSpinner($target);
             setElementAsDisabled($target);
 
-            fetch($target.href, {
-                method:'DELETE',
-                body: JSON.stringify({animalId: $target.dataset.id, incRegister: $target.dataset.increg })
-            }).then((response) => {
-               return response.json();
-            }).then((data) => {
-                showOrHideSpinner($target);
-                if (data.success) {
-                    deleteRow($target);
-                    swal.fire({type:'success', title:'Crotal Desvinculado con éxito', timer:3000});
+            swal.fire({
+                title: 'Quieres desvincular el crotal?',
+                text: 'El animal quedará huerfano de explotación y se desvinculará del registro',
+                type:'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Desvincula'
+            }).then(res =>{
+                if (!res.value) {
+                    showOrHideSpinner($target);
+                    setElementAsEnabled($target);
+
+                    return;
                 }
 
-            }).catch((err) => {
+                fetch($target.href, {
+                    method:'DELETE',
+                    body: JSON.stringify({animalId: $target.dataset.id, incRegister: $target.dataset.increg })
+                }).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    showOrHideSpinner($target);
+                    if (data.success) {
+                        deleteRow($target);
+                        udpateCuadre();
+                        swal.fire({type:'success', title:'Crotal Desvinculado con éxito', timer:3000});
+                    }
 
-            });
+                }).catch((err) => {
+
+                });
+            })
+
         };
 
         const setElementAsDisabled = function ($element) {
@@ -116,11 +134,14 @@ const swal = require('sweetalert2');
             $element.classList.remove('disabled');
         };
 
+        const udpateCuadre = function () {
+            let element = document.querySelector('#js-fromGuide');
+            element.innerHTML = parseInt(element.innerHTML) === 0 ? 0 : element.innerHTML - 1;
+        };
+
         const deleteRow = function ($target) {
             for ( ; $target && $target !== document; $target = $target.parentNode ) {
                 if ($target.tagName ==='TR') {
-                    console.log('found!');
-                    console.log($target);
                     let table = $(options.elements.table).DataTable();
                     table
                         .row($target)
@@ -182,7 +203,6 @@ const swal = require('sweetalert2');
 
         return {
             init : function(element){
-                console.log('init...');
                 loadDatatable(element);
                 loadEvents();
 

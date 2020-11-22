@@ -25,3 +25,11 @@ tr.shown td.details-control {
 .m12{
     margin-left: .5rem;
 }
+
+.mt-6 {
+   margin-top: 6px;
+}
+
+.font-2r {
+    font-size: 2rem;
+}
