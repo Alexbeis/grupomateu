@@ -11,6 +11,7 @@ use Mateu\Backend\OutgoingRegister\Application\Validation\OutgoingAnimalValidati
 use Mateu\Backend\OutgoingRegister\Domain\Entity\OutgoingRegister;
 use Mateu\Backend\OutgoingRegister\Infraestructure\OutgoingRegisterRepository;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Workflow\Registry;
 
 final class OutgoingRegisterCreator
 {
@@ -34,19 +35,25 @@ final class OutgoingRegisterCreator
      * @var Security
      */
     private $security;
+    /**
+     * @var Registry
+     */
+    private $workflow;
 
     public function __construct(
         AnnexRepositoryInterface $annexRepository,
         EntityManagerInterface $entityManager,
         OutgoingRegisterRepository $outgoingRegisterRepository,
         OutgoingAnimalValidation $animalValidation,
-        Security $security
+        Security $security,
+        Registry $workflow
     ) {
         $this->annexRepository = $annexRepository;
         $this->entityManager = $entityManager;
         $this->outgoingRegisterRepository = $outgoingRegisterRepository;
         $this->animalValidation = $animalValidation;
         $this->security = $security;
+        $this->workflow = $workflow;
     }
 
     public function create($expCode, $uuid)
@@ -70,6 +77,10 @@ final class OutgoingRegisterCreator
              * @var Animal $animal
              */
             $animal = $annexed->getAnimal();
+
+            $animalStateMachine = $this->workflow->get($animal);
+            $animalStateMachine->apply($animal, 'to_outgoing');
+
             $outRegister->addAnimal($animal);
 
             $animal->setExplotation(null);

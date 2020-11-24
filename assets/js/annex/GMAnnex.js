@@ -3,7 +3,13 @@
 const swal = require('sweetalert2');
 import AjaxCall from "../shared/AjaxCall";
 
-(function(window, $, swal) {
+// Routing
+const routes = require('../../../public/js/fos_js_routes.json');
+import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+Routing.setRoutingData(routes);
+
+
+(function(window, $, swal, Routing) {
 
     window.GMAnnex = function($annexWrapper) {
 
@@ -119,7 +125,7 @@ import AjaxCall from "../shared/AjaxCall";
                 if (result.value) {
                     this.ajaxCall
                         .send(
-                            url,
+                            Routing.generate('annex_bulk_delete.'+ window.REQUEST_LOCALE),
                             'DELETE',
                             {'exp_code': expCode}
                             )
@@ -319,7 +325,7 @@ import AjaxCall from "../shared/AjaxCall";
     });
 
 
-})(window, jQuery, swal);
+})(window, jQuery, swal, Routing);
 
 let AnnexTableWrappers = $('.annex-table');
 

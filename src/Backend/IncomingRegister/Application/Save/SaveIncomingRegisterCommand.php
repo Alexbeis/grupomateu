@@ -25,6 +25,7 @@ class SaveIncomingRegisterCommand
      */
     private $supplierId;
     private $guideNum;
+    private $guideAnimals;
     private $guideDate;
     private $origin;
 
@@ -34,6 +35,7 @@ class SaveIncomingRegisterCommand
         int $inTypeId,
         int $supplierId,
         $guideNum,
+        $guideAnimals,
         $guideDate,
         $origin
     ) {
@@ -43,6 +45,7 @@ class SaveIncomingRegisterCommand
         $this->inTypeId = $inTypeId;
         $this->supplierId = $supplierId;
         $this->guideNum = $guideNum;
+        $this->guideAnimals = $guideAnimals;
         $this->guideDate = $guideDate;
         $this->origin = $origin;
     }
@@ -94,6 +97,15 @@ class SaveIncomingRegisterCommand
     {
         return $this->guideNum;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGuideAnimals()
+    {
+        return $this->guideAnimals;
+    }
+
 
     /**
      * @return mixed

@@ -67,7 +67,7 @@ class OutgoingRegisterRepository extends ServiceEntityRepository implements Outg
                 'destination' => $element->getDestination(),
                 'transport' => '',
                 'animalsCount' => $element->getAnimalsCount(),
-                'outDate' => $element->getOutDate(),
+                'outDate' => $element->getOutDate()->format('d-m-y'),
                 'createdAt' => $element->getCreatedAt()->format('d-m-y'),
                 'createdBy' => $element->getCreatedBy()->getUsername(),
                 'uuid' => $element->getUuid()

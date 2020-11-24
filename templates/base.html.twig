@@ -356,6 +356,9 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
 {% block javascripts %}
+    <script>
+        window.REQUEST_LOCALE = '{{ app.request.locale }}';
+    </script>
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
 

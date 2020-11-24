@@ -7,8 +7,9 @@
                         <table id="movements-table" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                             <tr>
-                                <th>From</th>
-                                <th>To</th>
+                                <th>De</th>
+                                <th>Hacia</th>
+                                <th>Tipo</th>
                                 <th>Creado Por</th>
                                 <th>Creado el</th>
                             </tr>
@@ -18,6 +19,13 @@
                                 <tr>
                                     <td>{{ movement.initial }}</td>
                                     <td>{{ movement.last }}</td>
+                                    <td>
+                                        {% if movement.type == 'in_register' %}
+                                            Registro Entrada
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
                                     <td>{{ movement.createdBy.username }}</td>
                                     <td>{{ movement.createdAt|date('d-m-Y') }}</td>
                                 </tr>
@@ -31,8 +39,9 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>From</th>
-                                <th>To</th>
+                                <th>De</th>
+                                <th>Hacia</th>
+                                <th>Tipo</th>
                                 <th>Creado Por</th>
                                 <th>Creado el</th>
                             </tr>

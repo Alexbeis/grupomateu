@@ -31,8 +31,8 @@ class GetIncomingRegisterController extends BaseController implements Controller
      * @return Response
      * @Route(
      *     {
-     *     "es": "/registro-entrada/{uuid}",
-     *     "en": "/incoming-register/{uuid}"
+     *     "es": "/registro/entrada/{uuid}",
+     *     "en": "/register/incoming/{uuid}"
      * },
      *     name = "register_get",
      *     methods={"GET"}
