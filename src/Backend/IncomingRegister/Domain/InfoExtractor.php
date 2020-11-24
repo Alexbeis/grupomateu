@@ -59,7 +59,6 @@ class InfoExtractor
 
     private function getFirstStep()
     {
-        var_dump(explode(self::SEPARATOR, $this->codeFromScanner->value()));
         return explode(self::SEPARATOR, $this->codeFromScanner->value());
     }
 }

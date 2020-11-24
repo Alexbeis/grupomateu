@@ -30,8 +30,8 @@ class GetOutgoingRegisterController extends BaseController implements Controller
      * @return Response
      * @Route(
      *     {
-     *     "es": "/registro-salida/{uuid}",
-     *     "en": "/outgoing-register/{uuid}"
+     *     "es": "/registros/salida/{uuid}",
+     *     "en": "/registers/outgoing/{uuid}"
      * },
      *     name = "out_register_get",
      *     methods={"GET"}

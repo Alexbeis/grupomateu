@@ -121,6 +121,8 @@ final class AnimalAdder
                 )->toString());
         }
 
+        $oldExplotation = null;
+        $newExplotation = $incomingRegister->getExplotation();
         /**
          * Animal can be on the system or can be first time on the system.
          */
@@ -129,7 +131,7 @@ final class AnimalAdder
                 $crotalNum,
                 $crotalNumMother,
                 $birthDate,
-                $incomingRegister->getExplotation(),
+                $newExplotation,
                 $race,
                 $sex == 02 ? 'female':'male'
             );
@@ -165,6 +167,8 @@ final class AnimalAdder
 
             if ($animal->getId()){
                 $animalStateMachine->apply($animal, 'to_income');
+                $oldExplotation = $animal->getExplotation();
+                $animal->setExplotation($incomingRegister->getExplotation());
             }
 
             $incomingRegister->addAnimal($animal);
@@ -176,7 +180,9 @@ final class AnimalAdder
                     $incRegisterId,
                     $incomingRegister->getUuid(),
                     $animal->getId(),
-                    $animal->getCrotal()
+                    $animal->getCrotal(),
+                    $newExplotation->getCode(),
+                    is_null($oldExplotation)?null:$oldExplotation->getCode()
                 )
             );
 

@@ -64,7 +64,7 @@ class Movement
         return new self($from, $to, $animal, $createdBy, 'standard');
     }
 
-    public static function createIncomingRegister($from, $to, Animal $animal, User $createdBy)
+    public static function fromIncomingRegister($from, $to, Animal $animal, User $createdBy)
     {
         return new self($from, $to, $animal, $createdBy, 'in_register');
     }
@@ -110,6 +110,14 @@ class Movement
     {
         $this->animal = $animal;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
