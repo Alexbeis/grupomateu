@@ -12,6 +12,12 @@ import '../css/app.css';
 const $ = require('jquery');
 global.$ = global.jquery = $;
 
+// ROUTING
+const routes = require('../../public/js/fos_js_routes.json');
+import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+Routing.setRoutingData(routes);
+window.routing = Routing || {};
+
 //import 'bootstrap';
 import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 import '../../node_modules/admin-lte/bower_components/datatables.net/js/jquery.dataTables.min.js';

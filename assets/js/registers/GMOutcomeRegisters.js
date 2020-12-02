@@ -57,7 +57,7 @@ const swal = require('sweetalert2');
                 serverSide: true,
                 searchDelay: 1000,
                 order: [[ 4, "desc" ]],
-                ajax: function (data, callback, settings) {
+                ajax: function (data, callback) {
                     let dataSource = '/admin/registros-salida/paginados/';
                     $.post(dataSource, data, function (rdata) {
                         callback({
@@ -132,8 +132,8 @@ const swal = require('sweetalert2');
                             clickedRow.fadeOut(1000, ()=>{
                                 $(this).remove();
                             });
-
-                            window.location.href= `/admin/registro-salida/${response.params.uuid}`;
+                            const routeName = `out_register_get.${window.REQUEST_LOCALE}`;
+                            window.location.href= window.routing.generate(routeName, {'uuid': response.params.uuid});
                             $('.overlay').toggleClass('hidden');
 
 
@@ -214,6 +214,7 @@ const swal = require('sweetalert2');
                         $('.overlay').toggleClass('hidden');
 
                 }).catch(err => {
+                    console.log(err);
                   $('.overlay').toggleClass('hidden');
                 });
           });

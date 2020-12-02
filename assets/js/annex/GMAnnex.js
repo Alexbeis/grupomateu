@@ -3,13 +3,7 @@
 const swal = require('sweetalert2');
 import AjaxCall from "../shared/AjaxCall";
 
-// Routing
-const routes = require('../../../public/js/fos_js_routes.json');
-import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
-Routing.setRoutingData(routes);
-
-
-(function(window, $, swal, Routing) {
+(function(window, $, swal) {
 
     window.GMAnnex = function($annexWrapper) {
 
@@ -93,12 +87,12 @@ Routing.setRoutingData(routes);
                 let table = $(e.target).closest('table');
                 let rows = table.DataTable().rows().nodes();
 
-                rows.each((row, i)=>{
+                rows.each((row)=>{
                     $(row).toggleClass('selected');
                 });
             });
 
-            $('.annex-table').on('click', 'tbody tr', function (e) {
+            $('.annex-table').on('click', 'tbody tr', function () {
                 //Avoid mark table header and table footer.
                  if (!(this).closest('tfoot') && !(this).closest('thead')) {
                      $(this).toggleClass('selected');
@@ -110,7 +104,6 @@ Routing.setRoutingData(routes);
         bulkAnnexRemoveByExplotation(e) {
             e.preventDefault();
             let $target = $(e.target);
-            let url = $target.attr('href');
             let expCode = $target.data('exp');
 
             swal.fire({
@@ -125,7 +118,7 @@ Routing.setRoutingData(routes);
                 if (result.value) {
                     this.ajaxCall
                         .send(
-                            Routing.generate('annex_bulk_delete.'+ window.REQUEST_LOCALE),
+                            window.routing.generate('annex_bulk_delete.'+ window.REQUEST_LOCALE),
                             'DELETE',
                             {'exp_code': expCode}
                             )
@@ -148,7 +141,7 @@ Routing.setRoutingData(routes);
                                )
                            }
                         }).catch(err => {
-
+                            console.log(err);
                     });
                 }
             });
@@ -301,6 +294,7 @@ Routing.setRoutingData(routes);
                     })
                     .catch((err) => {
                         this._hideSpinner($target);
+                        console.log(err);
                     });
 
             } else if (result.dismiss) {
@@ -325,7 +319,7 @@ Routing.setRoutingData(routes);
     });
 
 
-})(window, jQuery, swal, Routing);
+})(window, jQuery, swal);
 
 let AnnexTableWrappers = $('.annex-table');
 

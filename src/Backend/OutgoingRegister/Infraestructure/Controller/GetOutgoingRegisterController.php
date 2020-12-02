@@ -34,8 +34,8 @@ class GetOutgoingRegisterController extends BaseController implements Controller
      *     "en": "/registers/outgoing/{uuid}"
      * },
      *     name = "out_register_get",
-     *     methods={"GET"}
-     *     )
+     *     methods={"GET"},
+	 *	   options = { "expose" = true })
      */
     public function __invoke(Request $request, Countries $countries, GetAllOutTypes $allOutTypes, string $uuid)
     {
