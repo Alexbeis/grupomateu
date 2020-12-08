@@ -25,6 +25,10 @@ class UserCreator
 
     public function create($email, $username, $fullname, $password)
     {
+    	if ($this->userRepository->findOneByEmail($email)) {
+    		throw new \Exception('Email existente');
+		}
+
         $user = new User();
         $user
             ->setUsername($username)
