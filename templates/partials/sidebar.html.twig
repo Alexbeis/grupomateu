@@ -93,7 +93,7 @@
     ##################################################################################
     #}
     <li class="header">CONFIGURACIÓN</li>
-    <li class="treeview  {% if route in ['index_race'] %} active menu-open{% endif %}">
+    <li class="treeview  {% if route in ['index_race', 'index_users'] %} active menu-open{% endif %}">
         <a href="#">
             <i class="fas fa-dashboard"></i> <span>Configuración</span>
             <span class="pull-right-container">
@@ -102,14 +102,14 @@
         </a>
         <ul class="treeview-menu ">
             <li {% if route == 'index_race' %} class="active"{% endif %}>
-                <a href="{{ path('index_race') }}"><i class="fa fa-circle-o"></i> Razas</a></li>
-        </ul>
-        {% if is_granted('ROLE_SUPERADMIN') %}
-            <ul class="treeview-menu ">
+                <a href="{{ path('index_race') }}"><i class="fa fa-circle-o"></i> Razas</a>
+            </li>
+            {% if is_granted('ROLE_SUPERADMIN') %}
                 <li {% if route == 'index_users' %} class="active"{% endif %}>
-                    <a href="{{ path('index_users') }}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-            </ul>
-        {% endif %}
+                    <a href="{{ path('index_users') }}"><i class="fa fa-circle-o"></i> Usuarios</a>
+                </li>
+            {% endif %}
+        </ul>
     </li>
 
 </ul>

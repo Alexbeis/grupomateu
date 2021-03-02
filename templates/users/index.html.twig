@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>Usuarios <small>Listado de Usuarios</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('index_dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active">Usuarios</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h4>Tabla de Usuarios</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% include 'users/users-table.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

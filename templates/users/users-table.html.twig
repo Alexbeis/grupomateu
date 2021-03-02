@@ -1,0 +1,40 @@
+<table id="user-table" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        <th>Email</th>
+        <th>Nombre</th>
+        <th>Username</th>
+        <th>Roles</th>
+        <th>Creado el</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.roles|join(',') }}</td>
+            <td>{{ user.createdAt|date('d-m-Y') }}</td>
+
+        </tr>
+    {% else %}
+        <tr>
+            <td>
+                <em>no users found</em>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Email</th>
+        <th>Nombre</th>
+        <th>Username</th>
+        <th>Roles</th>
+        <th>Creado el</th>
+    </tr>
+    </tfoot>
+</table>
